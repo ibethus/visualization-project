@@ -1,14 +1,8 @@
 <template>
   <div>
     <h1>Future D3 data renderer</h1>
-    <div style="max-height: 600px; overflow: hidden">
-      <tree
-        style="max-height: 600px; overflow: hidden"
-        :data="tree"
-        node-text="name"
-        :duration="0"
-      >
-      </tree>
+    <div class="container">
+      <tree class="tree" :data="tree" node-text="name" :duration="null"> </tree>
     </div>
   </div>
 </template>
@@ -39,3 +33,14 @@ export default {
   },
 };
 </script>
+
+<style>
+.tree {
+  width: 100%;
+  height: 100%;
+}
+.container {
+  width: 500px;
+  height: 500px;
+}
+</style>

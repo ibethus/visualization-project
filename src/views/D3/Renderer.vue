@@ -32,11 +32,13 @@
 
 <script>
 import { tree } from "vued3tree";
+import reorder from "@/mixins/reorder.mixin";
 
 export default {
   components: {
     tree,
   },
+  mixins: [reorder],
   data() {
     return {
       options: {

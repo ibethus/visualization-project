@@ -18,12 +18,22 @@
       <tree
         class="tree"
         :data="tree"
-        node-text="name"
-        :duration="null"
+        :node-text="options.nodeText"
+        :duration="options.duration"
         :type="options.type"
         :radius="options.radius"
         :zoomable="options.zoomable"
         :strokeWidth="options.strokeWidth"
+        :layoutType="options.layoutType"
+        :linkLayout="options.linkLayout"
+        :leafTextMargin="options.leafTextMargin"
+        :marginX="options.marginX"
+        :marginY="options.marginY"
+        :maxZoom="options.maxZoom"
+        :minZoom="options.minZoom"
+        :nodeTextDisplay="options.nodeTextDisplay"
+        :nodeTextMargin="options.nodeTextMargin"
+        @clickedText="selectNode($event)"
       >
       </tree>
     </div>
@@ -36,31 +46,211 @@ import reorder from "@/mixins/reorder.mixin";
 
 export default {
   components: {
-    tree,
+    tree
   },
   mixins: [reorder],
   data() {
     return {
       options: {
-        type: "tree",
+        type: "tree", // 'tree' or 'cluster'
         radius: 6,
-        zoomable: false,
+        zoomable: true,
         strokeWidth: 2,
+        layoutType: "circular", // 'circular' 'vertical' or 'horizontal'
+        leafTextMargin: 6,
+        linkLayout: "orthogonal", // 'bezier' or 'orthogonal'
+        marginX: 0,
+        marginY: 0,
+        maxZoom: 10,
+        minZoom: 2,
+        nodeText: "name",
+        nodeTextDisplay: "all", // 'all' 'leaves' or 'extremities'
+        nodeTextMargin: 6,
+        selected: null,
+        duration: 750,
       },
       tree: {
-        name: "father",
-        children: [
-          {
-            name: "son1",
-            children: [{ name: "grandson" }, { name: "grandson2" }],
-          },
-          {
-            name: "son2",
-            children: [{ name: "grandson3" }, { name: "grandson4" }],
-          },
-        ],
-      },
+  name: 'root',
+  children: [
+    {
+      name: 'Cross section',
+      children: [
+        {
+          name: 'Well section',
+          children: [
+            {
+              name: 'Well section',
+              children: [
+                {
+                  name: 'Well section',
+                  children: [ { name: '', children: [] } ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: 'Geology',
+          children: [
+            {
+              name: 'Geology',
+              children: [
+                {
+                  name: 'Geology',
+                  children: [ { name: '', children: [] } ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'Maps',
+      children: [
+        {
+          name: 'One time',
+          children: [
+            {
+              name: 'Maps concentration',
+              children: [
+                {
+                  name: 'Maps concentration',
+                  children: [ { name: '', children: [] } ]
+                }
+              ]
+            },
+            {
+              name: 'Piezometry',
+              children: [
+                {
+                  name: 'Piezometry',
+                  children: [ { name: '', children: [] } ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: 'Permanent',
+          children: [
+            {
+              name: 'Geology',
+              children: [
+                {
+                  name: 'Geology',
+                  children: [ { name: '', children: [] } ]
+                }
+              ]
+            },
+            {
+              name: 'Installation',
+              children: [
+                {
+                  name: 'Installation',
+                  children: [ { name: '', children: [] } ]
+                }
+              ]
+            },
+            {
+              name: 'Wells',
+              children: [
+                {
+                  name: 'Wells',
+                  children: [ { name: '', children: [] } ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'Graphs and Tables',
+      children: [
+        {
+          name: 'Results',
+          children: [
+            {
+              name: 'Mass balance',
+              children: [
+                {
+                  name: 'Mass balance',
+                  children: [ { name: '', children: [] } ]
+                }
+              ]
+            },
+            {
+              name: 'Temporal',
+              children: [
+                {
+                  name: 'Concentration',
+                  children: [
+                    { name: '', children: [] },
+                    { name: '', children: [] },
+                    { name: '', children: [] }
+                  ]
+                },
+                {
+                  name: 'Injected volume',
+                  children: [ { name: '', children: [] } ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: 'Description',
+          children: [
+            {
+              name: 'Technical description',
+              children: [
+                {
+                  name: 'Technical description',
+                  children: [ { name: '', children: [] } ]
+                }
+              ]
+            },
+            {
+              name: 'Technical results',
+              children: [
+                {
+                  name: 'Technical results',
+                  children: [ { name: '', children: [] } ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'Photos',
+      children: [
+        {
+          name: 'Photos',
+          children: [
+            {
+              name: 'Photos',
+              children: [
+                {
+                  name: 'Photos',
+                  children: [ { name: '', children: [] } ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
     };
+  },
+  methods: {
+    selectNode({data}) {
+      console.log(data);
+    }
   },
 };
 </script>

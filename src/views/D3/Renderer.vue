@@ -5,11 +5,27 @@
     </h1>
     <p>
       Voir
-      <a href="https://github.com/David-Desmaisons/Vue.D3.tree">le repo</a> pour
-      la customisation de l'arbre et des noeuds
+      <a
+        href="https://github.com/David-Desmaisons/Vue.D3.tree"
+        target="_blank"
+        rel="noopener noreferer"
+        class="underline text-blue-500 font-semibold"
+        >le repo</a
+      >
+      pour la customisation de l'arbre et des noeuds
     </p>
     <div class="container">
-      <tree class="tree" :data="tree" node-text="name" :duration="null"> </tree>
+      <tree
+        class="tree"
+        :data="tree"
+        node-text="name"
+        :duration="null"
+        :type="options.type"
+        :radius="options.radius"
+        :zoomable="options.zoomable"
+        :strokeWidth="options.strokeWidth"
+      >
+      </tree>
     </div>
   </div>
 </template>
@@ -23,6 +39,12 @@ export default {
   },
   data() {
     return {
+      options: {
+        type: "tree",
+        radius: 6,
+        zoomable: false,
+        strokeWidth: 2,
+      },
       tree: {
         name: "father",
         children: [

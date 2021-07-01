@@ -1,6 +1,13 @@
 <template>
   <div>
-    <h1>Future D3 data renderer</h1>
+    <h1 class="font-extrabold text-4xl text-red-600 underline">
+      Future D3 data renderer
+    </h1>
+    <p>
+      Voir
+      <a href="https://github.com/David-Desmaisons/Vue.D3.tree">le repo</a> pour
+      la customisation de l'arbre et des noeuds
+    </p>
     <div class="container">
       <tree class="tree" :data="tree" node-text="name" :duration="null"> </tree>
     </div>
@@ -40,7 +47,7 @@ export default {
   height: 100%;
 }
 .container {
-  width: 500px;
+  width: 100%;
   height: 500px;
 }
 </style>

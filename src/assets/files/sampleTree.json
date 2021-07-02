@@ -1,0 +1,51 @@
+[
+    [{
+        "name": "root"
+    }],
+    [{
+            "name": "Cross section",
+            "parent": 0
+        },
+        {
+            "name": "Maps",
+            "parent": 0
+        },
+        {
+            "name": "Graphs and Tables",
+            "parent": 0
+        },
+        {
+            "name": "Photos",
+            "parent": 0
+        }
+    ],
+    [{
+            "name": "Well section",
+            "parent": 0
+        },
+        {
+            "name": "Geology",
+            "parent": 0
+        },
+        {
+            "name": "One time",
+            "parent": 1
+        },
+        {
+            "name": "Permanent",
+            "parent": 1
+        },
+        {
+            "name": "Results",
+            "parent": 2
+        },
+        {
+            "name": "Description",
+            "parent": 2
+        },
+        {
+            "name": "Photos",
+            "parent": 3
+        }
+    ]
+]

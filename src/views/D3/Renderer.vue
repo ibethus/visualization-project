@@ -46,7 +46,7 @@ import reorder from "@/mixins/reorder.mixin";
 
 export default {
   components: {
-    tree
+    tree,
   },
   mixins: [reorder],
   data() {
@@ -54,7 +54,7 @@ export default {
       options: {
         type: "tree", // 'tree' or 'cluster'
         radius: 6,
-        zoomable: true,
+        zoomable: false,
         strokeWidth: 2,
         layoutType: "horizontal", // 'circular' 'vertical' or 'horizontal'
         leafTextMargin: 6,
@@ -70,187 +70,187 @@ export default {
         duration: 750,
       },
       tree: {
-  name: 'root',
-  children: [
-    {
-      name: 'Cross section',
-      children: [
-        {
-          name: 'Well section',
-          children: [
-            {
-              name: 'Well section',
-              children: [
-                {
-                  name: 'Well section',
-                  children: [ { name: '', children: [] } ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          name: 'Geology',
-          children: [
-            {
-              name: 'Geology',
-              children: [
-                {
-                  name: 'Geology',
-                  children: [ { name: '', children: [] } ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      name: 'Maps',
-      children: [
-        {
-          name: 'One time',
-          children: [
-            {
-              name: 'Maps concentration',
-              children: [
-                {
-                  name: 'Maps concentration',
-                  children: [ { name: '', children: [] } ]
-                }
-              ]
-            },
-            {
-              name: 'Piezometry',
-              children: [
-                {
-                  name: 'Piezometry',
-                  children: [ { name: '', children: [] } ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          name: 'Permanent',
-          children: [
-            {
-              name: 'Geology',
-              children: [
-                {
-                  name: 'Geology',
-                  children: [ { name: '', children: [] } ]
-                }
-              ]
-            },
-            {
-              name: 'Installation',
-              children: [
-                {
-                  name: 'Installation',
-                  children: [ { name: '', children: [] } ]
-                }
-              ]
-            },
-            {
-              name: 'Wells',
-              children: [
-                {
-                  name: 'Wells',
-                  children: [ { name: '', children: [] } ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      name: 'Graphs and Tables',
-      children: [
-        {
-          name: 'Results',
-          children: [
-            {
-              name: 'Mass balance',
-              children: [
-                {
-                  name: 'Mass balance',
-                  children: [ { name: '', children: [] } ]
-                }
-              ]
-            },
-            {
-              name: 'Temporal',
-              children: [
-                {
-                  name: 'Concentration',
-                  children: [
-                    { name: '', children: [] },
-                    { name: '', children: [] },
-                    { name: '', children: [] }
-                  ]
-                },
-                {
-                  name: 'Injected volume',
-                  children: [ { name: '', children: [] } ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          name: 'Description',
-          children: [
-            {
-              name: 'Technical description',
-              children: [
-                {
-                  name: 'Technical description',
-                  children: [ { name: '', children: [] } ]
-                }
-              ]
-            },
-            {
-              name: 'Technical results',
-              children: [
-                {
-                  name: 'Technical results',
-                  children: [ { name: '', children: [] } ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      name: 'Photos',
-      children: [
-        {
-          name: 'Photos',
-          children: [
-            {
-              name: 'Photos',
-              children: [
-                {
-                  name: 'Photos',
-                  children: [ { name: '', children: [] } ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-},
+        name: "root",
+        children: [
+          {
+            name: "Cross section",
+            children: [
+              {
+                name: "Well section",
+                children: [
+                  {
+                    name: "Well section",
+                    children: [
+                      {
+                        name: "Well section",
+                        children: [{ name: "", children: [] }],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Geology",
+                children: [
+                  {
+                    name: "Geology",
+                    children: [
+                      {
+                        name: "Geology",
+                        children: [{ name: "", children: [] }],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: "Maps",
+            children: [
+              {
+                name: "One time",
+                children: [
+                  {
+                    name: "Maps concentration",
+                    children: [
+                      {
+                        name: "Maps concentration",
+                        children: [{ name: "", children: [] }],
+                      },
+                    ],
+                  },
+                  {
+                    name: "Piezometry",
+                    children: [
+                      {
+                        name: "Piezometry",
+                        children: [{ name: "", children: [] }],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Permanent",
+                children: [
+                  {
+                    name: "Geology",
+                    children: [
+                      {
+                        name: "Geology",
+                        children: [{ name: "", children: [] }],
+                      },
+                    ],
+                  },
+                  {
+                    name: "Installation",
+                    children: [
+                      {
+                        name: "Installation",
+                        children: [{ name: "", children: [] }],
+                      },
+                    ],
+                  },
+                  {
+                    name: "Wells",
+                    children: [
+                      {
+                        name: "Wells",
+                        children: [{ name: "", children: [] }],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: "Graphs and Tables",
+            children: [
+              {
+                name: "Results",
+                children: [
+                  {
+                    name: "Mass balance",
+                    children: [
+                      {
+                        name: "Mass balance",
+                        children: [{ name: "", children: [] }],
+                      },
+                    ],
+                  },
+                  {
+                    name: "Temporal",
+                    children: [
+                      {
+                        name: "Concentration",
+                        children: [
+                          { name: "", children: [] },
+                          { name: "", children: [] },
+                          { name: "", children: [] },
+                        ],
+                      },
+                      {
+                        name: "Injected volume",
+                        children: [{ name: "", children: [] }],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Description",
+                children: [
+                  {
+                    name: "Technical description",
+                    children: [
+                      {
+                        name: "Technical description",
+                        children: [{ name: "", children: [] }],
+                      },
+                    ],
+                  },
+                  {
+                    name: "Technical results",
+                    children: [
+                      {
+                        name: "Technical results",
+                        children: [{ name: "", children: [] }],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: "Photos",
+            children: [
+              {
+                name: "Photos",
+                children: [
+                  {
+                    name: "Photos",
+                    children: [
+                      {
+                        name: "Photos",
+                        children: [{ name: "", children: [] }],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
     };
   },
   methods: {
-    selectNode({data}) {
+    selectNode({ data }) {
       console.log(data);
-    }
+    },
   },
 };
 </script>

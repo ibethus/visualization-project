@@ -147,6 +147,7 @@ export default class Tree {
       json.name = node.name;
       json.children.push(this.json(child));
     });
+    if (node.children.length === 0) json.name = node.name;
     return json;
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-screen h-screen">
     <h1 class="font-extrabold text-4xl text-red-600 underline">
       Future D3 data renderer
     </h1>
@@ -54,7 +54,7 @@ export default {
       options: {
         type: "tree", // 'tree' or 'cluster'
         radius: 6,
-        zoomable: false,
+        zoomable: true,
         strokeWidth: 2,
         layoutType: "horizontal", // 'circular' 'vertical' or 'horizontal'
         leafTextMargin: 6,
@@ -71,6 +71,14 @@ export default {
       },
     };
   },
+  mounted() {
+    let zoom = Math.round(
+      Math.log(this.definition.length) +
+        Math.log10(this.definition.reverse()[0].length)
+    );
+    this.options.minZoom = zoom / 5;
+    this.options.maxZoom = Math.pow(zoom, 2);
+  },
   methods: {
     selectNode({ data }) {
       console.log(data);
@@ -86,6 +94,7 @@ export default {
 }
 .container {
   width: 100%;
-  height: 500px;
+  height: 100%;
+  overflow: visible;
 }
 </style>

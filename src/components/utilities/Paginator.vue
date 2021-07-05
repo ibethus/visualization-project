@@ -3,7 +3,7 @@
         <div>
             <ul class="grid grid-cols-1 md:grid-cols-4 gap-3">
                 <li v-for="(item, index) in paginated" :key="index">
-                    <a :href="'images' + item.Path" target="_blank">
+                    <a :href="'images' + item.Path" target="item.Path">
                         <img
                             class="object-cover h-32 w-full"
                             :src="'/images/' + item.Path"

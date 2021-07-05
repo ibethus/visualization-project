@@ -1,12 +1,13 @@
 <template>
   <div>
     <div>
-      <ul v-if="data.length" class="grid grid-cols-1 md:grid-cols-4 gap-3">
+      <ul v-if="data.length" >
         <draggable
           v-model="data.data"
           group="nodes"
           @start="startDrag($event)"
           @end="endDrag($event)"
+          class="grid grid-cols-1 md:grid-cols-4 gap-3"
         >
           <li v-for="(item, index) in paginated" :key="index">
             <a :href="`images${item.Path}`" target="item.Path">

@@ -8,7 +8,6 @@ import * as images from "@/assets/files/formattedPaysages.json";
 
 export default {
   created() {
-    console.log(definition);
     this.definition = definition.default;
     this.data = images.default;
   },
@@ -35,6 +34,17 @@ export default {
     },
     mapData(node) {
       return this.data.filter(item => item['pred subclass'] === node.name);
-    }
+    },
+    commute(targets, nodes) {
+      const origin = this.tree.findNodeByID(nodes[targets.from].id);
+      const target = this.tree.findNodeByID(nodes[targets.to].id);
+
+      let o_data = origin.data;
+      const n_data = o_data.splice(targets.oldIndex, 1)[0];
+      let t_data = target.data;
+      t_data.splice(targets.newIndex, 0, n_data);
+      target.data = t_data;
+      return this.tree;
+    },
   },
 };

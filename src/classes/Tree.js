@@ -15,13 +15,15 @@ export default class Tree {
   #depth = null;
   #id = id();
   #name;
-  constructor(name, index = -1, depth = -1) {
+  #data = [];
+  constructor(name, index = -1, depth = -1, data) {
     if (!name || typeof name !== "string" || !name.trim().length) {
       throw new Error("Name must be a non empty string");
     }
     this.#name = name;
     this.#index = index;
     this.#depth = depth;
+    this.#data = data;
   }
 
   get name() {
@@ -45,6 +47,12 @@ export default class Tree {
   get parentNode() {
     return this.#parent;
   }
+  get data() {
+    return this.#data;
+  }
+  set data(data) {
+    this.#data = data;
+  }
   set parentNode(parent) {
     if (parent !== this.parent && (parent == null || parent instanceof Tree)) {
       if (this.#parent) {
@@ -60,8 +68,8 @@ export default class Tree {
     return this.#children.size;
   }
 
-  createNode(name, index, depth) {
-    const node = new Tree(name, index, depth);
+  createNode(name, index, depth, data) {
+    const node = new Tree(name, index, depth, data);
     this.#children.set(node.id, node);
     node.parent = this;
     return node;
@@ -148,6 +156,7 @@ export default class Tree {
       depth: node.depth,
       id: node.id,
       index: node.index,
+      data: node.data,
     };
     node.children.forEach((child) => {
       json.name = node.name;
@@ -191,5 +200,10 @@ export default class Tree {
       }
     });
     return found;
+  }
+
+  // change data with splice method
+  changeNodeData(newData, index, remove = 1) {
+    this.#data.splice(index, remove, newData);
   }
 }

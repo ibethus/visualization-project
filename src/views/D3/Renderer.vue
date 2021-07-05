@@ -56,7 +56,7 @@ export default {
         radius: 6,
         zoomable: true,
         strokeWidth: 2,
-        layoutType: "horizontal", // 'circular' 'vertical' or 'horizontal'
+        layoutType: "vertical", // 'circular' 'vertical' or 'horizontal'
         leafTextMargin: 6,
         linkLayout: "bezier", // 'bezier' or 'orthogonal'
         marginX: 0,

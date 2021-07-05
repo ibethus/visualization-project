@@ -1,122 +1,122 @@
 [
     {
-        "Path": "/database/Aerien/Jour/billy-huynh.jpg",
+        "Path": "/database_paysages/Paysages/Aerien/Jour/Ciel jour/billy-huynh.jpg",
         "document name": "Photo de ciel de jour.pdf",
         "field": "Marseille",
         "parentclass": "Aerien",
         "subclass": "Jour",
         "caption": "Photo du ciel de marseille",
-        "pred parentclass": "Aerien",
-        "pred subclass": "Jour"
+        "pred parentclass": "Jour",
+        "pred subclass": "Ciel jour"
       },
       {
-        "Path": "/database/Aerien/Jour/taylor-van-riper.jpg",
+        "Path": "/database_paysages/Paysages/Aerien/Jour/Ciel jour/taylor-van-riper.jpg",
         "document name": "Photo de ciel de jour.pdf",
         "field": "Lille",
         "parentclass": "Aerien",
         "subclass": "Jour",
         "caption": "Photo du ciel de lille",
-        "pred parentclass": "Aerien",
-        "pred subclass": "Jour"
+        "pred parentclass": "Jour",
+        "pred subclass": "Ciel jour"
       },
       {
-        "Path": "/database/Aerien/Nuit/sander-dewerte.jpg",
+        "Path": "/database_paysages/Paysages/Aerien/Nuit/Ciel nuit/sander-dewerte.jpg",
         "document name": "Photo d'un ciel de nuit.pdf",
         "field": "Strasbourg",
         "parentclass": "Aerien",
         "subclass": "Nuit",
         "caption": "Photo du ciel de strasbourg",
-        "pred parentclass": "Aerien",
-        "pred subclass": "Nuit"
+        "pred parentclass": "Nuit",
+        "pred subclass": "Ciel nuit"
       },
       {
-        "Path": "/database/Aerien/Nuit/wil-stewart.jpg",
+        "Path": "/database_paysages/Paysages/Aerien/Nuit/Ciel nuit/wil-stewart.jpg",
         "document name": "Photo d'un ciel de nuit.pdf",
         "field": "Montpellier",
         "parentclass": "Aerien",
         "subclass": "Nuit",
         "caption": "Photo du ciel de montpellier",
-        "pred parentclass": "Aerien",
-        "pred subclass": "Nuit"
+        "pred parentclass": "Nuit",
+        "pred subclass": "Ciel nuit"
       },
       {
-        "Path": "/database/Marin/Mer/das-sasha.jpg",
+        "Path": "/database_paysages/Paysages/Marin/Mer/Mer mediteranee/das-sasha.jpg",
         "document name": "Photo de la mer mediteranee.pdf",
         "field": "Arles",
         "parentclass": "Marin",
         "subclass": "Mer",
         "caption": "Photo de la mer mediteranee",
-        "pred parentclass": "Marin",
-        "pred subclass": "Mer"
+        "pred parentclass": "Mer",
+        "pred subclass": "Mer mediteranee"
       },
       {
-        "Path": "/database/Marin/Mer/vasy-cotorobai.jpg",
+        "Path": "/database_paysages/Paysages/Marin/Mer/Mer noire/vasy-cotorobai.jpg",
         "document name": "Photo de la mer noire.pdf",
         "field": "Nantes",
         "parentclass": "Marin",
         "subclass": "Mer",
         "caption": "Photo de la mer noire",
         "pred parentclass": "Marin",
-        "pred subclass": "Mer"
+        "pred subclass": "Mer noire"
       },
       {
-        "Path": "/database/Marin/Ocean/curioso-photography.jpg",
+        "Path": "/database_paysages/Paysages/Marin/Ocean/Ocean pacifique/curioso-photography.jpg",
         "document name": "Photo d'un ocean.pdf",
         "field": "Paris",
         "parentclass": "Marin",
         "subclass": "Ocean",
         "caption": "Photo d'un ocean",
-        "pred parentclass": "Marin",
-        "pred subclass": "Ocean"
+        "pred parentclass": "Ocean",
+        "pred subclass": "Ocean pacifique"
       },
       {
-        "Path": "/database/Marin/Ocean/nattu-adnan.jpg",
+        "Path": "/database_paysages/Paysages/Marin/Ocean/Ocean indien/nattu-adnan.jpg",
         "document name": "Photo d'un ocean.pdf",
         "field": "Bordeaux",
         "parentclass": "Marin",
         "subclass": "Ocean",
         "caption": "Photo d'un ocean",
-        "pred parentclass": "Marin",
-        "pred subclass": "Ocean"
+        "pred parentclass": "Ocean",
+        "pred subclass": "Ocean indien"
       },
       {
-        "Path": "/database/Terrestre/Urbain/ben-o-bro.jpg",
+        "Path": "/database_paysages/Paysages/Terrestre/Urbain/Ville/ben-o-bro.jpg",
         "document name": "Photo d'une ville.pdf",
         "field": "Cestas",
         "parentclass": "Terrestre",
         "subclass": "Urbain",
         "caption": "Photo d'une ville",
-        "pred parentclass": "Terrestre",
-        "pred subclass": "Urbain"
+        "pred parentclass": "Urbain",
+        "pred subclass": "Ville"
       },
       {
-        "Path": "/database/Terrestre/Urbain/patrick-hendry.jpg",
+        "Path": "/database_paysages/Paysages/Terrestre/Urbain/Usine/patrick-hendry.jpg",
         "document name": "Photo d'une usine.pdf",
         "field": "Canejan",
         "parentclass": "Terrestre",
         "subclass": "Urbain",
         "caption": "Photo d'une usine",
-        "pred parentclass": "Terrestre",
-        "pred subclass": "Urbain"
+        "pred parentclass": "Urbain",
+        "pred subclass": "Usine"
       },
       {
-        "Path": "/database/Terrestre/Montagne/antoine-beauvillain.jpg",
+        "Path": "/database_paysages/Paysages/Terrestre/Montagne/Alpes/antoine-beauvillain.jpg",
         "document name": "Photo d'une montagne.pdf",
         "field": "Pessac",
         "parentclass": "Terrestre",
         "subclass": "Montagne",
         "caption": "Photo d'une montagne",
-        "pred parentclass": "Terrestre",
-        "pred subclass": "Montagne"
+        "pred parentclass": "Montagne",
+        "pred subclass": "Alpes"
       },
       {
-        "Path": "/database/Terrestre/Montagne/nomad-bikers.jpg",
+        "Path": "/database_paysages/Paysages/Terrestre/Montagne/Pyrenees/nomad-bikers.jpg",
         "document name": "Photo d'une montagne.pdf",
         "field": "Merignac",
         "parentclass": "Terrestre",
         "subclass": "Montagne",
         "caption": "Photo d'une montagne",
-        "pred parentclass": "Terrestre",
-        "pred subclass": "Montagne"
+        "pred parentclass": "Montagne",
+        "pred subclass": "Pyrenees"
       }
 ]

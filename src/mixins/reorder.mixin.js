@@ -7,13 +7,6 @@ export default {
   created() {
     console.log(definition);
     this.definition = definition.default;
-    this.tree = this.buildTree(this.definition);
-  },
-  data() {
-    return {
-      definition: [],
-      tree: null,
-    };
   },
   methods: {
     buildTree(treeDefinition) {

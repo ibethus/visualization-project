@@ -1,0 +1,122 @@
+[
+    {
+        "Path": "/database/Chats/Persans/chat_persan_du_sud.png",
+        "document name": "Chat persan du sud.pdf",
+        "field": "Marseille",
+        "parentclass": "Chats",
+        "subclass": "Persans",
+        "caption": "Photo d'un chat persan du sud",
+        "pred parentclass": "Chats",
+        "pred subclass": "Persans"
+      },
+      {
+        "Path": "/database/Chats/Persans/persan_du_nord.jpg",
+        "document name": "Chat persan du nord.pdf",
+        "field": "Lille",
+        "parentclass": "Chats",
+        "subclass": "Persans",
+        "caption": "Photo d'un chat persan du nord",
+        "pred parentclass": "Chats",
+        "pred subclass": "Persans"
+      },
+      {
+        "Path": "/database/Chats/Siamois/siamoi_du_nord.jpg",
+        "document name": "Chat siamoi du nord.pdf",
+        "field": "Strasbourg",
+        "parentclass": "Chats",
+        "subclass": "Siamois",
+        "caption": "Photo d'un chat siamoi du nord",
+        "pred parentclass": "Chats",
+        "pred subclass": "Siamois"
+      },
+      {
+        "Path": "/database/Chats/Siamois/siamoi_du_sud.jpg",
+        "document name": "Chat siamoi du sud.pdf",
+        "field": "Montpellier",
+        "parentclass": "Chats",
+        "subclass": "Siamois",
+        "caption": "Photo d'un chat siamoi du sud",
+        "pred parentclass": "Chats",
+        "pred subclass": "Siamois"
+      },
+      {
+        "Path": "/database/Chiens/Chihuahuas/chihuahua_blanc.jpg",
+        "document name": "Chien chihuahua blanc.pdf",
+        "field": "Arles",
+        "parentclass": "Chiens",
+        "subclass": "Chihuahua",
+        "caption": "Photo d'un chien chihuahua blanc",
+        "pred parentclass": "Chiens",
+        "pred subclass": "Chihuahuas"
+      },
+      {
+        "Path": "/database/Chiens/Chihuahuas/chihuahua_noir.jpg",
+        "document name": "Chien chihuahua noir.pdf",
+        "field": "Nantes",
+        "parentclass": "Chiens",
+        "subclass": "Chihuahuas",
+        "caption": "Photo d'un chien chihuahua noir",
+        "pred parentclass": "Chiens",
+        "pred subclass": "Chihuahuas"
+      },
+      {
+        "Path": "/database/Chiens/Labradors/labrador_noir.jpg",
+        "document name": "Chien labrador noir.pdf",
+        "field": "Paris",
+        "parentclass": "Chiens",
+        "subclass": "Labradors",
+        "caption": "Photo d'un chien labrador noir",
+        "pred parentclass": "Chiens",
+        "pred subclass": "Labradors"
+      },
+      {
+        "Path": "/database/Chiens/Labradors/labrador_blanc.jpg",
+        "document name": "Chien labrador blanc.pdf",
+        "field": "Bordeaux",
+        "parentclass": "Chiens",
+        "subclass": "Labradors",
+        "caption": "Photo d'un chien labrador blanc",
+        "pred parentclass": "Chiens",
+        "pred subclass": "Labradors"
+      },
+      {
+        "Path": "/database/Oiseaux/Aigles/aigle_royal.jpg",
+        "document name": "Aigle royal.pdf",
+        "field": "Cestas",
+        "parentclass": "Oiseaux",
+        "subclass": "Aigles",
+        "caption": "Photo d'un aigle royal",
+        "pred parentclass": "Oiseaux",
+        "pred subclass": "Aigles"
+      },
+      {
+        "Path": "/database/Oiseaux/Aigles/pygargue.jpg",
+        "document name": "Pygargue.pdf",
+        "field": "Canejan",
+        "parentclass": "Oiseaux",
+        "subclass": "Aigles",
+        "caption": "Photo d'un pygargue",
+        "pred parentclass": "Oiseaux",
+        "pred subclass": "Aigles"
+      },
+      {
+        "Path": "/database/Oiseaux/Buses/buse_a_epaulette.jpg",
+        "document name": "Buse a epaulette.pdf",
+        "field": "Pessac",
+        "parentclass": "Oiseaux",
+        "subclass": "Buses",
+        "caption": "Photo d'une buse a epaulette",
+        "pred parentclass": "Oiseaux",
+        "pred subclass": "Buses"
+      },
+      {
+        "Path": "/database/Oiseaux/Buses/buse_a_gros_bec.jpg",
+        "document name": "Buse a gros bec.pdf",
+        "field": "Merignac",
+        "parentclass": "Oiseaux",
+        "subclass": "Buses",
+        "caption": "Photo d'une buse a gros bec",
+        "pred parentclass": "Oiseaux",
+        "pred subclass": "Buses"
+      }
+]

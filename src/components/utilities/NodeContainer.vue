@@ -17,14 +17,23 @@
     </div>
     <div class="px-4 py-5 sm:p-6">
       <!-- Content goes here -->
+      <Paginator :data="node.data"/>
     </div>
   </div>
 </template>
 
 <script>
+import Paginator from "@/components/utilities/Paginator";
+
 export default {
   props: {
     node: { type: Object, default: () => {} },
   },
+  mounted() {
+    console.log(this.node.data);
+  },
+  components: {
+    Paginator
+  }
 };
 </script>

@@ -12,7 +12,8 @@
     "d3": "^7.0.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
-    "vued3tree": "^5.1.0"
+    "vued3tree": "^5.1.0",
+    "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss7-compat": "^2.2.4",

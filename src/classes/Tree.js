@@ -183,6 +183,16 @@ export default class Tree {
     });
     return found;
   }
+  findNodeByID(id) {
+    let found = null;
+    this.traverse((node) => {
+      if (node.id === id) {
+        found = node;
+        return true;
+      }
+    });
+    return found;
+  }
   findAllNodesByName(name) {
     let found = [];
     this.traverse((node) => {
@@ -203,7 +213,11 @@ export default class Tree {
   }
 
   // change data with splice method
-  changeNodeData(newData, index, remove = 1) {
+  addNodeData(newData, index, remove = 1) {
     this.#data.splice(index, remove, newData);
+  }
+  // change data with splice method
+  removeNodeData(index, remove = 1) {
+    this.#data.splice(index, remove);
   }
 }

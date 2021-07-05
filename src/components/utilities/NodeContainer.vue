@@ -4,7 +4,7 @@
       bg-white
       h-full
       overflow-hidden
-      shadow-xl
+      shadow-md
       rounded-lg
       divide-y divide-gray-200
     "

@@ -19,7 +19,7 @@
     ], 
 
     [
-        { "name": "Ciel jour", "parent": 0 },
+        { "name": "Cieljour", "parent": 0 },
         { "name": "Ciel nuit", "parent": 1},
         { "name": "Mer mediteranee", "parent": 2 },
         { "name": "Mer noire", "parent": 2 },

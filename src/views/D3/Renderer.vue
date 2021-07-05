@@ -1,8 +1,5 @@
 <template>
   <div class="w-screen h-screen">
-    <h1 class="font-extrabold text-4xl text-red-600 underline">
-      Future D3 data renderer
-    </h1>
     <p>
       Voir
       <a
@@ -10,43 +7,65 @@
         target="_blank"
         rel="noopener noreferer"
         class="underline text-blue-500 font-semibold"
-        >le repo</a
       >
+        le repo
+      </a>
       pour la customisation de l'arbre et des noeuds
     </p>
-    <div class="container">
-      <tree
-        class="tree"
-        :data="tree.json()"
-        :node-text="options.nodeText"
-        :duration="options.duration"
-        :type="options.type"
-        :radius="options.radius"
-        :zoomable="options.zoomable"
-        :strokeWidth="options.strokeWidth"
-        :layoutType="options.layoutType"
-        :linkLayout="options.linkLayout"
-        :leafTextMargin="options.leafTextMargin"
-        :marginX="options.marginX"
-        :marginY="options.marginY"
-        :maxZoom="options.maxZoom"
-        :minZoom="options.minZoom"
-        :nodeTextDisplay="options.nodeTextDisplay"
-        :nodeTextMargin="options.nodeTextMargin"
-        @clickedText="selectNode($event)"
-      >
-      </tree>
+    <div class="h-screen w-screen flex">
+      <div v-if="tree" class="w-full h-full pt-10">
+        <tree
+          class="tree"
+          :data="treeJSON"
+          :node-text="options.nodeText"
+          :duration="options.duration"
+          :type="options.type"
+          :radius="options.radius"
+          :zoomable="options.zoomable"
+          :strokeWidth="options.strokeWidth"
+          :layoutType="options.layoutType"
+          :linkLayout="options.linkLayout"
+          :leafTextMargin="options.leafTextMargin"
+          :marginX="options.marginX"
+          :marginY="options.marginY"
+          :maxZoom="options.maxZoom"
+          :minZoom="options.minZoom"
+          :nodeTextDisplay="options.nodeTextDisplay"
+          :nodeTextMargin="options.nodeTextMargin"
+          @clickedText="onClick"
+          @expand="onExpand"
+          @retract="onRetract"
+          @clickedNode="onClickNode"
+        >
+        </tree>
+      </div>
+      <section class="w-6/12 h-screen">
+        <div class="w-full max-h-full h-full flex flex-col">
+          <template v-if="nodes.length">
+            <section
+              v-for="(node, index) in nodes"
+              :key="index"
+              class="flex-1 p-4 m-h"
+            >
+              <NodeContainer :node="node" />
+            </section>
+          </template>
+          <div v-else>Click on a node to display its content</div>
+        </div>
+      </section>
     </div>
   </div>
 </template>
 
 <script>
 import { tree } from "vued3tree";
+import NodeContainer from "@/components/utilities/NodeContainer";
 import reorder from "@/mixins/reorder.mixin";
 
 export default {
   components: {
     tree,
+    NodeContainer,
   },
   mixins: [reorder],
   data() {
@@ -69,9 +88,24 @@ export default {
         selected: null,
         duration: 750,
       },
+      nodes: [],
+      events: [],
+      definition: [],
+      tree: null,
+      treeJSON: {},
     };
   },
+  watch: {
+    "events.length"(newVal) {
+      const event = this.events[newVal - 1];
+      if (event.eventName === "clickedText") {
+        this.selectNode(event.data);
+      }
+    },
+  },
   mounted() {
+    this.tree = this.buildTree(this.definition);
+    this.treeJSON = this.tree.json();
     let zoom = Math.round(
       Math.log(this.definition.length) +
         Math.log10(this.definition.reverse()[0].length)
@@ -80,8 +114,52 @@ export default {
     this.options.maxZoom = Math.pow(zoom, 2);
   },
   methods: {
-    selectNode({ data }) {
-      console.log(data);
+    selectNode(data) {
+      this.displayNode(data);
+    },
+    displayNode(node) {
+      if (this.nodes.includes(node)) return;
+      if (this.nodes.length === 2) {
+        this.nodes.shift();
+      }
+      this.nodes.push(node);
+    },
+    async do(action) {
+      if (this.currentData) {
+        this.isLoading = true;
+        await this.$refs["tree"][action](this.currentData);
+        this.isLoading = false;
+      }
+    },
+    getId(node) {
+      return node.id;
+    },
+    expandAll() {
+      this.do("expandAll");
+    },
+    collapseAll() {
+      this.do("collapseAll");
+    },
+    showOnly() {
+      this.do("showOnly");
+    },
+    show() {
+      this.do("show");
+    },
+    onClick(evt) {
+      this.onEvent("clickedText", evt);
+    },
+    onClickNode(evt) {
+      this.onEvent("clickedNode", evt);
+    },
+    onExpand(evt) {
+      this.onEvent("onExpand", evt);
+    },
+    onRetract(evt) {
+      this.onEvent("onRetract", evt);
+    },
+    onEvent(eventName, data) {
+      this.events.push({ eventName, data: data.data });
     },
   },
 };
@@ -93,7 +171,6 @@ export default {
   height: 100%;
 }
 .container {
-  width: 100%;
   height: 100%;
   overflow: visible;
 }

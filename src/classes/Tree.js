@@ -150,7 +150,13 @@ export default class Tree {
   }
 
   json(node = this) {
-    const json = { name: "", children: [] };
+    const json = {
+      name: "",
+      children: [],
+      depth: node.depth,
+      id: node.id,
+      index: node.index,
+    };
     node.children.forEach((child) => {
       json.name = node.name;
       json.children.push(this.json(child));

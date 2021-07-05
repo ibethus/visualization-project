@@ -156,6 +156,7 @@ export default class Tree {
       depth: node.depth,
       id: node.id,
       index: node.index,
+      data: node.data,
     };
     node.children.forEach((child) => {
       json.name = node.name;

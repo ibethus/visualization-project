@@ -9,14 +9,6 @@ export default {
     console.log(definition);
     this.definition = definition.default;
     this.data = images.default;
-    this.tree = this.buildTree(this.definition);
-  },
-  data() {
-    return {
-      definition: [],
-      data: null,
-      tree: null,
-    };
   },
   methods: {
     buildTree(treeDefinition) {
@@ -31,7 +23,7 @@ export default {
             let parent = parents.find(
               (parentNode) => node.parent == parentNode.index
             );
-            if (parent.depth == depth - 1 && parent.index === node.parent ) {
+            if (parent.depth == depth - 1 && parent.index === node.parent) {
               parent.createNode(node.name, index, depth, this.mapData(node));
             }
           }
@@ -40,11 +32,7 @@ export default {
       return tree;
     },
     mapData(node) {
-      //console.log(node.name);
-      //console.log(this.data);
-      //console.log(images.filter(item => item['pred subclass'] === node.name));
-      //return [];
-      return images.filter(item => item['pred subclass'] === node.name);
+      return images.filter(item => item['pred subclass'] === node.name && item['pred parentclass'] == node.parent.name);
     }
   },
 };

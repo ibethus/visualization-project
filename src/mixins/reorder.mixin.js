@@ -1,4 +1,5 @@
 import Tree from "@/classes/Tree";
+// import * as definition from "@/assets/files/animal.json";
 import * as definition from "@/assets/files/completedTree.json";
 import * as images from "@/assets/files/formatted_groundtruth.json";
 // import * as definition from "@/assets/files/dummyTree.json";

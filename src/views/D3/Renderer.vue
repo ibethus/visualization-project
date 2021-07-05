@@ -35,15 +35,8 @@
           @clickedText="selectNode($event)"
         ></tree>
       </div>
-      <section
-        class="
-          w-6/12
-          h-screen
-          shadow-inner
-          border border-t-4 border-r-0 border-b-0 border-l-4 border-black
-        "
-      >
-        <div class="w-full max-h-full h-full flex flex-col bg-gray-400">
+      <section class="w-6/12 h-screen">
+        <div class="w-full max-h-full h-full flex flex-col">
           <template v-if="nodes.length">
             <section
               v-for="(node, index) in nodes"

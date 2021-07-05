@@ -3,6 +3,7 @@ node_modules
 /dist
 /database/*
 /public/images/database/*
+/public/images/*
 
 
 # local env files

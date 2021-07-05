@@ -17,7 +17,7 @@
         </div>
 
         <div class="mt-5" v-if="maxpage">
-            <span @click="previous" class="cursor-pointer">Prev </span>
+            <span @click="previous" class="text-indigo-600 hover:text-indigo-400 cursor-pointer">&#8249; Prev </span>
             <span v-for="(item, index) in maxpage" :key="index"
                 ><span
                     @click="goto(index + 1)"
@@ -30,7 +30,7 @@
                     >{{ index + 1 }}
                 </span></span
             >
-            <span @click="next" class="cursor-pointer"> Next</span>
+            <span @click="next" class="text-indigo-600 hover:text-indigo-400 cursor-pointer"> Next &#8250;</span>
         </div>
     </div>
 </template>

@@ -17,7 +17,10 @@
     </div>
     <div class="px-4 py-5 sm:p-6">
       <!-- Content goes here -->
-      <Paginator :data="node.data"/>
+      <Paginator
+        :data="node.data"
+        :node-coord="{ index: node.id, depth: node.depth, card: card }"
+      />
     </div>
   </div>
 </template>
@@ -28,12 +31,10 @@ import Paginator from "@/components/utilities/Paginator";
 export default {
   props: {
     node: { type: Object, default: () => {} },
-  },
-  mounted() {
-    console.log(this.node.data);
+    card: { type: Number, default: 0 },
   },
   components: {
-    Paginator
-  }
+    Paginator,
+  },
 };
 </script>

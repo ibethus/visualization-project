@@ -13,10 +13,12 @@
       pour la customisation de l'arbre et des noeuds
     </p>
     <div class="h-screen w-screen flex">
-      <div v-if="tree" class="w-full h-full pt-10">
+      <div v-if="!loading" class="w-full h-full pt-10">
         <tree
           class="tree"
+          ref="tree"
           :data="treeJSON"
+          :identifier="getId"
           :node-text="options.nodeText"
           :duration="options.duration"
           :type="options.type"
@@ -47,7 +49,7 @@
               :key="index"
               class="flex-1 p-4 m-h"
             >
-              <NodeContainer :node="node" />
+              <NodeContainer :node="node" :card="index" />
             </section>
           </template>
           <div v-else>Click on a node to display its content</div>
@@ -61,6 +63,7 @@
 import { tree } from "vued3tree";
 import NodeContainer from "@/components/utilities/NodeContainer";
 import reorder from "@/mixins/reorder.mixin";
+import { EventBus } from "../../helpers/event-bus";
 
 export default {
   components: {
@@ -88,6 +91,7 @@ export default {
         selected: null,
         duration: 750,
       },
+      loading: true,
       nodes: [],
       events: [],
       definition: [],
@@ -112,6 +116,24 @@ export default {
     );
     this.options.minZoom = zoom / 5;
     this.options.maxZoom = Math.pow(zoom, 2);
+    this.loading = false;
+  },
+  created() {
+    EventBus.$on("end-drag", (payload) => {
+      this.loading = true;
+      if (payload.card === 0) {
+        payload.to = 1;
+      } else {
+        payload.to = 0;
+      }
+      payload.from = payload.card;
+      delete payload.card;
+      const n_tree = this.commute(payload, this.nodes);
+      this.clearTree();
+      this.tree = n_tree;
+      this.treeJSON = this.tree.json()
+      this.loading = false;
+    });
   },
   methods: {
     selectNode(data) {
@@ -160,6 +182,12 @@ export default {
     },
     onEvent(eventName, data) {
       this.events.push({ eventName, data: data.data });
+    },
+    clearTree() {
+      // delete this.$refs["tree"];
+      this.tree = null;
+      this.treeJSON = null;
+      // console.log(this.$refs);
     },
   },
 };

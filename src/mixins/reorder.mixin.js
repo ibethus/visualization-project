@@ -32,7 +32,7 @@ export default {
       return tree;
     },
     mapData(node) {
-      return images.filter(item => item['pred subclass'] === node.name && item['pred parentclass'] == node.parent.name);
+      return images.filter(item => item['pred subclass'] === node.name);
     }
   },
 };

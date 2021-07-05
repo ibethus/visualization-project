@@ -16,7 +16,7 @@
       <div v-if="tree" class="w-full h-full pt-10">
         <tree
           class="tree"
-          :data="tree.json()"
+          :data="treeJSON"
           :node-text="options.nodeText"
           :duration="options.duration"
           :type="options.type"
@@ -32,8 +32,12 @@
           :minZoom="options.minZoom"
           :nodeTextDisplay="options.nodeTextDisplay"
           :nodeTextMargin="options.nodeTextMargin"
-          @clickedText="selectNode($event)"
-        ></tree>
+          @clickedText="onClick"
+          @expand="onExpand"
+          @retract="onRetract"
+          @clickedNode="onClickNode"
+        >
+        </tree>
       </div>
       <section class="w-6/12 h-screen">
         <div class="w-full max-h-full h-full flex flex-col">
@@ -69,7 +73,7 @@ export default {
       options: {
         type: "tree", // 'tree' or 'cluster'
         radius: 6,
-        zoomable: false,
+        zoomable: true,
         strokeWidth: 2,
         layoutType: "vertical", // 'circular' 'vertical' or 'horizontal'
         leafTextMargin: 6,
@@ -85,10 +89,19 @@ export default {
         duration: 750,
       },
       nodes: [],
+      events: [],
       definition: [],
       tree: null,
       treeJSON: {},
     };
+  },
+  watch: {
+    "events.length"(newVal) {
+      const event = this.events[newVal - 1];
+      if (event.eventName === "clickedText") {
+        this.selectNode(event.data);
+      }
+    },
   },
   mounted() {
     this.tree = this.buildTree(this.definition);
@@ -101,7 +114,7 @@ export default {
     this.options.maxZoom = Math.pow(zoom, 2);
   },
   methods: {
-    selectNode({ data }) {
+    selectNode(data) {
       this.displayNode(data);
     },
     displayNode(node) {
@@ -110,6 +123,43 @@ export default {
         this.nodes.shift();
       }
       this.nodes.push(node);
+    },
+    async do(action) {
+      if (this.currentData) {
+        this.isLoading = true;
+        await this.$refs["tree"][action](this.currentData);
+        this.isLoading = false;
+      }
+    },
+    getId(node) {
+      return node.id;
+    },
+    expandAll() {
+      this.do("expandAll");
+    },
+    collapseAll() {
+      this.do("collapseAll");
+    },
+    showOnly() {
+      this.do("showOnly");
+    },
+    show() {
+      this.do("show");
+    },
+    onClick(evt) {
+      this.onEvent("clickedText", evt);
+    },
+    onClickNode(evt) {
+      this.onEvent("clickedNode", evt);
+    },
+    onExpand(evt) {
+      this.onEvent("onExpand", evt);
+    },
+    onRetract(evt) {
+      this.onEvent("onRetract", evt);
+    },
+    onEvent(eventName, data) {
+      this.events.push({ eventName, data: data.data });
     },
   },
 };

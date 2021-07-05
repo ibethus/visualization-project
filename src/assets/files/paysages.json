@@ -1,0 +1,33 @@
+[
+    [
+        { "name": "root" }
+    ],
+
+    [
+        { "name": "Aerien", "parent": 0 },
+        { "name": "Marin", "parent": 0 },
+        { "name": "Terrestre", "parent": 0 }
+    ],
+
+    [
+        { "name": "Jour", "parent": 0 },
+        { "name": "Nuit", "parent": 0 },
+        { "name": "Mer", "parent": 1 },
+        { "name": "Ocean", "parent": 1 },
+        { "name": "Urbain", "parent": 2 },
+        { "name": "Montagne", "parent": 2 }
+    ], 
+
+    [
+        { "name": "Ciel jour", "parent": 0 },
+        { "name": "Ciel nuit", "parent": 1},
+        { "name": "Mer mediteranee", "parent": 2 },
+        { "name": "Mer noire", "parent": 2 },
+        { "name": "Ocean indien", "parent": 3 },
+        { "name": "Ocean pacifique", "parent": 3 },
+        { "name": "Ville", "parent": 4 },
+        { "name": "Usine", "parent": 4 },
+        { "name": "Alpes", "parent": 5 },
+        { "name": "Pyrenees", "parent": 5 }
+    ]
+]

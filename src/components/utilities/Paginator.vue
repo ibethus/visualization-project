@@ -3,7 +3,7 @@
     <div>
         <ul class="grid grid-cols-1 md:grid-cols-4 gap-3">
             <li v-for="(item, index) in paginated" :key="index">
-                <img :src="item.Path" :alt="item.caption" :title="item.caption" loading="lazy"/>
+                <img class="object-cover h-32 w-full" :src="'/images/' + item.Path" :alt="item.caption" :title="item.caption" loading="lazy"/>
             </li>
         </ul>
     </div>

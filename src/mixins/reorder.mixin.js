@@ -34,7 +34,7 @@ export default {
       return tree;
     },
     mapData(node) {
-      return images.filter(item => item['pred subclass'] === node.name);
+      return this.data.filter(item => item['pred subclass'] === node.name);
     }
   },
 };

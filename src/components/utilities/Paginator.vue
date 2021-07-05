@@ -6,7 +6,7 @@
                     <a :href="'images' + item.Path" target="item.Path">
                         <img
                             class="object-cover h-32 w-full"
-                            :src="'/images/' + item.Path"
+                            :src="'/images' + item.Path"
                             :alt="item.caption"
                             :title="item.caption"
                             loading="lazy"

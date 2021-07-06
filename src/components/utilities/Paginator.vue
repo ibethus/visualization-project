@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{maxpage}}
     <div>
       <ul>
         <draggable v-model="data.data" group="nodes" @start="startDrag($event)" @end="endDrag($event)"

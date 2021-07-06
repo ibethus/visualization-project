@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{maxpage}}
     <div>
       <ul>
         <draggable v-model="data.data" group="nodes" @start="startDrag($event)" @end="endDrag($event)"
@@ -7,7 +8,7 @@
           <li v-for="(item, index) in paginated" :key="index">
             <a :href="`images${item.Path}`" target="item.Path">
               <img class="object-cover h-32 w-full" :src="`images${item.Path}`" :alt="item.caption"
-                :title="item.caption" loading="lazy" />
+                :title="item.caption" />
             </a>
           </li>
         </draggable>
@@ -117,7 +118,7 @@
         return this.start + this.items_per_page;
       },
       maxpage() {
-        return Math.round(this.data.length / this.items_per_page);
+        return Math.ceil(this.data.length / this.items_per_page);
       },
       startPage() {
         // When on the first page

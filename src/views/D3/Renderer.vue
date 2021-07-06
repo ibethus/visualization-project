@@ -12,6 +12,7 @@
       </a>
       pour la customisation de l'arbre et des noeuds
     </p>
+    <!-- <button @click="clearNodes">Clear nodes</button> -->
     <div class="h-screen w-screen flex">
       <div v-if="!loading" class="w-full h-full pt-10">
         <tree
@@ -38,10 +39,9 @@
           @expand="onExpand"
           @retract="onRetract"
           @clickedNode="onClickNode"
-        >
-        </tree>
+        ></tree>
       </div>
-      <section class="w-6/12 h-screen">
+      <!-- <section class="w-6/12 h-screen">
         <div class="w-full max-h-full h-full flex flex-col">
           <template v-if="nodes.length">
             <section
@@ -54,14 +54,24 @@
           </template>
           <div v-else>Click on a node to display its content</div>
         </div>
-      </section>
+      </section> -->
     </div>
+    <Slideover :is-open="slidover" @close-slideover="closeSlideover">
+      <section
+        v-for="(node, index) in nodes"
+        :key="index"
+        class="flex-1 p-4 m-h"
+      >
+        <NodeContainer :node="node" :card="index" />
+      </section>
+    </Slideover>
   </div>
 </template>
 
 <script>
 import { tree } from "vued3tree";
 import NodeContainer from "@/components/utilities/NodeContainer";
+import Slideover from "@/components/utilities/Slideover";
 import reorder from "@/mixins/reorder.mixin";
 import { EventBus } from "../../helpers/event-bus";
 
@@ -69,6 +79,7 @@ export default {
   components: {
     tree,
     NodeContainer,
+    Slideover,
   },
   mixins: [reorder],
   data() {
@@ -91,6 +102,7 @@ export default {
         selected: null,
         duration: 750,
       },
+      slidover: false,
       loading: true,
       nodes: [],
       events: [],
@@ -103,13 +115,14 @@ export default {
     "events.length"(newVal) {
       const event = this.events[newVal - 1];
       if (event.eventName === "clickedText") {
-        this.selectNode(event.data);
+        this.selectNode(event.data, event.target);
       }
     },
   },
   mounted() {
     this.tree = this.buildTree(this.definition);
     this.treeJSON = this.tree.json();
+    this.$refs["tree"]?.redraw();
     let zoom = Math.round(
       Math.log(this.definition.length) +
         Math.log10(this.definition.reverse()[0].length)
@@ -128,45 +141,33 @@ export default {
       }
       payload.from = payload.card;
       delete payload.card;
-      const n_tree = this.commute(payload, this.nodes);
-      this.clearTree();
-      this.tree = n_tree;
-      this.treeJSON = this.tree.json()
+      this.tree = this.commute(payload, this.nodes);
+      // this.clearTree();
+      // this.tree = n_tree;
+      this.treeJSON = this.tree.json();
+      this.$refs["tree"].redraw();
+
       this.loading = false;
     });
   },
   methods: {
-    selectNode(data) {
-      this.displayNode(data);
-    },
-    displayNode(node) {
+    selectNode(node, target) {
+      node.target = target;
       if (this.nodes.includes(node)) return;
       if (this.nodes.length === 2) {
+        this.nodes[0].target.removeAttribute("fill");
+        this.nodes[0].target.removeAttribute("style");
         this.nodes.shift();
       }
       this.nodes.push(node);
-    },
-    async do(action) {
-      if (this.currentData) {
-        this.isLoading = true;
-        await this.$refs["tree"][action](this.currentData);
-        this.isLoading = false;
+      if (this.nodes.length && !this.slidover) {
+        this.slidover = true;
       }
+      target.setAttribute("fill", "#41B881");
+      target.setAttribute("style", "font-size: 1rem; font-weight: 700");
     },
     getId(node) {
       return node.id;
-    },
-    expandAll() {
-      this.do("expandAll");
-    },
-    collapseAll() {
-      this.do("collapseAll");
-    },
-    showOnly() {
-      this.do("showOnly");
-    },
-    show() {
-      this.do("show");
     },
     onClick(evt) {
       this.onEvent("clickedText", evt);
@@ -180,14 +181,19 @@ export default {
     onRetract(evt) {
       this.onEvent("onRetract", evt);
     },
-    onEvent(eventName, data) {
-      this.events.push({ eventName, data: data.data });
+    onEvent(eventName, { data, target }) {
+      this.events.push({ eventName, data, target });
     },
-    clearTree() {
-      // delete this.$refs["tree"];
-      this.tree = null;
-      this.treeJSON = null;
-      // console.log(this.$refs);
+    clearNodes() {
+      this.nodes.forEach((node) => {
+        node.target.removeAttribute("fill");
+        node.target.removeAttribute("style");
+      });
+      this.nodes = [];
+    },
+    closeSlideover() {
+      this.slidover = false;
+      this.clearNodes();
     },
   },
 };

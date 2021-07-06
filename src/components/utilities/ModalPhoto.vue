@@ -1,5 +1,5 @@
 <template>
-  <div v-show="isOpen" class="fixed z-10 inset-0 overflow-y-auto m-auto w-1/3 h-auto">
+  <div v-show="isOpen" style="margin-right: 100%" class="fixed z-10 inset-0 overflow-y-auto m-auto w-10/12 h-auto">
 
       <transition
         enter-active-class="ease-out duration-300 delay-300"

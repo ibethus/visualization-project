@@ -520,6 +520,56 @@
         "pred subclass": "Ocean indien"
       },
       {
+        "Path": "/database_paysages/Paysages/Marin/Lac/arthur-guiot.jpg",
+        "document name": "Photo d'un Lac.pdf",
+        "field": "Bordeaux",
+        "parentclass": "root",
+        "subclass": "Marin",
+        "caption": "Photo d'un Lac",
+        "pred parentclass": "Marin",
+        "pred subclass": "Lac"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Marin/Lac/dwain-norsa.jpg",
+        "document name": "Photo d'un Lac.pdf",
+        "field": "Bordeaux",
+        "parentclass": "root",
+        "subclass": "Marin",
+        "caption": "Photo d'un Lac",
+        "pred parentclass": "Marin",
+        "pred subclass": "Lac"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Marin/Lac/leonard-cotte.jpg",
+        "document name": "Photo d'un Lac.pdf",
+        "field": "Bordeaux",
+        "parentclass": "root",
+        "subclass": "Marin",
+        "caption": "Photo d'un Lac",
+        "pred parentclass": "Marin",
+        "pred subclass": "Lac"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Marin/Lac/pascal-bernardon.jpg",
+        "document name": "Photo d'un Lac.pdf",
+        "field": "Bordeaux",
+        "parentclass": "root",
+        "subclass": "Marin",
+        "caption": "Photo d'un Lac",
+        "pred parentclass": "Marin",
+        "pred subclass": "Lac"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Marin/Lac/sylvain-gllm.jpg",
+        "document name": "Photo d'un Lac.pdf",
+        "field": "Bordeaux",
+        "parentclass": "root",
+        "subclass": "Marin",
+        "caption": "Photo d'un Lac",
+        "pred parentclass": "Marin",
+        "pred subclass": "Lac"
+      },
+      {
         "Path": "/database_paysages/Paysages/Terrestre/Urbain/Ville/ben-o-bro.jpg",
         "document name": "Photo d'une ville.pdf",
         "field": "Cestas",
@@ -610,6 +660,46 @@
         "pred subclass": "Usine"
       },
       {
+        "Path": "/database_paysages/Paysages/Terrestre/Urbain/Usine/clayton-cardinalli.jpg",
+        "document name": "Photo d'une usine.pdf",
+        "field": "Canejan",
+        "parentclass": "Terrestre",
+        "subclass": "Urbain",
+        "caption": "Photo d'une usine",
+        "pred parentclass": "Urbain",
+        "pred subclass": "Usine"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Terrestre/Urbain/Usine/crystal-kwok.jpg",
+        "document name": "Photo d'une usine.pdf",
+        "field": "Canejan",
+        "parentclass": "Terrestre",
+        "subclass": "Urbain",
+        "caption": "Photo d'une usine",
+        "pred parentclass": "Urbain",
+        "pred subclass": "Usine"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Terrestre/Urbain/Usine/pierre-chatel.jpg",
+        "document name": "Photo d'une usine.pdf",
+        "field": "Canejan",
+        "parentclass": "Terrestre",
+        "subclass": "Urbain",
+        "caption": "Photo d'une usine",
+        "pred parentclass": "Urbain",
+        "pred subclass": "Usine"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Terrestre/Urbain/Usine/pilmo-kang.jpg",
+        "document name": "Photo d'une usine.pdf",
+        "field": "Canejan",
+        "parentclass": "Terrestre",
+        "subclass": "Urbain",
+        "caption": "Photo d'une usine",
+        "pred parentclass": "Urbain",
+        "pred subclass": "Usine"
+      },
+      {
         "Path": "/database_paysages/Paysages/Terrestre/Montagne/Alpes/antoine-beauvillain.jpg",
         "document name": "Photo d'une montagne.pdf",
         "field": "Pessac",
@@ -620,7 +710,97 @@
         "pred subclass": "Alpes"
       },
       {
+        "Path": "/database_paysages/Paysages/Terrestre/Montagne/Alpes/chris-maya.jpg",
+        "document name": "Photo d'une montagne.pdf",
+        "field": "Pessac",
+        "parentclass": "Terrestre",
+        "subclass": "Montagne",
+        "caption": "Photo d'une montagne",
+        "pred parentclass": "Montagne",
+        "pred subclass": "Alpes"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Terrestre/Montagne/Alpes/elena-joland.jpg",
+        "document name": "Photo d'une montagne.pdf",
+        "field": "Pessac",
+        "parentclass": "Terrestre",
+        "subclass": "Montagne",
+        "caption": "Photo d'une montagne",
+        "pred parentclass": "Montagne",
+        "pred subclass": "Alpes"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Terrestre/Montagne/Alpes/fernando-puente.jpg",
+        "document name": "Photo d'une montagne.pdf",
+        "field": "Pessac",
+        "parentclass": "Terrestre",
+        "subclass": "Montagne",
+        "caption": "Photo d'une montagne",
+        "pred parentclass": "Montagne",
+        "pred subclass": "Alpes"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Terrestre/Montagne/Alpes/frederic-perez.jpg",
+        "document name": "Photo d'une montagne.pdf",
+        "field": "Pessac",
+        "parentclass": "Terrestre",
+        "subclass": "Montagne",
+        "caption": "Photo d'une montagne",
+        "pred parentclass": "Montagne",
+        "pred subclass": "Alpes"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Terrestre/Montagne/Alpes/patrick-gilles.jpg",
+        "document name": "Photo d'une montagne.pdf",
+        "field": "Pessac",
+        "parentclass": "Terrestre",
+        "subclass": "Montagne",
+        "caption": "Photo d'une montagne",
+        "pred parentclass": "Montagne",
+        "pred subclass": "Alpes"
+      },
+      {
         "Path": "/database_paysages/Paysages/Terrestre/Montagne/Pyrenees/nomad-bikers.jpg",
+        "document name": "Photo d'une montagne.pdf",
+        "field": "Merignac",
+        "parentclass": "Terrestre",
+        "subclass": "Montagne",
+        "caption": "Photo d'une montagne",
+        "pred parentclass": "Montagne",
+        "pred subclass": "Pyrenees"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Terrestre/Montagne/Pyrenees/mathias-p-r.jpg",
+        "document name": "Photo d'une montagne.pdf",
+        "field": "Merignac",
+        "parentclass": "Terrestre",
+        "subclass": "Montagne",
+        "caption": "Photo d'une montagne",
+        "pred parentclass": "Montagne",
+        "pred subclass": "Pyrenees"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Terrestre/Montagne/Pyrenees/mathieu-olivares.jpg",
+        "document name": "Photo d'une montagne.pdf",
+        "field": "Merignac",
+        "parentclass": "Terrestre",
+        "subclass": "Montagne",
+        "caption": "Photo d'une montagne",
+        "pred parentclass": "Montagne",
+        "pred subclass": "Pyrenees"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Terrestre/Montagne/Pyrenees/simon-joseph.jpg",
+        "document name": "Photo d'une montagne.pdf",
+        "field": "Merignac",
+        "parentclass": "Terrestre",
+        "subclass": "Montagne",
+        "caption": "Photo d'une montagne",
+        "pred parentclass": "Montagne",
+        "pred subclass": "Pyrenees"
+      },
+      {
+        "Path": "/database_paysages/Paysages/Terrestre/Montagne/Pyrenees/yann-allegre.jpg",
         "document name": "Photo d'une montagne.pdf",
         "field": "Merignac",
         "parentclass": "Terrestre",

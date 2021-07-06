@@ -24,7 +24,7 @@
       </ul>
     </div>
 
-    <div class="mt-5 flex justify-center items-center" v-if="maxpage">
+    <div class="mt-5 flex justify-center items-center" v-if="maxpage > 1">
       <span
         @click="goto(1)"
         class="
@@ -158,10 +158,6 @@ export default {
       type: Array,
       default: () => {},
     },
-    nodeCoord: {
-      type: Object,
-      default: () => {},
-    },
   },
   computed: {
     paginated() {
@@ -178,18 +174,36 @@ export default {
     },
     startPage() {
       // When on the first page
-      if (this.current_page === 1 || this.current_page === 2) {
+      if (
+        this.current_page === 1 ||
+        this.current_page === 2 ||
+        this.maxpage <= this.maxVisibleButtons
+      ) {
         return 1;
       }
       // When on the last page
       if (this.current_page === this.maxpage) {
-        return this.maxpage - this.maxVisibleButtons;
+        return this.maxpage - this.maxVisibleButtons <= 0
+          ? 1
+          : this.maxpage - this.maxVisibleButtons;
       }
       // When in between
-      return this.current_page - Math.round(this.maxVisibleButtons / 2);
+      return this.current_page - 2;
     },
     pages() {
       const range = [];
+
+      for (
+        let i = this.startPage - 1;
+        i <=
+        Math.min(this.startPage + this.maxVisibleButtons - 1, this.maxpage - 1);
+        i++
+      ) {
+        range.push({
+          name: i,
+          isDisabled: i === this.current_page,
+        });
+      }
 
       for (
         let i = this.startPage - 1;

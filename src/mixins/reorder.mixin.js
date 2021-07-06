@@ -36,8 +36,10 @@ export default {
       return this.data.filter(item => item['pred subclass'] === node.name);
     },
     commute(targets, nodes) {
+      if (nodes.length === 1) return this.tree;
       const origin = this.tree.findNodeByID(nodes[targets.from].id);
       const target = this.tree.findNodeByID(nodes[targets.to].id);
+
 
       let o_data = origin.data;
       const n_data = o_data.splice(targets.oldIndex, 1)[0];
@@ -45,6 +47,6 @@ export default {
       t_data.splice(targets.newIndex, 0, n_data);
       target.data = t_data;
       return this.tree;
-    },
+    }
   },
 };

@@ -18,7 +18,8 @@
     <div class="px-4 py-5 sm:p-6">
       <!-- Content goes here -->
       <Paginator
-        :data="node.data"
+        v-if="node"
+        :data="getChildrenData(node)"
         :node-coord="{ index: node.id, depth: node.depth, card: card }"
       />
     </div>
@@ -27,14 +28,28 @@
 
 <script>
 import Paginator from "@/components/utilities/Paginator";
+import reorder from "@/mixins/reorder.mixin";
 
 export default {
   props: {
     node: { type: Object, default: () => {} },
     card: { type: Number, default: 0 },
   },
+  mixins: [reorder],
   components: {
     Paginator,
   },
+  methods: {
+    getChildrenData(node) {
+      const data = [];
+      if (node.children) {
+        node.children.forEach((child) => {
+          data.push(...this.getChildrenData(child));
+        });
+      }
+      if (node?.children.length === 0) data.unshift(...node.data);
+      return data;
+    }
+  }
 };
 </script>

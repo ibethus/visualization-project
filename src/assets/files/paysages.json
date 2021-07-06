@@ -15,7 +15,8 @@
         { "name": "Mer", "parent": 1 },
         { "name": "Ocean", "parent": 1 },
         { "name": "Urbain", "parent": 2 },
-        { "name": "Montagne", "parent": 2 }
+        { "name": "Montagne", "parent": 2 },
+        { "name": "Lac", "parent": 1 }
     ], 
 
     [

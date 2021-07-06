@@ -3,11 +3,11 @@
     <div>
       <ul>
         <draggable v-model="data.data" group="nodes" @start="startDrag($event)" @end="endDrag($event)"
-          class="grid grid-cols-1 md:grid-cols-4 gap-3">
-          <li v-for="(item, index) in paginated" :key="index">
+         class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <li v-for="(item, index) in paginated" :key="index" ref="photo" :id="index">
             <a :href="`images${item.Path}`" target="item.Path">
               <img class="object-cover h-32 w-full" :src="`images${item.Path}`" :alt="item.caption"
-                :title="item.caption" loading="lazy" />
+                :title="item.caption" />
             </a>
           </li>
         </draggable>
@@ -75,17 +75,30 @@
           </svg></span>
       </span>
     </div>
+    <ModalPhoto :is-open="modal">
+      <div class="h-full">
+        <img class="object-cover h-full w-full" :src="`images${modalData.Path}`" :alt="modalData.caption"
+        :title="modalData.caption" />
+      </div>
+      <div>
+        <div class="flex justify-center">
+          {{modalData.caption}}
+        </div>
+      </div>
+    </ModalPhoto>
   </div>
 </template>
 
 <script>
   import draggable from "vuedraggable";
+  import ModalPhoto from "@/components/utilities/ModalPhoto";
   import {
     EventBus
   } from "@/helpers/event-bus";
   export default {
     components: {
       draggable,
+      ModalPhoto
     },
     data() {
       return {
@@ -93,7 +106,9 @@
         items_per_page: 12,
         nodeData: [],
         drag: false,
-        maxVisibleButtons: 5
+        maxVisibleButtons: 5,
+        modal: false,
+        modalData: {}        
       };
     },
     props: {
@@ -182,6 +197,24 @@
           card: this.nodeCoord.card,
         });
       },
+      open() {
+        this.modal = true;
+      },
+      close() {
+        this.modal = false;
+      }
+    },
+    mounted() {
+      const photos = this.$refs['photo'];
+      photos.forEach(photo => {
+        photo.addEventListener('mouseenter', e => {
+          this.modalData = this.data[e.target.id];
+          this.open();
+        });
+        photo.addEventListener('mouseout', () => {
+          this.close();
+        })
+      })
     },
   };
 </script>

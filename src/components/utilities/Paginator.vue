@@ -150,12 +150,16 @@ export default {
       items_per_page: 12,
       nodeData: [],
       drag: false,
-      maxVisibleButtons: 4,
+      maxVisibleButtons: 5,
     };
   },
   props: {
     data: {
       type: Array,
+      default: () => {},
+    },
+    nodeCoord: {
+      type: Object,
       default: () => {},
     },
   },
@@ -192,18 +196,6 @@ export default {
     },
     pages() {
       const range = [];
-
-      for (
-        let i = this.startPage - 1;
-        i <=
-        Math.min(this.startPage + this.maxVisibleButtons - 1, this.maxpage - 1);
-        i++
-      ) {
-        range.push({
-          name: i,
-          isDisabled: i === this.current_page,
-        });
-      }
 
       for (
         let i = this.startPage - 1;

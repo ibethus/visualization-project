@@ -12,6 +12,7 @@
       </a>
       pour la customisation de l'arbre et des noeuds
     </p>
+    <button @click="clearNodes">Clear nodes</button>
     <div class="h-screen w-screen flex">
       <div v-if="!loading" class="w-full h-full pt-10">
         <tree
@@ -38,10 +39,9 @@
           @expand="onExpand"
           @retract="onRetract"
           @clickedNode="onClickNode"
-        >
-        </tree>
+        ></tree>
       </div>
-      <section class="w-6/12 h-screen">
+      <!-- <section class="w-6/12 h-screen">
         <div class="w-full max-h-full h-full flex flex-col">
           <template v-if="nodes.length">
             <section
@@ -54,14 +54,24 @@
           </template>
           <div v-else>Click on a node to display its content</div>
         </div>
-      </section>
+      </section> -->
     </div>
+    <Slideover :is-open="slidover" @close-slideover="closeSlideover">
+      <section
+        v-for="(node, index) in nodes"
+        :key="index"
+        class="flex-1 p-4 m-h"
+      >
+        <NodeContainer :node="node" :card="index" />
+      </section>
+    </Slideover>
   </div>
 </template>
 
 <script>
 import { tree } from "vued3tree";
 import NodeContainer from "@/components/utilities/NodeContainer";
+import Slideover from "@/components/utilities/Slideover";
 import reorder from "@/mixins/reorder.mixin";
 import { EventBus } from "../../helpers/event-bus";
 
@@ -69,6 +79,7 @@ export default {
   components: {
     tree,
     NodeContainer,
+    Slideover,
   },
   mixins: [reorder],
   data() {
@@ -91,6 +102,7 @@ export default {
         selected: null,
         duration: 750,
       },
+      slidover: false,
       loading: true,
       nodes: [],
       events: [],
@@ -148,10 +160,12 @@ export default {
         this.nodes.shift();
       }
       this.nodes.push(node);
+      if (this.nodes.length && !this.slidover) {
+        this.slidover = true;
+      }
       target.setAttribute("fill", "#41B881");
       target.setAttribute("style", "font-size: 1rem; font-weight: 700");
-      console.log(target);
-      console.log(node);
+      console.log(this.$refs["tree"]);
     },
     getId(node) {
       return node.id;
@@ -171,6 +185,17 @@ export default {
     },
     onEvent(eventName, { data, target }) {
       this.events.push({ eventName, data, target });
+    },
+    clearNodes() {
+      this.nodes.forEach((node) => {
+        node.target.removeAttribute("fill");
+        node.target.removeAttribute("style");
+      });
+      this.nodes = [];
+      this.closeSlideover();
+    },
+    closeSlideover() {
+      this.slidover = false;
     },
   },
 };

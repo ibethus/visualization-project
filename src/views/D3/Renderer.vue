@@ -12,7 +12,7 @@
       </a>
       pour la customisation de l'arbre et des noeuds
     </p>
-    <button @click="clearNodes">Clear nodes</button>
+    <!-- <button @click="clearNodes">Clear nodes</button> -->
     <div class="h-screen w-screen flex">
       <div v-if="!loading" class="w-full h-full pt-10">
         <tree
@@ -190,10 +190,10 @@ export default {
         node.target.removeAttribute("style");
       });
       this.nodes = [];
-      this.closeSlideover();
     },
     closeSlideover() {
       this.slidover = false;
+      this.clearNodes();
     },
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed top-0 right-0 w-4/12 h-full overflow-hidden z-50 transform"
+    class="fixed top-0 right-0 w-4/12 h-full z-50 transform"
     :class="isOpen ? 'translate-x-0' : 'translate-x-full'"
   >
     <div class="absolute w-full h-full overflow-hidden">
@@ -14,7 +14,7 @@
       >
         <div
           v-show="isOpen"
-          class="absolute inset-0 bg-gray-500 bg-opacity-50 transition-opacity"
+          class="absolute inset-0 bg-transparent transition-opacity"
           @click="$emit('close-slideover')"
         />
       </transition>

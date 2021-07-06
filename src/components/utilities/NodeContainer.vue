@@ -2,7 +2,7 @@
   <div
     class="
       bg-white
-      h-full
+      h-auto
       overflow-hidden
       shadow-md
       rounded-lg

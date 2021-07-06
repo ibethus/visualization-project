@@ -103,13 +103,14 @@ export default {
     "events.length"(newVal) {
       const event = this.events[newVal - 1];
       if (event.eventName === "clickedText") {
-        this.selectNode(event.data);
+        this.selectNode(event.data, event.target);
       }
     },
   },
   mounted() {
     this.tree = this.buildTree(this.definition);
     this.treeJSON = this.tree.json();
+    this.$refs["tree"]?.redraw();
     let zoom = Math.round(
       Math.log(this.definition.length) +
         Math.log10(this.definition.reverse()[0].length)
@@ -128,47 +129,35 @@ export default {
       }
       payload.from = payload.card;
       delete payload.card;
-      const n_tree = this.commute(payload, this.nodes);
-      this.clearTree();
-      this.tree = n_tree;
-      this.treeJSON = this.tree.json()
+      this.tree = this.commute(payload, this.nodes);
+      // this.clearTree();
+      // this.tree = n_tree;
+      this.treeJSON = this.tree.json();
+      this.$refs["tree"].redraw();
+
       this.loading = false;
     });
   },
   methods: {
-    selectNode(data) {
-      this.displayNode(data);
-    },
-    displayNode(node) {
+    selectNode(node, target) {
+      node.target = target;
       if (this.nodes.includes(node)) return;
       if (this.nodes.length === 2) {
+        this.nodes[0].target.removeAttribute("fill");
+        this.nodes[0].target.removeAttribute("style");
         this.nodes.shift();
       }
       this.nodes.push(node);
-    },
-    async do(action) {
-      if (this.currentData) {
-        this.isLoading = true;
-        await this.$refs["tree"][action](this.currentData);
-        this.isLoading = false;
-      }
+      target.setAttribute("fill", "#41B881");
+      target.setAttribute("style", "font-size: 1rem; font-weight: 700");
+      console.log(target);
+      console.log(node);
     },
     getId(node) {
       return node.id;
     },
-    expandAll() {
-      this.do("expandAll");
-    },
-    collapseAll() {
-      this.do("collapseAll");
-    },
-    showOnly() {
-      this.do("showOnly");
-    },
-    show() {
-      this.do("show");
-    },
     onClick(evt) {
+      console.log(evt);
       this.onEvent("clickedText", evt);
     },
     onClickNode(evt) {
@@ -180,14 +169,8 @@ export default {
     onRetract(evt) {
       this.onEvent("onRetract", evt);
     },
-    onEvent(eventName, data) {
-      this.events.push({ eventName, data: data.data });
-    },
-    clearTree() {
-      // delete this.$refs["tree"];
-      this.tree = null;
-      this.treeJSON = null;
-      // console.log(this.$refs);
+    onEvent(eventName, { data, target }) {
+      this.events.push({ eventName, data, target });
     },
   },
 };

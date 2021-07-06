@@ -165,13 +165,11 @@ export default {
       }
       target.setAttribute("fill", "#41B881");
       target.setAttribute("style", "font-size: 1rem; font-weight: 700");
-      console.log(this.$refs["tree"]);
     },
     getId(node) {
       return node.id;
     },
     onClick(evt) {
-      console.log(evt);
       this.onEvent("clickedText", evt);
     },
     onClickNode(evt) {

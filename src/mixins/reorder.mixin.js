@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import Tree from "@/classes/Tree";
 import { BLACKLISTED_WORDS, TAGS_COLORS } from "@/helpers/constants";
 import * as definition from "@/assets/files/paysages.json";
@@ -65,7 +66,15 @@ export default {
     },
     generateTags() {
       return this.data
-        .flatMap((entry) => entry.caption?.toLowerCase().split(" "))
+        .flatMap((entry) =>
+          entry.caption
+            ?.toLowerCase()
+            .replaceAll(
+              /[\(|\;|\)|\:|\.|\=|\+|\,|\?|\!|\^|\$|\'|\"|\*|\-|\d+|]/g,
+              ""
+            )
+            .split(" ")
+        )
         .filter(
           (word) =>
             !BLACKLISTED_WORDS.includes(word) &&
@@ -81,18 +90,11 @@ export default {
         }, {});
     },
     mapTagColor(value) {
-      const sample_size = this.data.length;
-      const sample_step = Math.ceil(sample_size / TAGS_COLORS.length);
       let color = TAGS_COLORS[0];
-      console.log("-----------------------");
-      console.log(sample_step);
-      console.log(sample_size);
-      console.log("------------------------");
       for (let i = 0; i < TAGS_COLORS.length; i++) {
         //console.log(i);
-        if (value > sample_step * i) {
+        if (value > Math.exp(i)) {
           color = TAGS_COLORS[i];
-          console.log(i, color);
         }
       }
       return color;

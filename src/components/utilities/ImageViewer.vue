@@ -71,7 +71,6 @@ export default {
       this.photo?.removeEventListener("mouseout", () => {}, true);
       this.photo = this.$refs["photo"];
       this.photo.addEventListener("mouseenter", (e) => {
-        console.log(e.target);
         this.modalData = this.pageContent[e.target.id];
         this.open();
       });

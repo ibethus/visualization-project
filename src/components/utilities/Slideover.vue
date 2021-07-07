@@ -84,7 +84,6 @@
                   class="
                     py-6
                     space-y-6
-                    sm:py-0
                     px-4
                     sm:space-y-0 sm:px-6 sm:py-5 sm:divide-y sm:divide-gray-200
                   "

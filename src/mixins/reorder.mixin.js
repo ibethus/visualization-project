@@ -1,4 +1,6 @@
+/* eslint-disable no-useless-escape */
 import Tree from "@/classes/Tree";
+import { BLACKLISTED_WORDS, TAGS_COLORS } from "@/helpers/constants";
 import * as definition from "@/assets/files/paysages.json";
 import * as images from "@/assets/files/formattedPaysages.json";
 // import * as definition from "@/assets/files/completedTree.json";
@@ -33,13 +35,27 @@ export default {
       return tree;
     },
     mapData(node) {
-      return this.data.filter(item => item['pred subclass'] === node.name);
+      const tags = this.generateTags();
+      return this.data
+        .filter((item) => item["pred subclass"] === node.name)
+        .map((item) => {
+          item.tags = [];
+          Object.keys(tags).forEach((tag) => {
+            if (item.caption?.toLowerCase().includes(tag)) {
+              item.tags.push({
+                name: tag,
+                occurrence: tags[tag],
+                color: this.mapTagColor(tags[tag]),
+              });
+            }
+          });
+          return item;
+        });
     },
     commute(targets, nodes) {
       if (nodes.length === 1) return this.tree;
       const origin = this.tree.findNodeByID(nodes[targets.from].id);
       const target = this.tree.findNodeByID(nodes[targets.to].id);
-
 
       let o_data = origin.data;
       const n_data = o_data.splice(targets.oldIndex, 1)[0];
@@ -47,6 +63,41 @@ export default {
       t_data.splice(targets.newIndex, 0, n_data);
       target.data = t_data;
       return this.tree;
-    }
+    },
+    generateTags() {
+      return this.data
+        .flatMap((entry) =>
+          entry.caption
+            ?.toLowerCase()
+            .replaceAll(
+              /[\(|\;|\)|\:|\.|\=|\+|\,|\?|\!|\^|\$|\'|\"|\*|\-|\d+|]/g,
+              ""
+            )
+            .split(" ")
+        )
+        .filter(
+          (word) =>
+            !BLACKLISTED_WORDS.includes(word) &&
+            word?.length >= 3 &&
+            isNaN(+word)
+        )
+        .reduce((obj, e) => {
+          obj[e] = (obj[e] || 0) + 1;
+          if (obj[e] === this.data.length) {
+            delete obj[e];
+          }
+          return obj;
+        }, {});
+    },
+    mapTagColor(value) {
+      let color = TAGS_COLORS[0];
+      for (let i = 0; i < TAGS_COLORS.length; i++) {
+        //console.log(i);
+        if (value > Math.exp(i)) {
+          color = TAGS_COLORS[i];
+        }
+      }
+      return color;
+    },
   },
 };

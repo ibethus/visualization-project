@@ -2,13 +2,20 @@
   <div>
     <div>
       <ul>
-        <draggable v-model="data.data" group="nodes" @start="startDrag($event)" @end="endDrag($event)"
-         class="grid grid-cols-1 md:grid-cols-4 gap-2">
-          <li v-for="(item, index) in paginated" :key="index" ref="photo" :id="index">
-            <a :href="`images${item.Path}`" target="item.Path">
-              <img class="object-cover h-16 w-16" :src="`images${item.Path}`" :alt="item.caption"
-                :title="item.caption" />
-            </a>
+        <draggable
+          v-model="data.data"
+          group="nodes"
+          @start="startDrag($event)"
+          @end="endDrag($event)"
+          class="grid grid-cols-1 md:grid-cols-4 gap-2"
+        >
+          <li v-for="(item, index) in paginated" :key="index">
+            <ImageViewer
+              :item="item"
+              :current-page="current_page"
+              :page-content="paginated"
+              :index="index"
+            />
           </li>
         </draggable>
       </ul>
@@ -124,153 +131,120 @@
         ></span>
       </span>
     </div>
-    <ModalPhoto :is-open="modal">
-      <div class="h-full">
-        <img class="object-cover h-full w-full" :src="`images${modalData.Path}`" :alt="modalData.caption"
-        :title="modalData.caption" />
-      </div>
-      <div>
-        <div class="flex justify-center">
-          {{modalData.caption}}
-        </div>
-      </div>
-    </ModalPhoto>
   </div>
 </template>
 
 <script>
-  import draggable from "vuedraggable";
-  import ModalPhoto from "@/components/utilities/ModalPhoto";
-  import {
-    EventBus
-  } from "@/helpers/event-bus";
-  export default {
-    components: {
-      draggable,
-      ModalPhoto
+import draggable from "vuedraggable";
+import { EventBus } from "@/helpers/event-bus";
+import ImageViewer from "@/components/utilities/ImageViewer.vue";
+export default {
+  components: {
+    draggable,
+    ImageViewer,
+  },
+  data() {
+    return {
+      current_page: 1,
+      items_per_page: 12,
+      nodeData: [],
+      drag: false,
+      maxVisibleButtons: 5,
+    };
+  },
+  props: {
+    data: {
+      type: Array,
+      default: () => {},
     },
-    data() {
-      return {
-        current_page: 1,
-        items_per_page: 12,
-        nodeData: [],
-        drag: false,
-        maxVisibleButtons: 5,
-        modal: false,
-        modalData: {}        
+    nodeCoord: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  computed: {
+    paginated() {
+      return this.data.slice(this.start, this.end);
+    },
+    start() {
+      return (this.current_page - 1) * this.items_per_page;
+    },
+    end() {
+      return this.start + this.items_per_page;
+    },
+    maxpage() {
+      return Math.ceil(this.data.length / this.items_per_page);
+    },
+    startPage() {
+      // When on the first page
+      if (
+        this.current_page === 1 ||
+        this.current_page === 2 ||
+        this.maxpage <= this.maxVisibleButtons
+      ) {
+        return 1;
+      }
+      // When on the last page
+      if (this.current_page === this.maxpage) {
+        return this.maxpage - this.maxVisibleButtons <= 0
+          ? 1
+          : this.maxpage - this.maxVisibleButtons;
+      }
+      // When in between
+      return this.current_page - 2;
+    },
+    pages() {
+      const range = [];
+
+      for (
+        let i = this.startPage - 1;
+        i <=
+        Math.min(this.startPage + this.maxVisibleButtons - 1, this.maxpage - 1);
+        i++
+      ) {
+        range.push({
+          name: i,
+          isDisabled: i === this.current_page,
+        });
+      }
+
+      return range;
+    },
+    linkClass() {
+      return (index) => {
+        return index === this.current_page
+          ? "text-indigo-600 font-bold pointer-event-none cursor-default"
+          : "cursor-pointer hover:underline";
       };
     },
-    props: {
-      data: {
-        type: Array,
-        default: () => {},
-      },
-      nodeCoord: {
-        type: Object,
-        default: () => {},
-      },
+  },
+  methods: {
+    previous() {
+      if (this.current_page > 1) this.current_page--;
     },
-    computed: {
-      paginated() {
-        return this.data.slice(this.start, this.end);
-      },
-      start() {
-        return (this.current_page - 1) * this.items_per_page;
-      },
-      end() {
-        return this.start + this.items_per_page;
-      },
-      maxpage() {
-        return Math.ceil(this.data.length / this.items_per_page);
-      },
-      startPage() {
-        // When on the first page
-        if (
-          this.current_page === 1 ||
-          this.current_page === 2 ||
-          this.maxpage <= this.maxVisibleButtons
-        ) {
-          return 1;
-        }
-        // When on the last page
-        if (this.current_page === this.maxpage) {
-          return this.maxpage - this.maxVisibleButtons <= 0
-            ? 1
-            : this.maxpage - this.maxVisibleButtons;
-        }
-        // When in between
-        return this.current_page - 2;
-      },
-      pages() {
-        const range = [];
-
-        for (
-          let i = this.startPage - 1;
-          i <=
-          Math.min(this.startPage + this.maxVisibleButtons - 1, this.maxpage - 1);
-          i++
-        ) {
-          range.push({
-            name: i,
-            isDisabled: i === this.current_page,
-          });
-        }
-
-        return range;
-      },
-      linkClass() {
-        return (index) => {
-          return index === this.current_page
-            ? "text-indigo-600 font-bold pointer-event-none cursor-default"
-            : "cursor-pointer hover:underline";
-        };
-      },
+    next() {
+      if (this.current_page < this.maxpage) this.current_page++;
     },
-    methods: {
-      previous() {
-        if (this.current_page > 1) this.current_page--;
-      },
-      next() {
-        if (this.current_page < this.maxpage) this.current_page++;
-      },
-      goto(index) {
-        this.current_page = index;
-      },
-      startDrag() {
-        this.drag = true;
-        //   EventBus.$emit("start-drag", {
-        //     target: from,
-        //     newIndex,
-        //     oldIndex,
-        //     card: this.nodeCoord.card,
-        //   });
-      },
-      endDrag({ oldIndex, newIndex }) {
-          this.drag = false;
-          EventBus.$emit("end-drag", {
-            newIndex,
-            oldIndex,
-            card: this.nodeCoord.card,
-          });
-        },
-        open() {
-          this.modal = true;
-        },
-        close() {
-          this.modal = false;
-        }
+    goto(index) {
+      this.current_page = index;
     },
-    mounted() {
-      const photos = this.$refs['photo'];
-      photos.forEach(photo => {
-        photo.addEventListener('mouseenter', e => {
-          this.modalData = this.data[e.target.id];
-          this.open();
-        });
-        photo.addEventListener('mouseout', () => {
-          this.close();
-        })
+    startDrag() {
+      this.drag = true;
+      //   EventBus.$emit("start-drag", {
+      //     target: from,
+      //     newIndex,
+      //     oldIndex,
+      //     card: this.nodeCoord.card,
+      //   });
+    },
+    endDrag({ oldIndex, newIndex }) {
+      this.drag = false;
+      EventBus.$emit("end-drag", {
+        newIndex,
+        oldIndex,
+        card: this.nodeCoord.card,
       });
     },
-  }
+  },
+};
 </script>

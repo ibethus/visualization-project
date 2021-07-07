@@ -21,3 +21,7 @@ export const BLACKLISTED_WORDS = [
   "ils",
   "elles",
 ];
+
+export const TAGS_COLORS = ["blue", "indigo", "green", "yellow", "red"];
+
+export const FILTERED_CHAR = ["(", ")"]

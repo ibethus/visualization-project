@@ -1,5 +1,5 @@
 import Tree from "@/classes/Tree";
-import { BLACKLISTED_WORDS } from "@/helpers/constants";
+import { BLACKLISTED_WORDS, TAGS_COLORS } from "@/helpers/constants";
 import * as definition from "@/assets/files/paysages.json";
 import * as images from "@/assets/files/formattedPaysages.json";
 // import * as definition from "@/assets/files/completedTree.json";
@@ -40,8 +40,12 @@ export default {
         .map((item) => {
           item.tags = [];
           Object.keys(tags).forEach((tag) => {
-            if (item.caption.toLowerCase().includes(tag)) {
-              item.tags.push({ name: tag, occurrence: tags[tag] });
+            if (item.caption?.toLowerCase().includes(tag)) {
+              item.tags.push({
+                name: tag,
+                occurrence: tags[tag],
+                color: this.mapTagColor(tags[tag]),
+              });
             }
           });
           return item;
@@ -61,8 +65,13 @@ export default {
     },
     generateTags() {
       return this.data
-        .flatMap((entry) => entry.caption.toLowerCase().split(" "))
-        .filter((word) => !BLACKLISTED_WORDS.includes(word))
+        .flatMap((entry) => entry.caption?.toLowerCase().split(" "))
+        .filter(
+          (word) =>
+            !BLACKLISTED_WORDS.includes(word) &&
+            word?.length >= 3 &&
+            isNaN(+word)
+        )
         .reduce((obj, e) => {
           obj[e] = (obj[e] || 0) + 1;
           if (obj[e] === this.data.length) {
@@ -70,6 +79,23 @@ export default {
           }
           return obj;
         }, {});
+    },
+    mapTagColor(value) {
+      const sample_size = this.data.length;
+      const sample_step = Math.ceil(sample_size / TAGS_COLORS.length);
+      let color = TAGS_COLORS[0];
+      console.log("-----------------------");
+      console.log(sample_step);
+      console.log(sample_size);
+      console.log("------------------------");
+      for (let i = 0; i < TAGS_COLORS.length; i++) {
+        //console.log(i);
+        if (value > sample_step * i) {
+          color = TAGS_COLORS[i];
+          console.log(i, color);
+        }
+      }
+      return color;
     },
   },
 };

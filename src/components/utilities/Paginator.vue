@@ -237,11 +237,12 @@ export default {
       //     card: this.nodeCoord.card,
       //   });
     },
-    endDrag({ oldIndex, newIndex }) {
+    endDrag({ newIndex, oldIndex, explicitOriginalTarget }) {
       this.drag = false;
       EventBus.$emit("end-drag", {
         newIndex,
         oldIndex,
+        value: explicitOriginalTarget.dataset?.node,
         card: this.nodeCoord.card,
       });
     },

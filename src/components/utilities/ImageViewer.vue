@@ -5,6 +5,7 @@
         class="object-cover h-16 w-16"
         ref="photo"
         :id="index"
+        :data-node="JSON.stringify(item)"
         :src="`images${item.Path}`"
         :title="item.caption"
       />

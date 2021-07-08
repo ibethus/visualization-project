@@ -1,10 +1,10 @@
 const id = (() => {
-  function* UUIDGeneratorNode(id = 0) {
+  function* IDGenerator(id = 0) {
     while (true) {
       yield id++;
     }
   }
-  const gen = UUIDGeneratorNode();
+  const gen = IDGenerator();
   return () => gen.next().value;
 })();
 
@@ -16,6 +16,7 @@ export default class Tree {
   #id = id();
   #name;
   #data = [];
+  tags = [];
   constructor(name, index = -1, depth = -1, data) {
     if (!name || typeof name !== "string" || !name.trim().length) {
       throw new Error("Name must be a non empty string");

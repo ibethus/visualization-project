@@ -1,6 +1,6 @@
 <template>
   <div class="w-screen h-screen">
-    <p>
+    <p class="absolute top-0 left-0 w-screen bg-transparent">
       Voir
       <a
         href="https://github.com/David-Desmaisons/Vue.D3.tree"
@@ -12,7 +12,28 @@
       </a>
       pour la customisation de l'arbre et des noeuds
     </p>
-    <!-- <button @click="clearNodes">Clear nodes</button> -->
+    <button
+      class="
+        absolute
+        bottom-4
+        left-10
+        z-50
+        inline-flex
+        items-center
+        px-2.5
+        py-1.5
+        border border-transparent
+        text-md
+        font-medium
+        rounded
+        text-white
+        bg-gray-700
+        hover:bg-gray-900
+      "
+      @click="exportJSON"
+    >
+      export to JSON
+    </button>
     <div class="h-screen w-screen flex">
       <div v-if="!loading" class="w-full h-full pt-10">
         <tree
@@ -122,7 +143,8 @@ export default {
   mounted() {
     this.tree = this.buildTree(this.definition);
     this.treeJSON = this.tree.json();
-    this.$refs["tree"]?.redraw();
+    // this.$refs["tree"]?.redraw();
+    // this.$refs["tree"]?.applyZoom(5)
     let zoom = Math.round(
       Math.log(this.definition.length) +
         Math.log10(this.definition.reverse()[0].length)
@@ -194,6 +216,16 @@ export default {
     closeSlideover() {
       this.slidover = false;
       this.clearNodes();
+    },
+    toJSON() {
+      // this.$refs["tree"]?.clean();
+      this.exportJSON();
+      this.$nextTick(() => {
+        this.tree = this.buildTree(this.definition);
+        this.treeJSON = this.tree.json();
+        // this.$refs["tree"]?.redraw();
+        document.location.reload();
+      });
     },
   },
 };

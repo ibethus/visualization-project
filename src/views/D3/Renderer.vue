@@ -74,6 +74,7 @@ import NodeContainer from "@/components/utilities/NodeContainer";
 import Slideover from "@/components/utilities/Slideover";
 import reorder from "@/mixins/reorder.mixin";
 import { EventBus } from "../../helpers/event-bus";
+import '../../../src/assets/css/node-color.css'
 
 export default {
   components: {
@@ -163,7 +164,7 @@ export default {
       if (this.nodes.length && !this.slidover) {
         this.slidover = true;
       }
-      target.setAttribute("fill", "#41B881");
+      target.setAttribute("fill", "#ffaf16");
       target.setAttribute("style", "font-size: 1rem; font-weight: 700");
     },
     getId(node) {
@@ -200,12 +201,12 @@ export default {
 </script>
 
 <style>
-.tree {
-  width: 100%;
-  height: 100%;
-}
-.container {
-  height: 100%;
-  overflow: visible;
-}
+  .tree {
+    width: 100%;
+    height: 100%;
+  }
+  .container {
+    height: 100%;
+    overflow: visible;
+  }
 </style>

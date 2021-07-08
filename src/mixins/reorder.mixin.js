@@ -8,6 +8,7 @@ import * as images from "@/assets/files/formattedPaysages.json";
 // import * as definition from "@/assets/files/dummyTree.json";
 // import * as definition from "@/assets/files/sampleTree.json";
 
+let id = 1;
 export default {
   created() {
     this.definition = definition.default;
@@ -58,9 +59,18 @@ export default {
       const target = this.tree.findNodeByID(nodes[targets.to].id);
 
       let o_data = origin.data;
-      const n_data = o_data.splice(targets.oldIndex, 1)[0];
+      o_data.splice(targets.oldIndex, 1)[0];
+      // console.log(n_data);
       let t_data = target.data;
-      t_data.splice(targets.newIndex, 0, n_data);
+      console.log("--------------------------------");
+      console.log(o_data);
+      console.log(t_data);
+      console.log("--------------------------------");
+      t_data.splice(targets.newIndex, 0, JSON.parse(targets.value));
+      console.log("--------------------------------");
+      console.log(o_data);
+      console.log(t_data);
+      console.log("--------------------------------");
       target.data = t_data;
       return this.tree;
     },
@@ -98,6 +108,42 @@ export default {
         }
       }
       return color;
+    },
+    exportJSON() {
+      const toExport = [];
+      let tmp_tree = this.tree;
+      tmp_tree.traverse((node) => {
+        let tmp = node.data;
+        tmp.map((data) => (data.node_name = node.name));
+        toExport.push(...tmp);
+      });
+      toExport.map((e) => {
+        e.correction = e.node_name === e["pred subclass"] ? "" : e.node_name;
+        //delete e.node_name
+        // delete e.tags
+        return e;
+        // return JSON.stringify(e);
+      });
+      const corrections = toExport.filter((e) => e.correction != "").length;
+      this.download(
+        `corrected-data-V${id++}-C${corrections}.json`,
+        JSON.stringify(toExport)
+      );
+    },
+    download(filename, text) {
+      var element = document.createElement("a");
+      element.setAttribute(
+        "href",
+        "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+      );
+      element.setAttribute("download", filename);
+
+      element.style.display = "none";
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
     },
   },
 };

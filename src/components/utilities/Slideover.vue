@@ -48,7 +48,24 @@
                     <div class="flex items-center">
                       <button
                         aria-label="Revenir en arrière"
-                        class="transition ease-in-out duration-150"
+                        class="
+                          transition
+                          ease-in-out
+                          duration-150
+                          inline-flex
+                          items-center
+                          px-2.5
+                          py-1.5
+                          border border-transparent
+                          text-sm
+                          uppercase
+                          font-medium
+                          rounded
+                          text-white
+                          bg-gray-700
+                          hover:bg-gray-900
+                          mb-2
+                        "
                         @click="$emit('close-slideover')"
                       >
                         Close

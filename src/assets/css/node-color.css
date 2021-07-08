@@ -1,0 +1,12 @@
+.treeclass .nodetree circle{
+    fill: #ffaf16;
+}
+
+.treeclass .node--internal circle {
+    cursor: pointer;
+    fill: #555;
+}
+
+.treeclass .linktree {
+    stroke: #2a2d32;
+}

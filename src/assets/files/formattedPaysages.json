@@ -805,8 +805,8 @@
         "field": "Merignac",
         "parentclass": "Terrestre",
         "subclass": "Montagne",
-        "caption": "Photo d'une montagne",
-        "pred parentclass": "Montagne",
-        "pred subclass": "Pyrenees"
+        "caption": "Photo d'une montagne des pyrenee",
+        "pred parentclass": "Jour",
+        "pred subclass": "Ciel jour"
       }
 ]

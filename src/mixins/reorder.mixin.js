@@ -54,7 +54,6 @@ export default {
         });
     },
     commute(targets, nodes) {
-      console.log(targets);
       if (nodes.length === 1) return this.tree;
       const origin = this.tree.findNodeByID(nodes[targets.from].id);
       const target = this.tree.findNodeByID(nodes[targets.to].id);

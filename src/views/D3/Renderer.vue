@@ -95,7 +95,7 @@ import NodeContainer from "@/components/utilities/NodeContainer";
 import Slideover from "@/components/utilities/Slideover";
 import reorder from "@/mixins/reorder.mixin";
 import { EventBus } from "../../helpers/event-bus";
-import '../../../src/assets/css/node-color.css'
+import "../../../src/assets/css/node-color.css";
 
 export default {
   components: {
@@ -108,19 +108,19 @@ export default {
     return {
       options: {
         type: "tree", // 'tree' or 'cluster'
-        radius: 6,
+        radius: 10,
         zoomable: true,
-        strokeWidth: 2,
+        strokeWidth: 3,
         layoutType: "vertical", // 'circular' 'vertical' or 'horizontal'
         leafTextMargin: 6,
         linkLayout: "bezier", // 'bezier' or 'orthogonal'
-        marginX: 0,
-        marginY: 0,
+        marginX: 15,
+        marginY: 4,
         maxZoom: 10,
         minZoom: 2,
         nodeText: "name",
         nodeTextDisplay: "all", // 'all' 'leaves' or 'extremities'
-        nodeTextMargin: 6,
+        nodeTextMargin: 10,
         selected: null,
         duration: 750,
       },
@@ -187,7 +187,10 @@ export default {
         this.slidover = true;
       }
       target.setAttribute("fill", "#ffaf16");
-      target.setAttribute("style", "font-size: 1rem; font-weight: 700");
+      target.setAttribute(
+        "style",
+        "font-size: 1.5rem !important; font-weight: 900 !important"
+      );
     },
     getId(node) {
       return node.id;
@@ -233,12 +236,12 @@ export default {
 </script>
 
 <style>
-  .tree {
-    width: 100%;
-    height: 100%;
-  }
-  .container {
-    height: 100%;
-    overflow: visible;
-  }
+.tree {
+  width: 100%;
+  height: 100%;
+}
+.container {
+  height: 100%;
+  overflow: visible;
+}
 </style>

@@ -77,7 +77,8 @@ export default {
       }
       if (node?.children.length === 0) {
         // console.log(node.data);
-        data.unshift(...node.data);}
+        data.unshift(...node.data);
+      }
       return data;
     },
   },

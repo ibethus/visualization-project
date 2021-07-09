@@ -31,7 +31,7 @@ export const BLACKLISTED_WORDS = [
   "with",
   "qui",
   "without",
-  "figure"
+  "figure",
 ];
 
 export const TAGS_COLORS = ["blue", "indigo", "green", "yellow", "red"];

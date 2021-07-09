@@ -1,12 +1,14 @@
 /* eslint-disable no-useless-escape */
 import Tree from "@/classes/Tree";
 import { BLACKLISTED_WORDS, TAGS_COLORS } from "@/helpers/constants";
-// import * as definition from "@/assets/files/paysages.json";
-// import * as images from "@/assets/files/formattedPaysages.json";
-import * as definition from "@/assets/files/completedTree.json";
-import * as images from "@/assets/files/formatted_groundtruth.json";
-// import * as definition from "@/assets/files/dummyTree.json";
-// import * as definition from "@/assets/files/sampleTree.json";
+
+// Dummy dataset for presentation purpose only
+import * as definition from "@/assets/files/paysages.json";
+import * as images from "@/assets/files/formattedPaysages.json";
+
+// Real dataset
+//import * as definition from "@/assets/files/completedTree.json";
+//import * as images from "@/assets/files/formatted_groundtruth.json";
 
 let id = 1;
 export default {

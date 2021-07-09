@@ -21,7 +21,7 @@ export default {
       treeDefinition = treeDefinition.forEach((nodes, depth) => {
         nodes.map((node, index) => {
           if (depth === 0) {
-            tree.createNode(node.name, index, depth, this.mapData(node));
+            tree.createNode(node.name, index, depth, this.mapData(node, depth));
           } else {
             let parents = tree.findAllNodesByDepth(depth - 1);
             let parent = parents.find(
@@ -37,21 +37,24 @@ export default {
     },
     mapData(node) {
       const tags = this.generateTags();
-      return this.data
-        .filter((item) => item["pred subclass"] === node.name)
-        .map((item) => {
-          item.tags = [];
-          Object.keys(tags).forEach((tag) => {
-            if (item.caption?.toLowerCase().includes(tag)) {
-              item.tags.push({
-                name: tag,
-                occurrence: tags[tag],
-                color: this.mapTagColor(tags[tag]),
-              });
-            }
-          });
-          return item;
-        });
+      return (
+        this.data
+          // .filter((item) => item["pred subclass"] === node.name) // mapping for the old version of the dataset
+          .filter((item) => item["pred level5"] === node.name) // mapping for the old version of the dataset
+          .map((item) => {
+            item.tags = [];
+            Object.keys(tags).forEach((tag) => {
+              if (item.caption?.toLowerCase().includes(tag)) {
+                item.tags.push({
+                  name: tag,
+                  occurrence: tags[tag],
+                  color: this.mapTagColor(tags[tag]),
+                });
+              }
+            });
+            return item;
+          })
+      );
     },
     commute(targets, nodes) {
       if (nodes.length === 1) return this.tree;
@@ -94,7 +97,7 @@ export default {
         .reduce((obj, e) => {
           obj[e] = (obj[e] || 0) + 1;
           if (obj[e] === this.data.length) {
-            delete obj[e];
+            // delete obj[e];
           }
           return obj;
         }, {});
@@ -118,7 +121,8 @@ export default {
         toExport.push(...tmp);
       });
       toExport.map((e) => {
-        e.correction = e.node_name === e["pred subclass"] ? "" : e.node_name;
+        // e.correction = e.node_name === e["pred subclass"] ? "" : e.node_name; // works with the old model
+        e.correction = e.node_name === e["pred level5"] ? "" : e.node_name;
         //delete e.node_name
         // delete e.tags
         return e;

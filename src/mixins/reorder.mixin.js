@@ -9,7 +9,7 @@ import { BLACKLISTED_WORDS, TAGS_COLORS } from "@/helpers/constants";
 
 // Real dataset
 import * as definition from "@/assets/files/completedTree.json";
-import * as images from "@/assets/files/formatted_groundtruth.json";
+import * as images from "@/assets/files/short_properties_for_app_new.json";
 
 let id = 1;
 export default {
@@ -42,12 +42,11 @@ export default {
       const tags = this.generateTags();
       return (
         this.data
-          // .filter((item) => item["pred subclass"] === node.name) // mapping for the old version of the dataset
           .filter((item) => item["pred level5"] === node.name) // mapping for the old version of the dataset
           .map((item) => {
             item.tags = [];
             Object.keys(tags).forEach((tag) => {
-              if (item.caption?.toLowerCase().includes(tag)) {
+              if (item.caption?.toString().toLowerCase().includes(tag)) {
                 item.tags.push({
                   name: tag,
                   occurrence: tags[tag],
@@ -83,8 +82,7 @@ export default {
     generateTags() {
       return this.data
         .flatMap((entry) =>
-          entry.caption
-            ?.toLowerCase()
+          entry.caption?.toString().toLowerCase()
             .replaceAll(
               /[\(|\;|\)|\:|\.|\=|\+|\,|\?|\!|\^|\$|\'|\"|\*|\-|\d+|]/g,
               ""

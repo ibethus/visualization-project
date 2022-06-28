@@ -34,6 +34,29 @@
     >
       export to JSON
     </button>
+    <router-link to="/graph">
+    <button
+      class="
+        absolute
+        bottom-4
+        left-15
+        z-50
+        inline-flex
+        items-center
+        px-2.5
+        py-1.5
+        border border-transparent
+        text-md
+        font-medium
+        rounded
+        text-white
+        bg-gray-700
+        hover:bg-gray-900
+      "
+    >
+      view graph
+    </button>
+    </router-link>
     <div class="h-screen w-screen flex">
       <div v-if="!loading" class="w-full h-full pt-10">
         <tree

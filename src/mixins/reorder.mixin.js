@@ -42,7 +42,6 @@ export default {
       const tags = this.generateTags();
       return (
         this.data
-          // .filter((item) => item["pred subclass"] === node.name) // mapping for the old version of the dataset
           .filter((item) => item["pred level5"] === node.name) // mapping for the old version of the dataset
           .map((item) => {
             item.tags = [];

@@ -31,5 +31,5 @@ name = sys.argv[1].split("_")[2]
 distance, neighbor = get_distance_neighbor(df)
 pd.DataFrame(distance).to_csv(f"distance_{name}")
 pd.DataFrame(neighbor).to_csv(f"neighbor_{name}")
-# pd.DataFrame(distance).to_csv(f"distance_{name}_test")
-# pd.DataFrame(neighbor).to_csv(f"neighbor_{name}_test")
+#pd.DataFrame(distance).to_csv(f"distance_test_{name}")
+#pd.DataFrame(neighbor).to_csv(f"neighbor_test_{name}")

@@ -9,6 +9,20 @@
         :src="`images${item.Path}`"
         :title="item.caption"
       />
+      <span
+        class="
+          inline-flex
+          items-center
+          px-3
+          rounded-full
+          text-xs
+          font-medium
+          leading-4
+          bg-red-500
+          text-white
+        "
+        >{{ hasPdf() }}</span
+      >
     </a>
     <ModalPhoto :is-open="modal">
       <div class="h-full flex flex-col">
@@ -67,6 +81,11 @@ export default {
     };
   },
   methods: {
+    hasPdf() {
+      if (!this.item.path_to_report) {
+        return "No pdf";
+      }
+    },
     getPdfUrl() {
       if (this.item.path_to_report) {
         if (this.item.page) {

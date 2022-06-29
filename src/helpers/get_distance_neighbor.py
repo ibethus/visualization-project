@@ -29,7 +29,18 @@ def get_distance_neighbor(embeddings):
 df = pd.read_csv (sys.argv[1], index_col="id")
 name = sys.argv[1].split("_")[2]
 distance, neighbor = get_distance_neighbor(df)
-pd.DataFrame(distance).to_csv(f"distance_{name}")
-pd.DataFrame(neighbor).to_csv(f"neighbor_{name}")
-#pd.DataFrame(distance).to_csv(f"distance_test_{name}")
-#pd.DataFrame(neighbor).to_csv(f"neighbor_test_{name}")
+
+# Mappings indexes from original file to generated files
+distance = pd.DataFrame(distance)
+neighbor = pd.DataFrame(neighbor)
+distance.index = df.index
+distance.columns = df.index
+neighbor.index = df.index
+
+# Generation new files
+distance.to_csv(f"distance_{name}")
+neighbor.to_csv(f"neighbor_{name}")
+
+# For test purposes
+#distance.to_csv(f"distance_test_{name}")
+#neighbor.to_csv(f"neighbor_test_{name}")

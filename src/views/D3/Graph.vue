@@ -15,15 +15,24 @@ export default {
   data() {
     return {
       nodes: [
-      	{"id": "Myriel", "group": 1},
-      	{"id": "Napoleon", "group": 1},
-        {"id": "Labarre", "group": 2},
-        {"id": "Valjean", "group": 2}
+      	{"id": "T1", "group": 1},
+      	{"id": "T2", "group": 1},
+        {"id": "T3", "group": 2},
+        {"id": "T4", "group": 2},
+        {"id": "T5", "group": 2},
+        {"id": "T6", "group": 2},
+        {"id": "T7", "group": 2},
+        {"id": "T8", "group": 3},
       ],
       links: [
-        {"source": "Napoleon", "target": "Myriel", "value": 50},
-        {"source": "Valjean", "target": "Labarre", "value": 50},
-        {"source": "Napoleon", "target": "Valjean", "value": 50},
+        {"source": "T1", "target": "T2", "value": 50},
+        {"source": "T3", "target": "T4", "value": 50},
+        {"source": "T1", "target": "T3", "value": 20},
+        {"source": "T3", "target": "T5", "value": 20},
+        {"source": "T5", "target": "T6", "value": 20},
+        {"source": "T5", "target": "T2", "value": 20},
+        {"source": "T1", "target": "T8", "value": 20},
+        {"source": "T7", "target": "T6", "value": 100},
       ]
     };
   },

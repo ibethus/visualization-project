@@ -75,7 +75,7 @@ export default {
           return `pdf/${this.item.path_to_report}`;
         }
       }
-      return "";
+      return `images${this.item.Path}`;
     },
     createEvents() {
       this.photo?.removeEventListener("mouseenter", () => {}), true;

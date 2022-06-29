@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a :href="`images${item.Path}`" target="item.Path">
+    <a :href="`${getPdfUrl()}`" target="_blank">
       <img
         class="object-cover h-16 w-16"
         ref="photo"
@@ -67,6 +67,16 @@ export default {
     };
   },
   methods: {
+    getPdfUrl() {
+      if (this.item.path_to_report) {
+        if (this.item.page) {
+          return `pdf/${this.item.path_to_report}#page=${this.item.page + 1}`;
+        } else {
+          return `pdf/${this.item.path_to_report}`;
+        }
+      }
+      return `images${this.item.Path}`;
+    },
     createEvents() {
       this.photo?.removeEventListener("mouseenter", () => {}), true;
       this.photo?.removeEventListener("mouseout", () => {}, true);

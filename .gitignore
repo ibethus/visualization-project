@@ -4,6 +4,7 @@ node_modules
 /database/*
 /public/images/database/*
 /public/images/*
+/public/pdf/*
 
 
 # local env files

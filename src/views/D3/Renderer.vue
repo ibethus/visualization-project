@@ -62,20 +62,6 @@
           @clickedNode="onClickNode"
         ></tree>
       </div>
-      <!-- <section class="w-6/12 h-screen">
-        <div class="w-full max-h-full h-full flex flex-col">
-          <template v-if="nodes.length">
-            <section
-              v-for="(node, index) in nodes"
-              :key="index"
-              class="flex-1 p-4 m-h"
-            >
-              <NodeContainer :node="node" :card="index" />
-            </section>
-          </template>
-          <div v-else>Click on a node to display its content</div>
-        </div>
-      </section> -->
     </div>
     <Slideover :is-open="slidover" @close-slideover="closeSlideover">
       <section

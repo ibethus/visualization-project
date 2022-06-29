@@ -41,7 +41,9 @@ npm run lint
 
 ### Gerer ses assets
 - *Banque d'images*
-    * `public/images` y placer votre dossier contenant vos images `database`
+    * `public/images` y placer votre dossier contenant vos images `database`. Ce dossier ne sera pas push sur git.
+- *Banque de PDFs*
+    * `public/pdf` y placer le dossier contenant les pdf liés aux images. Ce dossier ne sera pas push sur git. 
 - *Vos données*
     * `src/assets/files` y mettre les fichiers `.json` il faut un fichier de définition de structure d'arbre et un fichier de données, seule la définition est nécessaire au fonctionnement de l'arbre mais il n'y aura aucune données dans vos noeud s'il n'y a pas le fichier de données.
     * **import des données**

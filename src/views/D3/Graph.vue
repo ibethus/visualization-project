@@ -1,12 +1,14 @@
 <template>
   <div id="app">
-    <network v-if="!nodesLoading && !linksLoading" :nodeList="nodes" :linkList="links" :linkDistance="l => l.value" :nodeSize="7"></network>
+    <network v-if="!nodesLoading && !linksLoading" :nodeList="nodes" :linkList="links" :linkDistance="l => l.value"
+      :nodeSize="7"></network>
   </div>
 </template>
 
 <script>
 import Network from "vue-network-d3";
 import dataParser from "../../mixins/data-parser.mixin";
+import { LEVELS_ENUM } from "@/helpers/constants";
 
 export default {
   name: "Graph",
@@ -18,8 +20,8 @@ export default {
     return {
       nodes: null,
       /*[
-      	{"id": "T1", "group": 1},
-      	{"id": "T2", "group": 1},
+        {"id": "T1", "group": 1},
+        {"id": "T2", "group": 1},
         {"id": "T3", "group": 2},
         {"id": "T4", "group": 2},
         {"id": "T5", "group": 2},
@@ -43,15 +45,20 @@ export default {
     };
   },
   async created() {
-    this.getFirstLevelLinks().then(response => {
-      this.links = response;
-      this.nodesLoading = false;
-    });
-    this.getFirstLevelNodes().then(response => {
-      this.nodes = response;
-      this.linksLoading = false;
-    });    
+    this.loadData(LEVELS_ENUM.One)
   },
+  methods: {
+    loadData(level) {
+      this.getLinks(level).then(response => {
+        this.links = response;
+        this.linksLoading = false;
+      });
+      this.getNodes(level).then(response => {
+        this.nodes = response;
+        this.nodesLoading = false;
+      });
+    }
+  }
 };
 </script>
 

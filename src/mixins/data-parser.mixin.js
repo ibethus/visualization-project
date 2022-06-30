@@ -1,33 +1,53 @@
 import * as axios from "axios";
 import * as papa from "papaparse";
 import * as images from "@/assets/files/short_properties_for_app_new.json";
+import { LEVELS_ENUM } from "@/helpers/constants";
 
 export default {
   data() {
     return {
-      firstLevelDistanceIndexesById: Map,
+      //distanceIndexesByImageId: Map,
       imagesData: null,
     };
   },
   async created() {
-    this.firstLevelDistanceIndexesById =
-      await this.getFirstLevelDistanceIndexesById();
+    //this.distanceIndexesByImageId = await this.getDistanceIndexesByImageId();
     this.imagesData = images.default;
   },
   methods: {
-    async getFirstLevelNodes() {
-      var indexIds = await this.getFirstLevelDistanceIndexesById();
-        return indexIds.map((indexId) => {
-          var imageData = this.imagesData.filter(i => i.id == indexId.id);
-          console.log(imageData);  
-          return {
-            id: indexId.id,
-            group: imageData[0].level1, //TODO : insérer la classe
-          };
-        });
+    async getNodes(level) {
+      var indexIds = await this.getDistanceIndexesByImageId(level.neighborCSV);
+      return indexIds.map((indexId) => {
+        var imageData = this.imagesData.filter((i) => i.id == indexId.id);
+        var imageClass = null;
+        switch (level) {
+          case LEVELS_ENUM.One:
+            imageClass = imageData[0].level1;
+            break;
+          case LEVELS_ENUM.Two:
+            imageClass = imageData[0].level2;
+            break;
+          case LEVELS_ENUM.Three:
+            imageClass = imageData[0].level3;
+            break;
+          case LEVELS_ENUM.Four:
+            imageClass = imageData[0].level4;
+            break;
+          case LEVELS_ENUM.Five:
+            imageClass = imageData[0].level5;
+            break;
+          default:
+            imageClass = imageData[0].level1;
+            break;
+        }
+        return {
+          id: indexId.id,
+          group: imageClass,
+        };
+      });
     },
-    async getFirstLevelDistanceIndexesById() {
-      return axios.get("/data/" + "neighbor_first.csv").then((response) => {
+    async getDistanceIndexesByImageId(neighborCSV) {
+      return axios.get("/data/" + neighborCSV).then((response) => {
         var formattedCSV = papa.parse(response.data).data;
         formattedCSV.shift();
         formattedCSV.pop();
@@ -42,10 +62,10 @@ export default {
         });
       });
     },
-    async getFirstLevelLinks() {
-      var matchingNodesIndex = await this.getFirstLevelDistanceIndexesById();
+    async getLinks(level) {
+      var matchingNodesIndex = await this.getDistanceIndexesByImageId(level.neighborCSV);
       var firstRowIds = [];
-      return axios.get("/data/" + "distance_first.csv").then((response) => {
+      return axios.get("/data/" + level.distanceCSV).then((response) => {
         var distanceMatrix = papa.parse(response.data).data;
         firstRowIds = distanceMatrix[0];
         firstRowIds.shift();
@@ -54,7 +74,9 @@ export default {
         return distanceMatrix.flatMap((row) => {
           const id = row[0];
           row.shift();
-          var filteredNodesIndex = matchingNodesIndex.filter(distanceIndex => distanceIndex.id == id)[0].indexes;
+          var filteredNodesIndex = matchingNodesIndex.filter(
+            (distanceIndex) => distanceIndex.id == id
+          )[0].indexes;
           return filteredNodesIndex.slice(0, 10).map((nodeIndex) => {
             var distance = row[nodeIndex];
             var linkedNodeId = firstRowIds[nodeIndex];

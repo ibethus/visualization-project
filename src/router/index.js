@@ -13,6 +13,15 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "d3 renderer" */ "../views/D3/Renderer.vue"),
   },
+  {
+    path: "/graph",
+    name: "Graph",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "d3 renderer" */ "../views/D3/Graph.vue"),
+  },
 ];
 
 const router = new VueRouter({

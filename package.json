@@ -8,9 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "core-js": "^3.6.5",
-    "d3": "^7.0.0",
+    "d3": "^7.5.0",
+    "papaparse": "^5.3.2",
     "vue": "^2.6.11",
+    "vue-network-d3": "^0.1.2",
     "vue-router": "^3.2.0",
     "vued3tree": "^5.1.0",
     "vuedraggable": "^2.24.3"

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <network v-if="!nodesLoading && !linksLoading" :nodeList="nodes" :linkList="links" :linkDistance="l => l.value"></network>
+    <network v-if="!nodesLoading && !linksLoading" :nodeList="nodes" :linkList="links" :linkDistance="l => l.value" :nodeSize="7"></network>
   </div>
 </template>
 

@@ -1,24 +1,28 @@
 import * as axios from "axios";
 import * as papa from "papaparse";
+import * as images from "@/assets/files/short_properties_for_app_new.json";
 
 export default {
   data() {
     return {
       firstLevelDistanceIndexesById: Map,
+      imagesData: null,
     };
   },
   async created() {
     this.firstLevelDistanceIndexesById =
       await this.getFirstLevelDistanceIndexesById();
+    this.imagesData = images.default;
   },
   methods: {
     async getFirstLevelNodes() {
-      //var firstRow = [];
       var indexIds = await this.getFirstLevelDistanceIndexesById();
         return indexIds.map((indexId) => {
+          var imageData = this.imagesData.filter(i => i.id == indexId.id);
+          console.log(imageData);  
           return {
             id: indexId.id,
-            group: 1, //TODO : insérer la classe
+            group: imageData[0].level1, //TODO : insérer la classe
           };
         });
     },

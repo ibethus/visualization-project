@@ -35,3 +35,26 @@ export const BLACKLISTED_WORDS = [
 ];
 
 export const TAGS_COLORS = ["blue", "indigo", "green", "yellow", "red"];
+
+export const LEVELS_ENUM = Object.freeze({
+  One: {
+    distanceCSV : "distance_first.csv",
+    neighborCSV : "neighbor_first.csv",
+  },
+  Two: {
+    distanceCSV : "distance_second.csv",
+    neighborCSV : "neighbor_second.csv",
+  },
+  Three: {
+    distanceCSV : "distance_third.csv",
+    neighborCSV : "neighbor_third.csv",
+  },
+  Four: {
+    distanceCSV : "distance_fourth.csv",
+    neighborCSV : "neighbor_fourth.csv",
+  },
+  Five: {
+    distanceCSV : "distance_fifth.csv",
+    neighborCSV : "neighbor_fifth.csv",
+  },
+});

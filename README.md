@@ -13,7 +13,15 @@ La branche `develop` est configurée pour une démonstration et ne contient pas 
     * le dossier blur que l'on nous a fourni contient un dossier `database` il suffit de placer directement le dossier `database` dans le repertoire `public/images/`.
     
 ## Project setup 
-> si vous installez avec `yarn` toutes les commandes doivent être faites avec yarn, même chise pour `npm` les gestionnaire de package doit être le meme pour toutes les commandes
+> Il faut cloner [ce dépôt](https://github.com/Sajinnn/vue-network-d3) au même niveau que le projet.
+Dans ce projet, il faut exécuter les commandes suivantes :
+
+* `npm install`
+* `npm run build`
+
+> Il s'agit d'une librarie personnalisée fork d'un projet existant qui permet de travailler avec les graphs en réseaux.
+
+> si vous installez avec `yarn` toutes les commandes doivent être faites avec yarn, même chose pour `npm` les gestionnaire de package doit être le meme pour toutes les commandes
 
 ```
 yarn install

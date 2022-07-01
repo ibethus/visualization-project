@@ -13,7 +13,7 @@
     "d3": "^7.5.0",
     "papaparse": "^5.3.2",
     "vue": "^2.6.11",
-    "vue-network-d3": "^0.1.2",
+    "vue-network-d3": "../vue-network-d3",
     "vue-router": "^3.2.0",
     "vued3tree": "^5.1.0",
     "vuedraggable": "^2.24.3"

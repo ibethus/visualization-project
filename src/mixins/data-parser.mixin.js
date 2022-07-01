@@ -89,5 +89,29 @@ export default {
         });
       });
     },
+    getClassImageIds(nodeClass, level) {
+        var matchingImages = null;
+        switch (level) {
+          case LEVELS_ENUM.One:
+            matchingImages = this.imagesData.filter(image => image.level1 == nodeClass);
+            break;
+          case LEVELS_ENUM.Two:
+            matchingImages = this.imagesData.filter(image => image.level2 == nodeClass);
+            break;
+          case LEVELS_ENUM.Three:
+            matchingImages = this.imagesData.filter(image => image.level3 == nodeClass);
+            break;
+          case LEVELS_ENUM.Four:
+            matchingImages = this.imagesData.filter(image => image.level4 == nodeClass);
+            break;
+          case LEVELS_ENUM.Five:
+            matchingImages = this.imagesData.filter(image => image.level5 == nodeClass);
+            break;
+          default:
+            matchingImages = this.imagesData.filter(image => image.level1 == nodeClass);
+            break;
+        }
+        return matchingImages.map(image => image.id.toString());
+    },
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="w-screen h-screen">
-    <p class="absolute top-0 left-0 w-screen bg-transparent">
+    <!--<p class="absolute top-0 left-0 w-screen bg-transparent">
       Voir
       <a
         href="https://github.com/David-Desmaisons/Vue.D3.tree"
@@ -11,7 +11,7 @@
         le repo
       </a>
       pour la customisation de l'arbre et des noeuds
-    </p>
+    </p>-->
     <button
       class="
         absolute
@@ -34,7 +34,7 @@
     >
       export to JSON
     </button>
-    <router-link to="/graph">
+    <router-link to="/graph" target="_blank">
     <button
       class="
         absolute
@@ -184,6 +184,7 @@ export default {
   },
   methods: {
     selectNode(node, target) {
+
       node.target = target;
       if (this.nodes.includes(node)) return;
       if (this.nodes.length === 2) {
@@ -200,6 +201,9 @@ export default {
         "style",
         "font-size: 1.5rem !important; font-weight: 900 !important"
       );
+
+      let routeData = this.$router.resolve({name: 'Graph', query: {nodeClass: node.name, level: node.depth + 1}});
+      window.open(routeData.href, '_blank');
     },
     getId(node) {
       return node.id;

@@ -118,8 +118,6 @@
 
 <script>
 export default {
-  name: "Slideover",
-
   props: {
     isOpen: Boolean,
     title: String,

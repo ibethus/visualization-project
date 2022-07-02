@@ -3,7 +3,7 @@
     <div>
       <ul>
         <draggable
-          v-model="data.data"
+          v-model="computedData().data"
           group="nodes"
           @start="startDrag($event)"
           @end="endDrag($event)"
@@ -137,7 +137,7 @@
 <script>
 import draggable from "vuedraggable";
 import { EventBus } from "@/helpers/event-bus";
-import ImageViewer from "@/components/utilities/ImageViewer.vue";
+import ImageViewer from "@/components/utilities/ImageViewer-component.vue";
 export default {
   components: {
     draggable,
@@ -163,6 +163,9 @@ export default {
     },
   },
   computed: {
+    computedData(){
+      return this.prop.data;
+    },
     paginated() {
       return this.data.slice(this.start, this.end);
     },
@@ -230,12 +233,6 @@ export default {
     },
     startDrag() {
       this.drag = true;
-      //   EventBus.$emit("start-drag", {
-      //     target: from,
-      //     newIndex,
-      //     oldIndex,
-      //     card: this.nodeCoord.card,
-      //   });
     },
     endDrag({ newIndex, oldIndex, explicitOriginalTarget }) {
       this.drag = false;

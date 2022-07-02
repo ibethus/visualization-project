@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import ModalPhoto from "@/components/utilities/ModalPhoto";
+import ModalPhoto from "@/components/utilities/ModalPhoto-component";
 export default {
   components: { ModalPhoto },
   props: {

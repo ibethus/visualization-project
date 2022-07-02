@@ -11,7 +11,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "d3 renderer" */ "../views/D3/Renderer.vue"),
+      import("../views/D3/Renderer-view.vue"),
   },
   {
     path: "/graph",
@@ -20,13 +20,12 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "d3 renderer" */ "../views/D3/Graph.vue"),
+      import("../views/D3/Graph-view.vue"),
   },
 ];
 
 const router = new VueRouter({
   mode: "history",
-  base: process.env.BASE_URL,
   routes,
 });
 

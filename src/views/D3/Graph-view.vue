@@ -28,7 +28,6 @@ import dataParser from "../../mixins/data-parser.mixin";
 import { LEVELS_ENUM } from "@/helpers/constants";
 
 export default {
-  name: "Graph",
   components: {
     Network
   },

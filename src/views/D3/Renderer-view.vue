@@ -1,17 +1,5 @@
 <template>
   <div class="w-screen h-screen">
-    <!--<p class="absolute top-0 left-0 w-screen bg-transparent">
-      Voir
-      <a
-        href="https://github.com/David-Desmaisons/Vue.D3.tree"
-        target="_blank"
-        rel="noopener noreferer"
-        class="underline text-blue-500 font-semibold"
-      >
-        le repo
-      </a>
-      pour la customisation de l'arbre et des noeuds
-    </p>-->
     <button
       class="
         absolute
@@ -100,8 +88,8 @@
 
 <script>
 import { tree } from "vued3tree";
-import NodeContainer from "@/components/utilities/NodeContainer";
-import Slideover from "@/components/utilities/Slideover";
+import NodeContainer from "@/components/utilities/NodeContainer-component";
+import Slideover from "@/components/utilities/Slideover-component";
 import reorder from "@/mixins/reorder.mixin";
 import { EventBus } from "../../helpers/event-bus";
 import "../../../src/assets/css/node-color.css";

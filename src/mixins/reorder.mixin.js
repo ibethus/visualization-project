@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable no-useless-escape */
 import Tree from "@/classes/Tree";
 import { BLACKLISTED_WORDS, TAGS_COLORS } from "@/helpers/constants";

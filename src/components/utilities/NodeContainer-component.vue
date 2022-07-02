@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import Paginator from "@/components/utilities/Paginator";
-import Tag from "@/components/utilities/Tag";
+import Paginator from "@/components/utilities/Paginator-component";
+import Tag from "@/components/utilities/Tag-component";
 import reorder from "@/mixins/reorder.mixin";
 
 export default {

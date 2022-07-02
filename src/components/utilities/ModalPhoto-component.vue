@@ -44,8 +44,6 @@
 
 <script>
 export default {
-  name: "ModalPhoto",
-
   props: {
     isOpen: {
       type: Boolean,

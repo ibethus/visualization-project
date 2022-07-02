@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="w-screen h-screen">
     <button
       class="
@@ -98,7 +99,7 @@ import Slideover from "@/components/utilities/Slideover-component";
 import reorder from "@/mixins/reorder.mixin";
 import { EventBus } from "../../helpers/event-bus";
 import "../../../src/assets/css/node-color.css";
-import Graph from './Graph.vue';
+import Graph from './Graph-view.vue';
 
 
 export default {

@@ -1,6 +1,5 @@
 import * as axios from "axios";
 import * as papa from "papaparse";
-import * as images from "@/assets/files/short_properties_for_app_new.json";
 import { LEVELS_ENUM } from "@/helpers/constants";
 
 export default {
@@ -8,13 +7,16 @@ export default {
     return {
       //distanceIndexesByImageId: Map,
       imagesData: null,
+      imagesLoading: true
     };
   },
-  async created() {
-    //this.distanceIndexesByImageId = await this.getDistanceIndexesByImageId();
-    this.imagesData = images.default;
-  },
   methods: {
+    async parseJson(){
+      // eslint-disable-next-line no-undef
+      return fetch(`${process.env.VUE_APP_PATH_FILES}short_properties_for_app_new.json`)
+      .then(response => response.json())
+      .then(this.imagesLoading = false)
+    },
     async getNodes(level) {
       var indexIds = await this.getDistanceIndexesByImageId(level.neighborCSV);
       return indexIds.map((indexId) => {
@@ -47,7 +49,8 @@ export default {
       });
     },
     async getDistanceIndexesByImageId(neighborCSV) {
-      return axios.get("/data/" + neighborCSV).then((response) => {
+      // eslint-disable-next-line no-undef
+      return axios.get(process.env.VUE_APP_PATH_DATA + neighborCSV).then((response) => {
         var formattedCSV = papa.parse(response.data).data;
         formattedCSV.shift();
         formattedCSV.pop();
@@ -65,7 +68,8 @@ export default {
     async getLinks(level) {
       var matchingNodesIndex = await this.getDistanceIndexesByImageId(level.neighborCSV);
       var firstRowIds = [];
-      return axios.get("/data/" + level.distanceCSV).then((response) => {
+      // eslint-disable-next-line no-undef
+      return axios.get(process.env.VUE_APP_PATH_DATA + level.distanceCSV).then((response) => {
         var distanceMatrix = papa.parse(response.data).data;
         firstRowIds = distanceMatrix[0];
         firstRowIds.shift();

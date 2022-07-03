@@ -2,21 +2,19 @@
 import Tree from "@/classes/Tree";
 import { BLACKLISTED_WORDS, TAGS_COLORS } from "@/helpers/constants";
 
-// Dummy dataset for presentation purpose only
-//import * as definition from "@/assets/files/paysages.json";
-//import * as images from "@/assets/files/formattedPaysages.json";
-
-// Real dataset
-import * as definition from "@/assets/files/completedTree.json";
-import * as images from "@/assets/files/short_properties_for_app_new.json";
-
 let id = 1;
 export default {
-  created() {
-    this.definition = definition.default;
-    this.data = images.default;
-  },
   methods: {
+    async parseDefinition(){
+      // eslint-disable-next-line no-undef
+      return fetch(`${process.env.VUE_APP_PATH_FILES}completedTree.json`)
+      .then(response => response.json())
+    },
+    async parseImages(){
+      // eslint-disable-next-line no-undef
+      return fetch(`${process.env.VUE_APP_PATH_FILES}short_properties_for_app_new.json`)
+      .then(response => response.json())
+    },
     buildTree(treeDefinition) {
       const tree = new Tree("root");
       treeDefinition.shift();

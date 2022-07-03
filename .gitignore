@@ -2,9 +2,10 @@
 node_modules
 /dist
 /database/*
-/public/images/database/*
-/public/images/*
-/public/pdf/*
+/public/static
+/public/data
+/public/embeddings
+/public/images
 
 
 # local env files

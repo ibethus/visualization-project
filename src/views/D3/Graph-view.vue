@@ -16,7 +16,7 @@
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         @click="loadData(LEVELS_ENUM.Five)"> Level 5 </button>
     </div>
-    <network v-if="!nodesLoading && !linksLoading" :nodeList="nodes" :linkList="links" :linkDistance="l => l.value"
+    <network v-if="!nodesLoading && !linksLoading && !imagesLoading" :nodeList="nodes" :linkList="links" :linkDistance="l => l.value"
       :nodeSize="7" :highlightNodes="highlightedNodes" :linkWidth="0.6"></network>
 
   </div>
@@ -63,7 +63,8 @@ export default {
     };
   },
   async created() {
-    this.loadData(LEVELS_ENUM.One)
+      this.imagesData = await this.parseJson();
+      this.loadData(LEVELS_ENUM.One)    
   },
   methods: {
     loadData(level) {
@@ -98,7 +99,6 @@ export default {
         this.highlightedNodes = [];
       }
 
-      this.$router.push(this.$route.path)
       this.getLinks(level).then(response => {
         this.links = response;
         this.linksLoading = false;

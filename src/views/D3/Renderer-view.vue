@@ -138,11 +138,11 @@ export default {
       }
     },
   },
-  mounted() {
+  async mounted() {
+    this.definition = await this.parseDefinition();
+    this.data = await this.parseImages();
     this.tree = this.buildTree(this.definition);
     this.treeJSON = this.tree.json();
-    // this.$refs["tree"]?.redraw();
-    // this.$refs["tree"]?.applyZoom(5)
     let zoom = Math.round(
       Math.log(this.definition.length) +
         Math.log10(this.definition.reverse()[0].length)
@@ -162,8 +162,6 @@ export default {
       payload.from = payload.card;
       delete payload.card;
       this.tree = this.commute(payload, this.nodes);
-      // this.clearTree();
-      // this.tree = n_tree;
       this.treeJSON = this.tree.json();
       this.$refs["tree"].redraw();
 

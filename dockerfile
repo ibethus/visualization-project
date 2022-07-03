@@ -19,6 +19,7 @@ RUN npm run build
 FROM nginx:stable-alpine as production-stage
 ##Copie des sources
 COPY --from=build-stage /app/install/dist /usr/share/nginx/html
+RUN rm -rf /usr/share/nginx/html/static
 ## Configuration du serveur nginx
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx/nginx.conf /etc/nginx/conf.d

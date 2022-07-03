@@ -6,7 +6,7 @@
         ref="photo"
         :id="index"
         :data-node="JSON.stringify(item)"
-        :src="`images${item.Path}`"
+        :src="`${getImageUrl()}`"
         :title="item.caption"
       />
       <span
@@ -29,7 +29,7 @@
         <div class="h-4/6">
           <img
             class="object-cover h-full w-full"
-            :src="`images${modalData.Path}`"
+            :src="`${getImageUrl()}`"
             :alt="modalData.caption"
             :title="modalData.caption"
           />
@@ -89,12 +89,19 @@ export default {
     getPdfUrl() {
       if (this.item.path_to_report) {
         if (this.item.page) {
-          return `pdf/${this.item.path_to_report}#page=${this.item.page + 1}`;
+          // eslint-disable-next-line no-undef
+          return `${process.env.VUE_APP_PATH_PDF}${this.item.path_to_report}#page=${this.item.page + 1}`;
         } else {
-          return `pdf/${this.item.path_to_report}`;
+          // eslint-disable-next-line no-undef
+          return `${process.env.VUE_APP_PATH_PDF}${this.item.path_to_report}`;
         }
       }
-      return `images${this.item.Path}`;
+      // eslint-disable-next-line no-undef
+      return `${process.env.VUE_APP_PATH_IMAGES}${this.item.Path}`;
+    },
+    getImageUrl(){
+      // eslint-disable-next-line no-undef
+      return `${process.env.VUE_APP_PATH_IMAGES}${this.item.Path}`;
     },
     createEvents() {
       this.photo?.removeEventListener("mouseenter", () => {}), true;

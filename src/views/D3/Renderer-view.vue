@@ -1,5 +1,4 @@
 <template>
-<div>
   <div class="w-screen h-screen">
     <button
       class="

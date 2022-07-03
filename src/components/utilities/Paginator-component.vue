@@ -3,7 +3,7 @@
     <div>
       <ul>
         <draggable
-          v-model="computedData().data"
+          v-model="computedData.data"
           group="nodes"
           @start="startDrag($event)"
           @end="endDrag($event)"
@@ -164,7 +164,7 @@ export default {
   },
   computed: {
     computedData(){
-      return this.prop.data;
+      return this.data;
     },
     paginated() {
       return this.data.slice(this.start, this.end);

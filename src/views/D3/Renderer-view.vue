@@ -48,48 +48,43 @@
     </router-link>
     <div class="h-screen w-screen flex">
       <div v-if="!loading" class="w-full h-full pt-10">
-          <tree
-            class="tree"
-            ref="tree"
-            :data="treeJSON"
-            :identifier="getId"
-            :node-text="options.nodeText"
-            :duration="options.duration"
-            :type="options.type"
-            :radius="options.radius"
-            :zoomable="options.zoomable"
-            :strokeWidth="options.strokeWidth"
-            :layoutType="options.layoutType"
-            :linkLayout="options.linkLayout"
-            :leafTextMargin="options.leafTextMargin"
-            :marginX="options.marginX"
-            :marginY="options.marginY"
-            :maxZoom="options.maxZoom"
-            :minZoom="options.minZoom"
-            :nodeTextDisplay="options.nodeTextDisplay"
-            :nodeTextMargin="options.nodeTextMargin"
-            @clickedText="onClick"
-            @expand="onExpand"
-            @retract="onRetract"
-            @clickedNode="onClickNode"
-          ></tree>
+        <tree
+          class="tree"
+          ref="tree"
+          :data="treeJSON"
+          :identifier="getId"
+          :node-text="options.nodeText"
+          :duration="options.duration"
+          :type="options.type"
+          :radius="options.radius"
+          :zoomable="options.zoomable"
+          :strokeWidth="options.strokeWidth"
+          :layoutType="options.layoutType"
+          :linkLayout="options.linkLayout"
+          :leafTextMargin="options.leafTextMargin"
+          :marginX="options.marginX"
+          :marginY="options.marginY"
+          :maxZoom="options.maxZoom"
+          :minZoom="options.minZoom"
+          :nodeTextDisplay="options.nodeTextDisplay"
+          :nodeTextMargin="options.nodeTextMargin"
+          @clickedText="onClick"
+          @expand="onExpand"
+          @retract="onRetract"
+          @clickedNode="onClickNode"
+        ></tree>
       </div>
-    </div>    
-    <div class="w-full h-full bg-gray-200 rounded-md">
-    <Graph/>
     </div>
-  </div>      
-  <div class="w-1/3 bg-gray-500 rounded-md">
-      <Slideover :is-open="true" @close-slideover="closeSlideover">
-        <section
-          v-for="(node, index) in nodes"
-          :key="index"
-          class="flex-1 p-4 m-h">
-          <NodeContainer :node="node" :card="index"/>
-        </section>
+    <Slideover :is-open="slidover" @close-slideover="closeSlideover">
+      <section
+        v-for="(node, index) in nodes"
+        :key="index"
+        class="flex-1 p-4 m-h"
+      >
+        <NodeContainer :node="node" :card="index" />
+      </section>
     </Slideover>
   </div>
-</div>
 </template>
 
 <script>
@@ -99,15 +94,12 @@ import Slideover from "@/components/utilities/Slideover-component";
 import reorder from "@/mixins/reorder.mixin";
 import { EventBus } from "../../helpers/event-bus";
 import "../../../src/assets/css/node-color.css";
-import Graph from './Graph-view.vue';
-
 
 export default {
   components: {
     tree,
     NodeContainer,
     Slideover,
-    Graph,
   },
   mixins: [reorder],
   data() {

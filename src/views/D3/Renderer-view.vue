@@ -1,79 +1,58 @@
 <template>
-  <div class="w-screen h-screen">
-    <button
-      class="
-        absolute
-        bottom-4
-        left-10
-        z-50
-        inline-flex
-        items-center
-        px-2.5
-        py-1.5
-        border border-transparent
-        text-md
-        font-medium
-        rounded
-        text-white
-        bg-gray-700
-        hover:bg-gray-900
-      "
-      @click="exportJSON"
-    >
-      export to JSON
-    </button>
-    <router-link to="/graph" target="_blank">
-    <button
-      class="
-        absolute
-        bottom-4
-        left-15
-        z-50
-        inline-flex
-        items-center
-        px-2.5
-        py-1.5
-        border border-transparent
-        text-md
-        font-medium
-        rounded
-        text-white
-        bg-gray-700
-        hover:bg-gray-900
-      "
-    >
-      view graph
-    </button>
-    </router-link>
-    <div class="h-screen w-screen flex">
-      <div v-if="!loading" class="w-full h-full pt-10">
-        <tree
-          class="tree"
-          ref="tree"
-          :data="treeJSON"
-          :identifier="getId"
-          :node-text="options.nodeText"
-          :duration="options.duration"
-          :type="options.type"
-          :radius="options.radius"
-          :zoomable="options.zoomable"
-          :strokeWidth="options.strokeWidth"
-          :layoutType="options.layoutType"
-          :linkLayout="options.linkLayout"
-          :leafTextMargin="options.leafTextMargin"
-          :marginX="options.marginX"
-          :marginY="options.marginY"
-          :maxZoom="options.maxZoom"
-          :minZoom="options.minZoom"
-          :nodeTextDisplay="options.nodeTextDisplay"
-          :nodeTextMargin="options.nodeTextMargin"
-          @clickedText="onClick"
-          @expand="onExpand"
-          @retract="onRetract"
-          @clickedNode="onClickNode"
-        ></tree>
+<div class="mx-auto h-screen flex flex-col">
+  <ul class="flex px-5 py-1 shadow">
+    <li class="mr-3">
+      <a @click="open = true" class="inline-block border border-blue-500 rounded py-1 px-3 bg-blue-500 text-white">
+        <p class="inline">
+          Detach graph
+        </p> 
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </a>
+    </li>
+    <li class="mr-3">
+      <a @click="exportJSON" class="inline-block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-1 px-3">
+        <p>
+          Export Json
+        </p>
+        </a>
+    </li>
+  </ul>
+<div class="grid grid-cols-2 gap-5 flex h-full m-5">
+        <div v-if="!loading" class="h-full w-full rounded-md	shadow">
+          <tree
+            class="tree"
+            ref="tree"
+            :data="treeJSON"
+            :identifier="getId"
+            :node-text="options.nodeText"
+            :duration="options.duration"
+            :type="options.type"
+            :radius="options.radius"
+            :zoomable="options.zoomable"
+            :strokeWidth="options.strokeWidth"
+            :layoutType="options.layoutType"
+            :linkLayout="options.linkLayout"
+            :leafTextMargin="options.leafTextMargin"
+            :marginX="options.marginX"
+            :marginY="options.marginY"
+            :maxZoom="options.maxZoom"
+            :minZoom="options.minZoom"
+            :nodeTextDisplay="options.nodeTextDisplay"
+            :nodeTextMargin="options.nodeTextMargin"
+            @clickedText="onClick"
+            @expand="onExpand"
+            @retract="onRetract"
+            @clickedNode="onClickNode"
+          ></tree>
       </div>
-    </div>
+        <div v-if="!open">
+          <iframe class="h-full w-full flex rounded-md shadow" :src="`${getActualUrl()}/graph`"></iframe>
+        </div>        
+       <detachable-graph-component v-model="open">
+            <iframe class="h-screen w-screen flex" :src="`${getActualUrl()}/graph`"></iframe>
+       </detachable-graph-component>
     <Slideover :is-open="slidover" @close-slideover="closeSlideover">
       <section
         v-for="(node, index) in nodes"
@@ -84,12 +63,14 @@
       </section>
     </Slideover>
   </div>
+</div>
 </template>
 
 <script>
 import { tree } from "vued3tree";
 import NodeContainer from "@/components/utilities/NodeContainer-component";
 import Slideover from "@/components/utilities/Slideover-component";
+import DetachableGraphComponent from "@/components/utilities/Detachable-graph-component";
 import reorder from "@/mixins/reorder.mixin";
 import { EventBus } from "../../helpers/event-bus";
 import "../../../src/assets/css/node-color.css";
@@ -99,10 +80,12 @@ export default {
     tree,
     NodeContainer,
     Slideover,
+    DetachableGraphComponent,
   },
   mixins: [reorder],
   data() {
     return {
+      open: false,
       options: {
         type: "tree", // 'tree' or 'cluster'
         radius: 10,
@@ -169,6 +152,9 @@ export default {
     });
   },
   methods: {
+    getActualUrl(){
+      return window.location.origin;
+    },
     selectNode(node, target) {
 
       node.target = target;
@@ -189,7 +175,7 @@ export default {
       );
 
       let routeData = this.$router.resolve({name: 'Graph', query: {nodeClass: node.name, level: node.depth + 1}});
-      window.open(routeData.href, '_blank');
+      console.log(routeData);
     },
     getId(node) {
       return node.id;

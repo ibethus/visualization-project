@@ -11,7 +11,7 @@ export default {
     };
   },
   methods: {
-    async parseJson(){
+    async parseImagesDataJson(){
       // eslint-disable-next-line no-undef
       return fetch(`${process.env.VUE_APP_PATH_FILES}short_properties_for_app_new.json`)
       .then(response => response.json())

@@ -35,6 +35,7 @@
 import Network from "vue-network-d3";
 import SidebarComponent from "@/components/Sidebar-component"
 import dataParser from "../../mixins/data-parser.mixin";
+import keywordsParser from "../../mixins/keywords-parser.mixin"
 import { LEVELS_ENUM } from "@/helpers/constants";
 
 export default {
@@ -42,7 +43,7 @@ export default {
     Network,
     SidebarComponent
   },
-  mixins: [dataParser],
+  mixins: [dataParser, keywordsParser],
   data() {
     return {
       nodes: null,
@@ -54,8 +55,13 @@ export default {
     };
   },
   async created() {
-      this.imagesData = await this.parseJson();
-      this.loadData(LEVELS_ENUM.One)    
+      this.imagesData = await this.parseImagesDataJson();
+      //console.log(this.keywordsData);
+      this.keywordsData = await this.parseKeywordsJson();
+      this.keywordsRankingData = await this.parseKeywordsRankingJson();
+      this.loadData(LEVELS_ENUM.One);
+      this.tmp = this.prepareKeywordsRankingData();
+      console.log(this.tmp);    
   },
   methods: {
     updateSelectedRank(event){

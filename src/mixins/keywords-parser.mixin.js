@@ -45,7 +45,7 @@ export default {
                 }
             }
             else {
-                
+                //var imageKeywords = this.keywordsData.filter(data => data.id == image);
             }
         },
         prepareKeywordsData() {

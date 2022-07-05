@@ -56,12 +56,11 @@ export default {
   },
   async created() {
       this.imagesData = await this.parseImagesDataJson();
-      //console.log(this.keywordsData);
       this.keywordsData = await this.parseKeywordsJson();
       this.keywordsRankingData = await this.parseKeywordsRankingJson();
       this.loadData(LEVELS_ENUM.One);
       this.tmp = this.prepareKeywordsRankingData();
-      console.log(this.tmp);    
+      console.log(this.tmp);
   },
   methods: {
     updateSelectedRank(event){

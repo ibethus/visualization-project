@@ -2,7 +2,7 @@
 <div class="mx-auto h-screen flex flex-col">
   <ul class="flex px-5 py-1 shadow">
     <li class="mr-3">
-      <a @click="open = true" class="inline-block border border-blue-500 rounded py-1 px-3 bg-blue-500 text-white">
+      <a @click="open = true" class="inline-block border border-blue-500 rounded py-1 px-3 bg-blue-500 text-white hover:bg-blue-700">
         <p class="inline">
           Detach graph
         </p> 
@@ -12,10 +12,23 @@
       </a>
     </li>
     <li class="mr-3">
+      <a @click="slidover = true" class="inline-block border border-green-500 rounded py-1 px-3 bg-green-500 text-white hover:bg-green-700">
+        <p class="inline">
+          Show images
+        </p> 
+        <svg xmlns="http://www.w3.org/2000/svg" class="inline h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      </a>
+    </li>
+    <li class="mr-3">
       <a @click="exportJSON" class="inline-block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-1 px-3">
-        <p>
+        <p class="inline">
           Export Json
         </p>
+        <svg xmlns="http://www.w3.org/2000/svg" class="inline h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
         </a>
     </li>
   </ul>
@@ -159,15 +172,12 @@ export default {
 
       node.target = target;
       if (this.nodes.includes(node)) return;
-      if (this.nodes.length === 2) {
+      if (this.nodes.length === 1) {
         this.nodes[0].target.removeAttribute("fill");
         this.nodes[0].target.removeAttribute("style");
         this.nodes.shift();
       }
       this.nodes.push(node);
-      if (this.nodes.length && !this.slidover) {
-        this.slidover = true;
-      }
       target.setAttribute("fill", "#ffaf16");
       target.setAttribute(
         "style",
@@ -228,5 +238,8 @@ export default {
 .container {
   height: 100%;
   overflow: visible;
+}
+li{
+  cursor: pointer;
 }
 </style>

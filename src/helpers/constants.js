@@ -64,3 +64,9 @@ export const KEYWORDS_FIELDS_ENUM = Object.freeze({
   Caption : "caption_keyword_",
   PageText : "page_text_keyword_",
 });
+
+export const KEYWORDS_RANKS_ENUM = Object.freeze({
+  One : "rank1",
+  Two : "rank2",
+  Three : "rank3",
+});

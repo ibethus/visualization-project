@@ -1,79 +1,72 @@
 <template>
-  <div class="w-screen h-screen">
-    <button
-      class="
-        absolute
-        bottom-4
-        left-10
-        z-50
-        inline-flex
-        items-center
-        px-2.5
-        py-1.5
-        border border-transparent
-        text-md
-        font-medium
-        rounded
-        text-white
-        bg-gray-700
-        hover:bg-gray-900
-      "
-      @click="exportJSON"
-    >
-      export to JSON
-    </button>
-    <router-link to="/graph" target="_blank">
-    <button
-      class="
-        absolute
-        bottom-4
-        left-15
-        z-50
-        inline-flex
-        items-center
-        px-2.5
-        py-1.5
-        border border-transparent
-        text-md
-        font-medium
-        rounded
-        text-white
-        bg-gray-700
-        hover:bg-gray-900
-      "
-    >
-      view graph
-    </button>
-    </router-link>
-    <div class="h-screen w-screen flex">
-      <div v-if="!loading" class="w-full h-full pt-10">
-        <tree
-          class="tree"
-          ref="tree"
-          :data="treeJSON"
-          :identifier="getId"
-          :node-text="options.nodeText"
-          :duration="options.duration"
-          :type="options.type"
-          :radius="options.radius"
-          :zoomable="options.zoomable"
-          :strokeWidth="options.strokeWidth"
-          :layoutType="options.layoutType"
-          :linkLayout="options.linkLayout"
-          :leafTextMargin="options.leafTextMargin"
-          :marginX="options.marginX"
-          :marginY="options.marginY"
-          :maxZoom="options.maxZoom"
-          :minZoom="options.minZoom"
-          :nodeTextDisplay="options.nodeTextDisplay"
-          :nodeTextMargin="options.nodeTextMargin"
-          @clickedText="onClick"
-          @expand="onExpand"
-          @retract="onRetract"
-          @clickedNode="onClickNode"
-        ></tree>
+<div class="mx-auto h-screen flex flex-col">
+  <ul class="flex px-5 py-1 shadow">
+    <li class="mr-3">
+      <a @click="open = true" class="inline-block border border-blue-500 rounded py-1 px-3 bg-blue-500 text-white hover:bg-blue-700">
+        <p class="inline">
+          Detach graph
+        </p> 
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </a>
+    </li>
+    <li class="mr-3">
+      <a @click="slidover = !slidover" class="inline-block border border-green-500 rounded py-1 px-3 bg-green-500 text-white hover:bg-green-700">
+        <p class="inline" v-if="!slidover">Show images</p>
+        <p v-else class="inline">Hide images</p>
+        <svg xmlns="http://www.w3.org/2000/svg" class="inline h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      </a>
+    </li>
+    <li class="mr-3">
+      <a @click="exportJSON" class="inline-block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-1 px-3">
+        <p class="inline">
+          Export Json
+        </p>
+        <svg xmlns="http://www.w3.org/2000/svg" class="inline h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        </a>
+    </li>
+  </ul>
+<div class="grid grid-cols-2 gap-5 flex h-full m-5">
+        <div v-if="!loading" class="h-full w-full rounded-md	shadow">
+          <tree
+            class="tree"
+            ref="tree"
+            :data="treeJSON"
+            :identifier="getId"
+            :node-text="options.nodeText"
+            :duration="options.duration"
+            :type="options.type"
+            :radius="options.radius"
+            :zoomable="options.zoomable"
+            :strokeWidth="options.strokeWidth"
+            :layoutType="options.layoutType"
+            :linkLayout="options.linkLayout"
+            :leafTextMargin="options.leafTextMargin"
+            :marginX="options.marginX"
+            :marginY="options.marginY"
+            :maxZoom="options.maxZoom"
+            :minZoom="options.minZoom"
+            :nodeTextDisplay="options.nodeTextDisplay"
+            :nodeTextMargin="options.nodeTextMargin"
+            @clickedText="onClick"
+            @expand="onExpand"
+            @retract="onRetract"
+            @clickedNode="onClickNode"
+          ></tree>
       </div>
-    </div>
+        <div v-if="!open" class="h-full w-full flex rounded-md shadow relative">
+          <div v-if="!iframeLoaded" class="h-full w-full absolute">
+              <SpinnerComponent/>
+          </div>
+          <iframe id="graph" class="h-full w-full" :src="updatedUrl" @load="iframeLoad"></iframe>
+        </div>        
+       <detachable-graph-component v-model="open" v-bind:nodeLevel="selectedNodeLevel" v-bind:nodeClass="selectedNodeClass">
+       </detachable-graph-component>
     <Slideover :is-open="slidover" @close-slideover="closeSlideover">
       <section
         v-for="(node, index) in nodes"
@@ -84,25 +77,35 @@
       </section>
     </Slideover>
   </div>
+</div>
 </template>
 
 <script>
 import { tree } from "vued3tree";
 import NodeContainer from "@/components/utilities/NodeContainer-component";
 import Slideover from "@/components/utilities/Slideover-component";
+import DetachableGraphComponent from "@/components/utilities/Detachable-graph-component";
 import reorder from "@/mixins/reorder.mixin";
 import { EventBus } from "../../helpers/event-bus";
 import "../../../src/assets/css/node-color.css";
+import SpinnerComponent from "@/components/Spinner-component"
 
 export default {
   components: {
     tree,
     NodeContainer,
     Slideover,
+    DetachableGraphComponent,
+    SpinnerComponent
   },
   mixins: [reorder],
   data() {
     return {
+      selectedNodeLevel: null,
+      selectedNodeClass: null,
+      updatedUrl: this.getActualUrl(),
+      open: false,
+      iframeLoaded: false,
       options: {
         type: "tree", // 'tree' or 'cluster'
         radius: 10,
@@ -137,6 +140,16 @@ export default {
         this.selectNode(event.data, event.target);
       }
     },
+    selectedNodeLevel(newLevel){
+      if (newLevel){
+        this.updateUrl();
+      }
+    },
+    selectedNodeClass(newClass){
+      if (newClass){
+        this.updateUrl();
+      }
+    }
   },
   async mounted() {
     this.definition = await this.parseDefinition();
@@ -169,27 +182,44 @@ export default {
     });
   },
   methods: {
+    iframeLoad(){
+      this.iframeLoaded = true;
+    },
+    updateUrl(){
+      let base = this.getActualUrl();
+      console.log(`classe : ${this.selectedNodeClass}`)
+      console.log(`level : ${this.selectedNodeLevel}`)
+      if (this.selectedNodeClass){
+        base = base.concat(`?nodeClass=${this.selectedNodeClass}`);
+      }
+      if (this.selectedNodeLevel){
+        base = base.concat(`&level=${this.selectedNodeLevel}`);
+      }
+      this.updatedUrl = encodeURI(base);
+      console.log(this.updatedUrl);
+      document.getElementById("graph").contentWindow.location.reload();
+      this.iframeLoaded = false;
+      return base;
+    },
+    getActualUrl(){
+      return `${window.location.origin}/graph`;
+    },
     selectNode(node, target) {
-
       node.target = target;
       if (this.nodes.includes(node)) return;
-      if (this.nodes.length === 2) {
+      if (this.nodes.length === 1) {
         this.nodes[0].target.removeAttribute("fill");
         this.nodes[0].target.removeAttribute("style");
         this.nodes.shift();
       }
       this.nodes.push(node);
-      if (this.nodes.length && !this.slidover) {
-        this.slidover = true;
-      }
       target.setAttribute("fill", "#ffaf16");
       target.setAttribute(
         "style",
         "font-size: 1.5rem !important; font-weight: 900 !important"
       );
-
-      let routeData = this.$router.resolve({name: 'Graph', query: {nodeClass: node.name, level: node.depth + 1}});
-      window.open(routeData.href, '_blank');
+      this.selectedNodeLevel = (node.depth + 1).toString();
+      this.selectedNodeClass = node.name;
     },
     getId(node) {
       return node.id;
@@ -242,5 +272,8 @@ export default {
 .container {
   height: 100%;
   overflow: visible;
+}
+li{
+  cursor: pointer;
 }
 </style>

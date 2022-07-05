@@ -50,6 +50,13 @@ export default {
                                     return data.rank1.pageText.includes(keyword)
                                 }
                             });
+                        }).map(data => {
+                            return {
+                                id : data.id,
+                                caption : keywords.some(keyword => data.rank1.caption.includes(keyword)),
+                                tesseract : keywords.some(keyword => data.rank1.tesseract.includes(keyword)),
+                                pageText : keywords.some(keyword => data.rank1.pageText.includes(keyword))
+                            }
                         });
                     case KEYWORDS_RANKS_ENUM.Two :
                         return this.keywordsData.filter(data => {

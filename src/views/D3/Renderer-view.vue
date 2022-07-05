@@ -60,11 +60,13 @@
             @clickedNode="onClickNode"
           ></tree>
       </div>
-        <div v-if="!open">
-          <iframe class="h-full w-full flex rounded-md shadow" :src="`${getActualUrl()}/graph`"></iframe>
+        <div v-if="!open" class="h-full w-full flex rounded-md shadow relative">
+          <div v-if="!iframeLoaded" class="h-full w-full absolute">
+              <SpinnerComponent/>
+          </div>
+          <iframe id="graph" class="h-full w-full" :src="updatedUrl" @load="iframeLoad"></iframe>
         </div>        
-       <detachable-graph-component v-model="open">
-            <iframe class="h-screen w-screen flex" :src="`${getActualUrl()}/graph`"></iframe>
+       <detachable-graph-component v-model="open" v-bind:nodeLevel="selectedNodeLevel" v-bind:nodeClass="selectedNodeClass">
        </detachable-graph-component>
     <Slideover :is-open="slidover" @close-slideover="closeSlideover">
       <section
@@ -87,6 +89,7 @@ import DetachableGraphComponent from "@/components/utilities/Detachable-graph-co
 import reorder from "@/mixins/reorder.mixin";
 import { EventBus } from "../../helpers/event-bus";
 import "../../../src/assets/css/node-color.css";
+import SpinnerComponent from "@/components/Spinner-component"
 
 export default {
   components: {
@@ -94,11 +97,16 @@ export default {
     NodeContainer,
     Slideover,
     DetachableGraphComponent,
+    SpinnerComponent
   },
   mixins: [reorder],
   data() {
     return {
+      selectedNodeLevel: null,
+      selectedNodeClass: null,
+      updatedUrl: this.getActualUrl(),
       open: false,
+      iframeLoaded: false,
       options: {
         type: "tree", // 'tree' or 'cluster'
         radius: 10,
@@ -133,6 +141,16 @@ export default {
         this.selectNode(event.data, event.target);
       }
     },
+    selectedNodeLevel(newLevel){
+      if (newLevel){
+        this.updateUrl();
+      }
+    },
+    selectedNodeClass(newClass){
+      if (newClass){
+        this.updateUrl();
+      }
+    }
   },
   async mounted() {
     this.definition = await this.parseDefinition();
@@ -165,11 +183,29 @@ export default {
     });
   },
   methods: {
+    iframeLoad(){
+      this.iframeLoaded = true;
+    },
+    updateUrl(){
+      let base = this.getActualUrl();
+      console.log(`classe : ${this.selectedNodeClass}`)
+      console.log(`level : ${this.selectedNodeLevel}`)
+      if (this.selectedNodeClass){
+        base = base.concat(`?nodeClass=${this.selectedNodeClass}`);
+      }
+      if (this.selectedNodeLevel){
+        base = base.concat(`&level=${this.selectedNodeLevel}`);
+      }
+      this.updatedUrl = encodeURI(base);
+      console.log(this.updatedUrl);
+      document.getElementById("graph").contentWindow.location.reload();
+      this.iframeLoaded = false;
+      return base;
+    },
     getActualUrl(){
-      return window.location.origin;
+      return `${window.location.origin}/graph`;
     },
     selectNode(node, target) {
-
       node.target = target;
       if (this.nodes.includes(node)) return;
       if (this.nodes.length === 1) {
@@ -183,9 +219,8 @@ export default {
         "style",
         "font-size: 1.5rem !important; font-weight: 900 !important"
       );
-
-      let routeData = this.$router.resolve({name: 'Graph', query: {nodeClass: node.name, level: node.depth + 1}});
-      console.log(routeData);
+      this.selectedNodeLevel = (node.depth + 1).toString();
+      this.selectedNodeClass = node.name;
     },
     getId(node) {
       return node.id;

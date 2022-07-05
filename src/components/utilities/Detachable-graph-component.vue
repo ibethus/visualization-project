@@ -1,6 +1,6 @@
 <template>
   <div v-if="open">
-    <slot />
+      <iframe id="graph" class="h-screen w-screen flex" :src="updatedUrl"></iframe>
   </div>
 </template>
 
@@ -38,11 +38,14 @@ export default {
     open: {
       type: Boolean,
       default: false,
-    }
+    },
+    nodeLevel: String,
+    nodeClass: String
   },
   data() {
     return {
       windowRef: null,
+      updatedUrl: this.getActualUrl()
     }
   },
   watch: {
@@ -52,14 +55,42 @@ export default {
       } else {
         this.closePortal();
       }
+    },
+    nodeLevel(newLevel){
+      if(newLevel){
+        //console.log(this.updateUrl());
+      }
+    },
+    nodeClass(newClass){
+      if(newClass){
+        //console.log(this.updateUrl());
+      }
     }
   },
   methods: {
+    updateUrl(){
+      let base = this.getActualUrl();
+      // console.log(`classe : ${this.nodeClass}`)
+      // console.log(`level : ${this.nodeLevel}`)
+      if (this.nodeClass){
+        base = base.concat(`?nodeClass=${this.nodeClass}`);
+      }
+      if (this.nodeLevel){
+        base = base.concat(`&level=${this.nodeLevel}`);
+      }
+      this.updatedUrl = base;
+      console.log(this.$refs.graph);
+      return base;
+    },
+    getActualUrl(){
+      return `${window.location.origin}/graph`;
+    },
     openPortal() {
       this.windowRef = window.open("", "", "width=1920,height=1080,left=200,top=200");
       this.windowRef.document.body.appendChild(this.$el);
       copyStyles(window.document, this.windowRef.document);
       this.windowRef.addEventListener('beforeunload', this.closePortal);
+      console.log(this.windowRef.document.getElementById("graph"))
     },
     closePortal() {
       if(this.windowRef) {

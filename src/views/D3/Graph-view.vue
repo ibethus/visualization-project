@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <div class="filters">
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         @click="loadData(LEVELS_ENUM.One)"> Level 1 </button>
@@ -32,10 +32,6 @@ export default {
     Network
   },
   mixins: [dataParser],
-  props: {
-    level: String,
-    nodeClass: String
-  },
   data() {
     return {
       nodes: null,
@@ -49,14 +45,12 @@ export default {
   async created() {
       this.imagesData = await this.parseJson();
       this.loadData(LEVELS_ENUM.One)    
-      console.log(`Niveau récupéré : ${this.level}`)
-      console.log(`Classe récupérée : ${this.nodeClass}`)
-      console.log(`Image data : ${this.imagesData}`)
   },
   methods: {
     loadData(level) {
-      if (this.level) {
-        switch (this.level) {
+      var levelFromParams = this.$route.query.level;
+      if (levelFromParams != null) {
+        switch (levelFromParams) {
           case "1":
             level = LEVELS_ENUM.One;
             break;
@@ -77,7 +71,7 @@ export default {
             break;
         }
       }
-      var imageIdsFromParams = this.getClassImageIds(this.nodeClass, level);
+      var imageIdsFromParams = this.getClassImageIds(this.$route.query.nodeClass, level);
       if (imageIdsFromParams != null) {
         this.highlightedNodes = imageIdsFromParams;
       }
@@ -87,12 +81,10 @@ export default {
 
       this.getLinks(level).then(response => {
         this.links = response;
-        console.log(response)
         this.linksLoading = false;
       });
       this.getNodes(level).then(response => {
         this.nodes = response;
-        console.log(response);
         this.nodesLoading = false;
       });
     },
@@ -106,9 +98,9 @@ body {
 }
 .filters {
   position: absolute;
-    margin-right: auto;
-    margin-left: auto;
-    left: 0;
-    right: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

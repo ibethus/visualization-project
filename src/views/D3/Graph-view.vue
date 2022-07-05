@@ -79,6 +79,7 @@ export default {
         this.highlightedNodes = [];
       }
 
+      this.$router.push(this.$route.path);
       this.getLinks(level).then(response => {
         this.links = response;
         this.linksLoading = false;

@@ -58,29 +58,30 @@ export default {
     },
     nodeLevel(newLevel){
       if(newLevel){
-        //console.log(this.updateUrl());
+        console.log(this.updateUrl());
       }
     },
     nodeClass(newClass){
       if(newClass){
-        //console.log(this.updateUrl());
+        console.log(this.updateUrl());
       }
     }
   },
   methods: {
     updateUrl(){
       let base = this.getActualUrl();
-      // console.log(`classe : ${this.nodeClass}`)
-      // console.log(`level : ${this.nodeLevel}`)
+      console.log(`classe : ${this.nodeClass}`)
+      console.log(`level : ${this.nodeLevel}`)
       if (this.nodeClass){
         base = base.concat(`?nodeClass=${this.nodeClass}`);
       }
       if (this.nodeLevel){
         base = base.concat(`&level=${this.nodeLevel}`);
       }
-      this.updatedUrl = base;
-      console.log(this.$refs.graph);
-      return base;
+      this.updatedUrl = encodeURI(base);
+      this.windowRef.document.getElementById("graph").contentWindow.location.reload();
+      this.iframeLoaded = false;
+      return this.updatedUrl;
     },
     getActualUrl(){
       return `${window.location.origin}/graph`;
@@ -90,7 +91,6 @@ export default {
       this.windowRef.document.body.appendChild(this.$el);
       copyStyles(window.document, this.windowRef.document);
       this.windowRef.addEventListener('beforeunload', this.closePortal);
-      console.log(this.windowRef.document.getElementById("graph"))
     },
     closePortal() {
       if(this.windowRef) {

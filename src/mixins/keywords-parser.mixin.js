@@ -136,9 +136,9 @@ export default {
                         }).map(data => {
                             return {
                                 id : data.id,
-                                caption : keywords.some(keyword => data.rank3.caption.includes(keyword)),
-                                tesseract : keywords.some(keyword => data.rank3.tesseract.includes(keyword)),
-                                pageText : keywords.some(keyword => data.rank3.pageText.includes(keyword))
+                                caption : keywords.some(keyword => data.rank1.caption.includes(keyword)),
+                                tesseract : keywords.some(keyword => data.rank1.tesseract.includes(keyword)),
+                                pageText : keywords.some(keyword => data.rank1.pageText.includes(keyword))
                             }
                         });;
                     case KEYWORDS_RANKS_ENUM.Two :
@@ -151,9 +151,9 @@ export default {
                         }).map(data => {
                             return {
                                 id : data.id,
-                                caption : keywords.some(keyword => data.rank3.caption.includes(keyword)),
-                                tesseract : keywords.some(keyword => data.rank3.tesseract.includes(keyword)),
-                                pageText : keywords.some(keyword => data.rank3.pageText.includes(keyword))
+                                caption : keywords.some(keyword => data.rank2.caption.includes(keyword)),
+                                tesseract : keywords.some(keyword => data.rank2.tesseract.includes(keyword)),
+                                pageText : keywords.some(keyword => data.rank2.pageText.includes(keyword))
                             }
                         });;
                     case KEYWORDS_RANKS_ENUM.Three :

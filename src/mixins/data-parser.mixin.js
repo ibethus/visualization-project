@@ -7,11 +7,12 @@ export default {
     return {
       //distanceIndexesByImageId: Map,
       imagesData: null,
+      imagesDatesData: null,
       imagesLoading: true
     };
   },
   methods: {
-    async parseJson(){
+    async parseImagesDataJson(){
       // eslint-disable-next-line no-undef
       return fetch(`${process.env.VUE_APP_PATH_FILES}short_properties_for_app_new.json`)
       .then(response => response.json())
@@ -117,5 +118,26 @@ export default {
         }
         return matchingImages.map(image => image.id.toString());
     },
+    prepareImageWithDates() {
+      return this.imagesData.map(image => {
+        var firstDate = null;
+        var secondDate = null;
+        if(image.converted_timeline) {
+          if(image.converted_timeline.includes('/')) {
+            firstDate = image.converted_timeline.split('/')[0];
+            secondDate = image.converted_timeline.split('/')[1];
+          }
+          else {
+            firstDate = image.converted_timeline;
+            secondDate = firstDate;
+          }
+        }
+        return {
+          id : image.id,
+          dateMin : Date.parse(firstDate),
+          dateMax : Date.parse(secondDate)
+        }
+      })
+    }
   },
 };

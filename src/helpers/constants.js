@@ -58,3 +58,15 @@ export const LEVELS_ENUM = Object.freeze({
     neighborCSV : "neighbor_fifth.csv",
   },
 });
+
+export const KEYWORDS_FIELDS_ENUM = Object.freeze({
+  Tesseract : "tesseract_keyword_",
+  Caption : "caption_keyword_",
+  PageText : "page_text_keyword_",
+});
+
+export const KEYWORDS_RANKS_ENUM = Object.freeze({
+  One : "rank1",
+  Two : "rank2",
+  Three : "rank3",
+});

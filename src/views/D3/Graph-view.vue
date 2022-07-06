@@ -14,20 +14,20 @@
       <li class="mr-3">
         <div>
           <label class="text-sm" for="startDate">Starting date</label>
-          <input id="startDate" datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
+          <input @change="updateStartDate" id="startDate" datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
         </div>
       </li>
       <li class="mr-3">
         <div>
           <label class="text-sm" for="endDate">End date</label>
-          <input id="endDate" datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
+          <input @change="updateEndDate" id="endDate" datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
         </div>
       </li>
     </ul>
     <SidebarComponent v-on:selected-rank="updateSelectedRank" v-on:selected-keyword="updateSelectedKeywords" 
     v-on:selected-fields="updateSelectedFields"/>
     <network class="z-0" v-if="!nodesLoading && !linksLoading && !imagesLoading" :nodeList="nodes" :linkList="links" :linkDistance="l => l.value"
-      :nodeSize="7" :highlightNodes="highlightedNodes" :linkWidth="0.6"></network>
+      :nodeSize="7" :highlightNodes="highlightedNodes" :linkWidth="0.6" :key="highlightedNodes"></network>
   </div>
 </template>
 
@@ -36,7 +36,7 @@ import Network from "vue-network-d3";
 import SidebarComponent from "@/components/Sidebar-component"
 import dataParser from "../../mixins/data-parser.mixin";
 import keywordsParser from "../../mixins/keywords-parser.mixin"
-import { LEVELS_ENUM, /*KEYWORDS_RANKS_ENUM, KEYWORDS_FIELDS_ENUM*/ } from "@/helpers/constants";
+import { LEVELS_ENUM, KEYWORDS_RANKS_ENUM, KEYWORDS_FIELDS_ENUM } from "@/helpers/constants";
 
 export default {
   components: {
@@ -52,6 +52,10 @@ export default {
       linksLoading: true,
       nodesLoading: true,
       LEVELS_ENUM,
+      imageIdsFromParams: null,
+      rankFilter: null,
+      fieldFilter: null,
+      keywordFilter: null,
     };
   },
   async created() {
@@ -66,13 +70,53 @@ export default {
   },
   methods: {
     updateSelectedRank(event){
-      console.log(event);
+      switch(event) {
+        case "1":
+          this.rankFilter = KEYWORDS_RANKS_ENUM.One;
+          this.highlightedNodes = [];
+          break;
+        case "2":
+          this.rankFilter = KEYWORDS_RANKS_ENUM.Two;
+          this.highlightedNodes = [];
+          break;
+        case "3":
+          this.rankFilter = KEYWORDS_RANKS_ENUM.Three;
+          this.highlightedNodes = [];
+          break;
+        default:
+          this.rankFilter = null;
+          this.highlightedNodes = [];
+          break;
+      }
+      console.log(this.rankFilter);
     },
     updateSelectedFields(event){
-      console.log(event);
+      if(event.size !== 0) {
+        this.fieldFilter = Array.from(event).map(field => {
+        switch(field) {
+          case "tesseract":
+            return KEYWORDS_FIELDS_ENUM.Tesseract;
+          case "caption":
+            return KEYWORDS_FIELDS_ENUM.Caption;
+          case "page_text":
+            return KEYWORDS_FIELDS_ENUM.PageText;
+          default:
+            return null;
+        }
+      });
+      }
+      else {
+        this.fieldFilter = null;
+      }
+      if(this.keywordFilter) {
+        this.highlightedNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter).map(image => image.id.toString());
+      }
+      console.log(this.highlightedNodes);
     },
     updateSelectedKeywords(event){
-      console.log(event);
+      this.keywordFilter = Array.from(event);
+      this.highlightedNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter).map(image => image.id.toString());
+      console.log(this.highlightedNodes);
     },
     updateData(event){
       this.loadData(event.target.value);
@@ -103,9 +147,9 @@ export default {
             level = LEVELS_ENUM.One
             break;
       }
-      var imageIdsFromParams = this.getClassImageIds(this.$route.query.nodeClass, level);
-      if (imageIdsFromParams != null) {
-        this.highlightedNodes = imageIdsFromParams;
+      this.imageIdsFromParams = this.getClassImageIds(this.$route.query.nodeClass, level);
+      if (this.imageIdsFromParams != null) {
+        this.highlightedNodes = this.imageIdsFromParams;
       }
       else {
         this.highlightedNodes = [];
@@ -118,7 +162,6 @@ export default {
       });
       this.getNodes(level).then(response => {
         this.nodes = response;
-        console.log(response);
         this.nodesLoading = false;
       });
     },

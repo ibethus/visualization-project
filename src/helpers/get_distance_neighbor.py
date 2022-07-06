@@ -38,8 +38,8 @@ distance.columns = df.index
 neighbor.index = df.index
 
 # Generation new files
-distance.to_csv(f"../../public/data/distance_{name}")
-neighbor.to_csv(f"../../public/data/neighbor_{name}")
+distance.to_csv(f"../../public/static/data/distance_{name}")
+neighbor.to_csv(f"../../public/static/data/neighbor_{name}")
 
 # For test purposes
 #distance.to_csv(f"distance_test_{name}")

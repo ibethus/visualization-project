@@ -1,6 +1,6 @@
 <template>
 <div class="mx-auto h-screen flex flex-col">
-  <ul class="flex px-5 py-1 shadow">
+  <ul class="flex px-5 py-1 shadow bg-gray-50">
     <li class="mr-3">
       <a @click="open = true" class="inline-block border border-blue-500 rounded py-1 px-3 bg-blue-500 text-white hover:bg-blue-700">
         <p class="inline">
@@ -32,7 +32,7 @@
     </li>
   </ul>
 <div class="grid grid-cols-2 gap-5 flex h-full m-5">
-        <div v-if="!loading" class="h-full w-full rounded-md	shadow">
+        <div v-if="!loading" class="h-full w-full rounded-md shadow">
           <tree
             class="tree"
             ref="tree"
@@ -216,7 +216,7 @@ export default {
       target.setAttribute("fill", "#ffaf16");
       target.setAttribute(
         "style",
-        "font-size: 1.5rem !important; font-weight: 900 !important"
+        "font-size: 1.5rem !important; font-weight: 900 !important;"
       );
       this.selectedNodeLevel = (node.depth + 1).toString();
       this.selectedNodeClass = node.name;

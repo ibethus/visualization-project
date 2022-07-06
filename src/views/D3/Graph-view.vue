@@ -56,6 +56,10 @@ export default {
       rankFilter: null,
       fieldFilter: null,
       keywordFilter: null,
+      startDateFilter: null,
+      endDateFilter: null,
+      dateFilteredImages: [],
+      searchResultNodes: [],
     };
   },
   async created() {
@@ -69,26 +73,59 @@ export default {
       //console.log(this.getImagesByKeywords(["milieux"], KEYWORDS_RANKS_ENUM.One, [KEYWORDS_FIELDS_ENUM.Caption, KEYWORDS_FIELDS_ENUM.Tesseract]));
   },
   methods: {
+    updateStartDate(event) {
+      this.startDateFilter = event.target.value;
+      if(this.endDateFilter) {
+        this.dateFilteredImages = this.imagesDatesData.filter(image => image.dateMin >= Date.parse(this.startDateFilter) && image.dateMax <= Date.parse(this.endDateFilter))
+        .map(image => image.id.toString());
+      }
+      else {
+        this.dateFilteredImages = this.imagesDatesData.filter(image => image.dateMin >= Date.parse(this.startDateFilter))
+        .map(image => image.id.toString());
+      }
+      if(this.searchResultNodes.length !== 0) {
+        this.searchResultNodes = this.searchResultNodes.filter(imageID => this.dateFilteredImages.includes(imageID));
+      }
+      else {
+        this.searchResultNodes = this.dateFilteredImages;
+      }
+    },
+    updateEndDate(event) {
+      this.endDateFilter = event.target.value;
+      if(this.startDateFilter) {
+        this.dateFilteredImages = this.imagesDatesData.filter(image => image.dateMin >= Date.parse(this.startDateFilter) && image.dateMax <= Date.parse(this.endDateFilter))
+        .map(image => image.id.toString());
+      }
+      else {
+        this.dateFilteredImages = this.imagesDatesData.filter(image => image.dateMax <= Date.parse(this.endDateFilter))
+        .map(image => image.id.toString());
+      }
+      if(this.searchResultNodes.length !== 0) {
+        this.searchResultNodes = this.searchResultNodes.filter(imageID => this.dateFilteredImages.includes(imageID));
+      }
+      else {
+        this.searchResultNodes = this.dateFilteredImages;
+      }
+    },
     updateSelectedRank(event){
       switch(event) {
         case "1":
           this.rankFilter = KEYWORDS_RANKS_ENUM.One;
-          this.highlightedNodes = [];
+          this.searchResultNodes = this.dateFilteredImages;
           break;
         case "2":
           this.rankFilter = KEYWORDS_RANKS_ENUM.Two;
-          this.highlightedNodes = [];
+          this.searchResultNodes = this.dateFilteredImages;
           break;
         case "3":
           this.rankFilter = KEYWORDS_RANKS_ENUM.Three;
-          this.highlightedNodes = [];
+          this.searchResultNodes = this.dateFilteredImages;
           break;
         default:
           this.rankFilter = null;
-          this.highlightedNodes = [];
+          this.searchResultNodes = this.dateFilteredImages;
           break;
       }
-      console.log(this.rankFilter);
     },
     updateSelectedFields(event){
       if(event.size !== 0) {
@@ -109,14 +146,29 @@ export default {
         this.fieldFilter = null;
       }
       if(this.keywordFilter) {
-        this.highlightedNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter).map(image => image.id.toString());
+        var keywordsFilteredNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter);
+        if(this.dateFilteredImages.length !== 0) {
+          this.searchResultNodes = keywordsFilteredNodes.filter(node => this.dateFilteredImages.includes(node.id));
+        }
+        else {
+          this.searchResultNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter);
+        }
       }
-      console.log(this.highlightedNodes);
     },
     updateSelectedKeywords(event){
       this.keywordFilter = Array.from(event);
-      this.highlightedNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter).map(image => image.id.toString());
-      console.log(this.highlightedNodes);
+      var keywordsFilteredNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter);
+      if(this.dateFilteredImages.length !== 0) {
+        if(this.keywordFilter.length !== 0) {
+          this.searchResultNodes = keywordsFilteredNodes.filter(node => this.dateFilteredImages.includes(node.id));
+        }
+        else {
+          this.searchResultNodes = this.dateFilteredImages;
+        }
+      }
+      else {
+        this.searchResultNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter);
+      }
     },
     updateData(event){
       this.loadData(event.target.value);

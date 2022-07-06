@@ -70,7 +70,6 @@ export default {
       this.keywordsData = this.prepareKeywordsData();
       this.keywordsRankingData = this.prepareKeywordsRankingData();
       this.loadData(LEVELS_ENUM.One);
-      //console.log(this.getImagesByKeywords(["milieux"], KEYWORDS_RANKS_ENUM.One, [KEYWORDS_FIELDS_ENUM.Caption, KEYWORDS_FIELDS_ENUM.Tesseract]));
   },
   methods: {
     updateStartDate(event) {

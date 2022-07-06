@@ -27,7 +27,7 @@
     <SidebarComponent v-on:selected-rank="updateSelectedRank" v-on:selected-keyword="updateSelectedKeywords" 
     v-on:selected-fields="updateSelectedFields"/>
     <network class="z-0" v-if="!nodesLoading && !linksLoading && !imagesLoading" :nodeList="nodes" :linkList="links" :linkDistance="l => l.value"
-      :nodeSize="7" :highlightNodes="highlightedNodes" :linkWidth="0.6" :key="highlightedNodes"></network>
+      :nodeSize="7" :highlightNodes="highlightedNodes" :linkWidth="0.6" :searchResults="searchResultNodes"></network>
   </div>
 </template>
 

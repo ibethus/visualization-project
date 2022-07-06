@@ -137,6 +137,6 @@ export default {
     text-align: left;
 }
 #sidebar {
-    max-width: 13rem;
+    width: 13rem;
 }
 </style>

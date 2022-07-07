@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Network from "vue-network-d3";
+import Network from "@/components/graph/Network-component";
 import SidebarComponent from "@/components/Sidebar-component"
 import dataParser from "../../mixins/data-parser.mixin";
 import keywordsParser from "../../mixins/keywords-parser.mixin"

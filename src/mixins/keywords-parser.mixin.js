@@ -140,7 +140,7 @@ export default {
                                 tesseract : keywords.some(keyword => data.rank1.tesseract.includes(keyword)),
                                 pageText : keywords.some(keyword => data.rank1.pageText.includes(keyword))
                             }
-                        });;
+                        });
                     case KEYWORDS_RANKS_ENUM.Two :
                         return this.keywordsData.filter(data => {
                             return keywords.some(keyword => {
@@ -155,7 +155,7 @@ export default {
                                 tesseract : keywords.some(keyword => data.rank2.tesseract.includes(keyword)),
                                 pageText : keywords.some(keyword => data.rank2.pageText.includes(keyword))
                             }
-                        });;
+                        });
                     case KEYWORDS_RANKS_ENUM.Three :
                         return this.keywordsData.filter(data => {
                             return keywords.some(keyword => {
@@ -170,7 +170,7 @@ export default {
                                 tesseract : keywords.some(keyword => data.rank3.tesseract.includes(keyword)),
                                 pageText : keywords.some(keyword => data.rank3.pageText.includes(keyword))
                             }
-                        });;
+                        });
                     default :
                         return this.keywordsData;
                 }

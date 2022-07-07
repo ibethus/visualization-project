@@ -27,7 +27,11 @@
     </ul>
     <SidebarComponent v-on:selected-rank="updateSelectedRank" v-on:selected-keyword="updateSelectedKeywords" 
     v-on:selected-fields="updateSelectedFields"/>
-    <network class="z-0" v-if="!nodesLoading && !linksLoading && !imagesLoading" :nodeList="nodes" :linkList="links" :linkDistance="l => l.value"
+    <div id="range" class="absolute z-40">
+      <label for="minmax-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nodes distance</label>
+      <input v-model="distanceCoefficient" id="minmax-range" type="range" min="1" max="10" step="0.05" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+    </div>
+    <network class="z-0" v-if="!nodesLoading && !linksLoading && !imagesLoading" :nodeList="nodes" :linkList="links" :linkDistance="l => l.value * distanceCoefficient"
       :nodeSize="7" :highlightNodes="highlightedNodes" :linkWidth="0.6" :searchResults="searchResultNodes"
       v-on:clickNode="displayClickedNodeModal"></network>
   </div>
@@ -50,6 +54,7 @@ export default {
   mixins: [dataParser, keywordsParser],
   data() {
     return {
+      distanceCoefficient: 1,
       showModal: false,
       nodeForModal: null,
       nodes: null,
@@ -83,7 +88,6 @@ export default {
     },
     displayClickedNodeModal(event){
       this.nodeForModal = this.nodes.find(n => n.id == event.target.__data__.id);
-      console.log(this.nodeForModal)
       this.showModal = true;
     },
     updateStartDate(event) {
@@ -255,5 +259,9 @@ body {
 }
 li {
   cursor: pointer;
+}
+#range {
+  right: 1em;
+  bottom: 1em;
 }
 </style>

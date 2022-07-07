@@ -46,7 +46,6 @@ export default {
             imageClass = imageData[0].level1;
             break;
         }
-        console.log(imageData[0])
         return {
           id: indexId.id,
           group: imageClass,

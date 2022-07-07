@@ -1,5 +1,6 @@
 <template>
   <div class="mx-auto h-screen flex flex-col">
+    <graph-image-modal :node="nodeForModal" :open="showModal" v-on:closeModal="closeGraphModal"/>
     <ul class="flex w-full px-3 py-1 shadow absolute z-20 shadow bg-gray-50 flex justify-around">
       <li class="mr-3 flex">
         <select @change="updateData($event)" id="levels" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-6">
@@ -26,14 +27,20 @@
     </ul>
     <SidebarComponent v-on:selected-rank="updateSelectedRank" v-on:selected-keyword="updateSelectedKeywords" 
     v-on:selected-fields="updateSelectedFields"/>
-    <network class="z-0" v-if="!nodesLoading && !linksLoading && !imagesLoading" :nodeList="nodes" :linkList="links" :linkDistance="l => l.value"
-      :nodeSize="7" :highlightNodes="highlightedNodes" :linkWidth="0.6" :searchResults="searchResultNodes"></network>
+    <div id="range" class="absolute z-40">
+      <label for="minmax-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nodes distance</label>
+      <input v-model="distanceCoefficient" id="minmax-range" type="range" min="1" max="10" step="0.05" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+    </div>
+    <network class="z-0" v-if="!nodesLoading && !linksLoading && !imagesLoading" :nodeList="nodes" :linkList="links" :linkDistance="l => l.value * distanceCoefficient"
+      :nodeSize="7" :highlightNodes="highlightedNodes" :linkWidth="0.6" :searchResults="searchResultNodes"
+      v-on:clickNode="displayClickedNodeModal"></network>
   </div>
 </template>
 
 <script>
 import Network from "@/components/graph/Network-component";
 import SidebarComponent from "@/components/Sidebar-component"
+import GraphImageModal from "@/components/graph/Graph-image-modal"
 import dataParser from "../../mixins/data-parser.mixin";
 import keywordsParser from "../../mixins/keywords-parser.mixin"
 import { LEVELS_ENUM, KEYWORDS_RANKS_ENUM, KEYWORDS_FIELDS_ENUM } from "@/helpers/constants";
@@ -41,11 +48,15 @@ import { LEVELS_ENUM, KEYWORDS_RANKS_ENUM, KEYWORDS_FIELDS_ENUM } from "@/helper
 export default {
   components: {
     Network,
-    SidebarComponent
+    SidebarComponent,
+    GraphImageModal
   },
   mixins: [dataParser, keywordsParser],
   data() {
     return {
+      distanceCoefficient: 1,
+      showModal: false,
+      nodeForModal: null,
       nodes: null,
       links: null,
       highlightedNodes: [],
@@ -72,15 +83,30 @@ export default {
       this.loadData(LEVELS_ENUM.One);
   },
   methods: {
+    closeGraphModal(){
+      this.showModal = false;
+    },
+    displayClickedNodeModal(event){
+      this.nodeForModal = this.nodes.find(n => n.id == event.target.__data__.id);
+      this.showModal = true;
+    },
     updateStartDate(event) {
       this.startDateFilter = event.target.value;
       if(this.endDateFilter) {
         this.dateFilteredImages = this.imagesDatesData.filter(image => image.dateMin >= Date.parse(this.startDateFilter) && image.dateMax <= Date.parse(this.endDateFilter))
-        .map(image => image.id.toString());
+        .map(image => {
+          return {
+            id: image.id.toString(),
+          }
+          });
       }
       else {
         this.dateFilteredImages = this.imagesDatesData.filter(image => image.dateMin >= Date.parse(this.startDateFilter))
-        .map(image => image.id.toString());
+        .map(image => {
+          return {
+            id: image.id.toString(),
+          }
+          });
       }
       if(this.searchResultNodes.length !== 0) {
         this.searchResultNodes = this.searchResultNodes.filter(imageID => this.dateFilteredImages.includes(imageID));
@@ -147,7 +173,7 @@ export default {
       if(this.keywordFilter) {
         var keywordsFilteredNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter);
         if(this.dateFilteredImages.length !== 0) {
-          this.searchResultNodes = keywordsFilteredNodes.filter(node => this.dateFilteredImages.includes(node.id.toString()));
+          this.searchResultNodes = keywordsFilteredNodes.filter(node => this.dateFilteredImages.some(d => d.id == node.id.toString()));
         }
         else {
           this.searchResultNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter);
@@ -159,7 +185,7 @@ export default {
       var keywordsFilteredNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter);
       if(this.dateFilteredImages.length !== 0) {
         if(this.keywordFilter.length !== 0) {
-          this.searchResultNodes = keywordsFilteredNodes.filter(node => this.dateFilteredImages.includes(node.id.toString()));
+          this.searchResultNodes = keywordsFilteredNodes.filter(node => this.dateFilteredImages.some(d => d.id == node.id.toString()));
         }
         else {
           this.searchResultNodes = this.dateFilteredImages;
@@ -233,5 +259,9 @@ body {
 }
 li {
   cursor: pointer;
+}
+#range {
+  right: 1em;
+  bottom: 1em;
 }
 </style>

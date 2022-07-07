@@ -14,29 +14,29 @@
       <li class="mr-3">
         <div>
           <label class="text-sm" for="startDate">Starting date</label>
-          <input id="startDate" datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
+          <input @change="updateStartDate" id="startDate" datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
         </div>
       </li>
       <li class="mr-3">
         <div>
           <label class="text-sm" for="endDate">End date</label>
-          <input id="endDate" datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
+          <input @change="updateEndDate" id="endDate" datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
         </div>
       </li>
     </ul>
     <SidebarComponent v-on:selected-rank="updateSelectedRank" v-on:selected-keyword="updateSelectedKeywords" 
     v-on:selected-fields="updateSelectedFields"/>
     <network class="z-0" v-if="!nodesLoading && !linksLoading && !imagesLoading" :nodeList="nodes" :linkList="links" :linkDistance="l => l.value"
-      :nodeSize="7" :highlightNodes="highlightedNodes" :linkWidth="0.6"></network>
+      :nodeSize="7" :highlightNodes="highlightedNodes" :linkWidth="0.6" :searchResults="searchResultNodes"></network>
   </div>
 </template>
 
 <script>
-import Network from "vue-network-d3";
+import Network from "@/components/graph/Network-component";
 import SidebarComponent from "@/components/Sidebar-component"
 import dataParser from "../../mixins/data-parser.mixin";
 import keywordsParser from "../../mixins/keywords-parser.mixin"
-import { LEVELS_ENUM, /*KEYWORDS_RANKS_ENUM, KEYWORDS_FIELDS_ENUM*/ } from "@/helpers/constants";
+import { LEVELS_ENUM, KEYWORDS_RANKS_ENUM, KEYWORDS_FIELDS_ENUM } from "@/helpers/constants";
 
 export default {
   components: {
@@ -52,6 +52,14 @@ export default {
       linksLoading: true,
       nodesLoading: true,
       LEVELS_ENUM,
+      imageIdsFromParams: null,
+      rankFilter: null,
+      fieldFilter: null,
+      keywordFilter: null,
+      startDateFilter: null,
+      endDateFilter: null,
+      dateFilteredImages: [],
+      searchResultNodes: [],
     };
   },
   async created() {
@@ -62,17 +70,104 @@ export default {
       this.keywordsData = this.prepareKeywordsData();
       this.keywordsRankingData = this.prepareKeywordsRankingData();
       this.loadData(LEVELS_ENUM.One);
-      //console.log(this.getImagesByKeywords(["milieux"], KEYWORDS_RANKS_ENUM.One, [KEYWORDS_FIELDS_ENUM.Caption, KEYWORDS_FIELDS_ENUM.Tesseract]));
   },
   methods: {
+    updateStartDate(event) {
+      this.startDateFilter = event.target.value;
+      if(this.endDateFilter) {
+        this.dateFilteredImages = this.imagesDatesData.filter(image => image.dateMin >= Date.parse(this.startDateFilter) && image.dateMax <= Date.parse(this.endDateFilter))
+        .map(image => image.id.toString());
+      }
+      else {
+        this.dateFilteredImages = this.imagesDatesData.filter(image => image.dateMin >= Date.parse(this.startDateFilter))
+        .map(image => image.id.toString());
+      }
+      if(this.searchResultNodes.length !== 0) {
+        this.searchResultNodes = this.searchResultNodes.filter(imageID => this.dateFilteredImages.includes(imageID));
+      }
+      else {
+        this.searchResultNodes = this.dateFilteredImages;
+      }
+    },
+    updateEndDate(event) {
+      this.endDateFilter = event.target.value;
+      if(this.startDateFilter) {
+        this.dateFilteredImages = this.imagesDatesData.filter(image => image.dateMin >= Date.parse(this.startDateFilter) && image.dateMax <= Date.parse(this.endDateFilter))
+        .map(image => image.id.toString());
+      }
+      else {
+        this.dateFilteredImages = this.imagesDatesData.filter(image => image.dateMax <= Date.parse(this.endDateFilter))
+        .map(image => image.id.toString());
+      }
+      if(this.searchResultNodes.length !== 0) {
+        this.searchResultNodes = this.searchResultNodes.filter(imageID => this.dateFilteredImages.includes(imageID));
+      }
+      else {
+        this.searchResultNodes = this.dateFilteredImages;
+      }
+    },
     updateSelectedRank(event){
-      console.log(event);
+      switch(event) {
+        case "1":
+          this.rankFilter = KEYWORDS_RANKS_ENUM.One;
+          this.searchResultNodes = this.dateFilteredImages;
+          break;
+        case "2":
+          this.rankFilter = KEYWORDS_RANKS_ENUM.Two;
+          this.searchResultNodes = this.dateFilteredImages;
+          break;
+        case "3":
+          this.rankFilter = KEYWORDS_RANKS_ENUM.Three;
+          this.searchResultNodes = this.dateFilteredImages;
+          break;
+        default:
+          this.rankFilter = null;
+          this.searchResultNodes = this.dateFilteredImages;
+          break;
+      }
     },
     updateSelectedFields(event){
-      console.log(event);
+      if(event.size !== 0) {
+        this.fieldFilter = Array.from(event).map(field => {
+        switch(field) {
+          case "tesseract":
+            return KEYWORDS_FIELDS_ENUM.Tesseract;
+          case "caption":
+            return KEYWORDS_FIELDS_ENUM.Caption;
+          case "page_text":
+            return KEYWORDS_FIELDS_ENUM.PageText;
+          default:
+            return null;
+        }
+      });
+      }
+      else {
+        this.fieldFilter = null;
+      }
+      if(this.keywordFilter) {
+        var keywordsFilteredNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter);
+        if(this.dateFilteredImages.length !== 0) {
+          this.searchResultNodes = keywordsFilteredNodes.filter(node => this.dateFilteredImages.includes(node.id.toString()));
+        }
+        else {
+          this.searchResultNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter);
+        }
+      }
     },
     updateSelectedKeywords(event){
-      console.log(event);
+      this.keywordFilter = Array.from(event);
+      var keywordsFilteredNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter);
+      if(this.dateFilteredImages.length !== 0) {
+        if(this.keywordFilter.length !== 0) {
+          this.searchResultNodes = keywordsFilteredNodes.filter(node => this.dateFilteredImages.includes(node.id.toString()));
+        }
+        else {
+          this.searchResultNodes = this.dateFilteredImages;
+        }
+      }
+      else {
+        this.searchResultNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter);
+      }
     },
     updateData(event){
       this.loadData(event.target.value);
@@ -103,9 +198,9 @@ export default {
             level = LEVELS_ENUM.One
             break;
       }
-      var imageIdsFromParams = this.getClassImageIds(this.$route.query.nodeClass, level);
-      if (imageIdsFromParams != null) {
-        this.highlightedNodes = imageIdsFromParams;
+      this.imageIdsFromParams = this.getClassImageIds(this.$route.query.nodeClass, level);
+      if (this.imageIdsFromParams != null) {
+        this.highlightedNodes = this.imageIdsFromParams;
       }
       else {
         this.highlightedNodes = [];
@@ -118,7 +213,6 @@ export default {
       });
       this.getNodes(level).then(response => {
         this.nodes = response;
-        console.log(response);
         this.nodesLoading = false;
       });
     },

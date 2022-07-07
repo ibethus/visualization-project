@@ -12,6 +12,9 @@ export default {
     };
   },
   methods: {
+    getActualUrl(){
+      return `${window.location.origin}`;
+    },
     async parseImagesDataJson(){
       // eslint-disable-next-line no-undef
       return fetch(`${process.env.VUE_APP_PATH_FILES}short_properties_for_app_new.json`)
@@ -46,6 +49,8 @@ export default {
         return {
           id: indexId.id,
           group: imageClass,
+          // eslint-disable-next-line no-undef
+          image_path: `${process.env.VUE_APP_PATH_IMAGES}${imageData[0].Path}`
         };
       });
     },

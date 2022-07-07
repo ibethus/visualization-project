@@ -41,6 +41,7 @@
         <g id="node-group">
           <g v-for="node in nodes" :key="node.index" class="image_holder">
             <circle
+              :nodeId="node.id"
               :fill="nodeColor(node[nodeTypeKey])"
               :stroke-width="highlightNodes.indexOf(node.id) == -1? 3:3"
               :stroke="highlightNodes.indexOf(node.id) == -1? theme.nodeStroke: 'red' "
@@ -246,34 +247,31 @@ export default {
     bodyStrength: function() {
       this.initData();
       this.$nextTick(function() {
-        this.initDragTickZoom();
+        this.computeNodePositions();
       });
     },
     linkDistance: function() {
       this.initData();
       this.$nextTick(function() {
-        this.initDragTickZoom();
+        this.computeNodePositions();
       });
     },
     nodes: function() {
       this.initData();
       this.$nextTick(function() {
-        this.initDragTickZoom();
+        this.computeNodePositions();
       });
     },
-    searchResults: function(){
-      console.log(this.searchResults);
-    }
   },
   created() {
     this.initData();
   },
   mounted() {
-    this.initDragTickZoom();
+    this.computeNodePositions();
   },
   methods: {
     isNodeInSearchResult(nodeId){
-      return this.isIncludedInSearchResult(nodeId) || !this.searchResults || this.searchResults.length == 0
+      return this.isIncludedInSearchResult(nodeId) || !this.searchResults
     },
     isIncludedInSearchResult(nodeId){
       return this.searchResults && this.searchResults.length > 0 && this.searchResults.some(r => r.id == nodeId);
@@ -313,8 +311,10 @@ export default {
         );
 
     },
-    initDragTickZoom() {
-      d3.selectAll(".node").call(this.drag(this.force));
+    computeNodePositions() {
+      for (var i = 0, n = Math.ceil(Math.log(this.force.alphaMin()) / Math.log(1 - this.force.alphaDecay())); i < n; ++i) {
+        this.force.tick();
+      }
       this.force.on("tick", () => {
         d3.selectAll(".link")
           .data(this.links)
@@ -357,12 +357,12 @@ export default {
       this.$emit("clickLink", e, e.target.__data__);
     },
     clickNode(e) {
-      if (this.pinned.length === 0) {
-        this.pinnedState(e);
-      } else {
-        d3.selectAll(".element").style("opacity", 0.2);
-        this.pinned = [];
-      }
+      // if (this.pinned.length === 0) {
+      //   this.pinnedState(e);
+      // } else {
+      //   d3.selectAll(".element").style("opacity", 0.2);
+      //   this.pinned = [];
+      // }
       this.$emit("clickNode", e, e.target.__data__);
     },
     clickEle(e) {
@@ -467,30 +467,6 @@ export default {
           ")"
       );
     },
-    drag(simulation) {
-      function dragstarted(d) {
-        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
-      }
-
-      function dragged(d) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
-      }
-
-      function dragended(d) {
-        if (!d3.event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
-      }
-
-      return d3
-        .drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended);
-    }
   }
 };
 </script>

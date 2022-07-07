@@ -91,7 +91,7 @@ export default {
           var filteredNodesIndex = matchingNodesIndex.filter(
             (distanceIndex) => distanceIndex.id == id
           )[0].indexes;
-          return filteredNodesIndex.slice(0, 10).map((nodeIndex) => {
+          return filteredNodesIndex.slice(0, 5).map((nodeIndex) => {
             var distance = row[nodeIndex];
             var linkedNodeId = firstRowIds[nodeIndex];
             return {

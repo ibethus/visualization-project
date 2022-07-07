@@ -140,13 +140,13 @@ export default {
         this.selectNode(event.data, event.target);
       }
     },
-    selectedNodeLevel(newLevel){
-      if (newLevel){
+    selectedNodeLevel(){
+      if (!this.open){
         this.updateUrl();
       }
     },
-    selectedNodeClass(newClass){
-      if (newClass){
+    selectedNodeClass(){
+      if (!this.open){
         this.updateUrl();
       }
     }
@@ -187,8 +187,6 @@ export default {
     },
     updateUrl(){
       let base = this.getActualUrl();
-      console.log(`classe : ${this.selectedNodeClass}`)
-      console.log(`level : ${this.selectedNodeLevel}`)
       if (this.selectedNodeClass){
         base = base.concat(`?nodeClass=${this.selectedNodeClass}`);
       }
@@ -196,7 +194,6 @@ export default {
         base = base.concat(`&level=${this.selectedNodeLevel}`);
       }
       this.updatedUrl = encodeURI(base);
-      console.log(this.updatedUrl);
       document.getElementById("graph").contentWindow.location.reload();
       this.iframeLoaded = false;
       return base;

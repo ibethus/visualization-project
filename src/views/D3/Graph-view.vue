@@ -106,6 +106,7 @@ export default {
     displayClickedNodeModal(event){
       this.nodeForModal = this.nodes.find(n => n.id == event.target.__data__.id);
       this.showModal = true;
+    },
     setDates() {
       if (this.highlightedNodes.length !== 0) {
         this.imagesDatesData.filter(data => this.highlightedNodes.includes(data.id.toString()))

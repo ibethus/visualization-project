@@ -56,13 +56,14 @@ export default {
         this.closePortal();
       }
     },
-    nodeLevel(newLevel){
-      if(newLevel){
+    nodeLevel(){
+      if(this.open){
+        console.log(`is open : ${open}`)
         console.log(this.updateUrl());
       }
     },
-    nodeClass(newClass){
-      if(newClass){
+    nodeClass(){
+      if(this.open){
         console.log(this.updateUrl());
       }
     }

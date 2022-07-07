@@ -144,8 +144,8 @@ export default {
       default: 10
     },
     linkDistance: {
-      type: Number,
-      default: 50
+      type: Function,
+      default: null
     },
     // svg
     svgSize: {
@@ -246,9 +246,6 @@ export default {
   watch: {
     bodyStrength: function() {
       this.initData();
-      // this.$nextTick(function() {
-      //   this.computeNodePositions();
-      // });
     },
     linkDistance: function() {
       this.initData();
@@ -258,9 +255,6 @@ export default {
     },
     nodes: function() {
       this.initData();
-      // this.$nextTick(function() {
-      //   this.computeNodePositions();
-      // });
     },
   },
   created() {
@@ -297,9 +291,7 @@ export default {
     initData() {
       this.force = d3
         .forceSimulation(this.nodes)
-        .force(
-          "link",
-          d3
+        .force("link", d3
             .forceLink(this.links)
             .id(d => d.id)
             .distance(this.linkDistance)

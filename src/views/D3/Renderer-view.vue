@@ -204,7 +204,7 @@ export default {
     selectNode(node, target) {
       node.target = target;
       if (this.nodes.includes(node)) return;
-      if (this.nodes.length === 1) {
+      if (this.nodes.length === 2) {
         this.nodes[0].target.removeAttribute("fill");
         this.nodes[0].target.removeAttribute("style");
         this.nodes.shift();

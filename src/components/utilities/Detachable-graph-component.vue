@@ -58,21 +58,18 @@ export default {
     },
     nodeLevel(){
       if(this.open){
-        console.log(`is open : ${open}`)
-        console.log(this.updateUrl());
+        this.updateUrl();
       }
     },
     nodeClass(){
       if(this.open){
-        console.log(this.updateUrl());
+        this.updateUrl();
       }
     }
   },
   methods: {
     updateUrl(){
       let base = this.getActualUrl();
-      console.log(`classe : ${this.nodeClass}`)
-      console.log(`level : ${this.nodeLevel}`)
       if (this.nodeClass){
         base = base.concat(`?nodeClass=${this.nodeClass}`);
       }

@@ -147,7 +147,7 @@ export default {
       if(this.keywordFilter) {
         var keywordsFilteredNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter);
         if(this.dateFilteredImages.length !== 0) {
-          this.searchResultNodes = keywordsFilteredNodes.filter(node => this.dateFilteredImages.includes(node.id));
+          this.searchResultNodes = keywordsFilteredNodes.filter(node => this.dateFilteredImages.includes(node.id.toString()));
         }
         else {
           this.searchResultNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter);
@@ -159,7 +159,7 @@ export default {
       var keywordsFilteredNodes = this.getImagesByKeywords(this.keywordFilter,this.rankFilter, this.fieldFilter);
       if(this.dateFilteredImages.length !== 0) {
         if(this.keywordFilter.length !== 0) {
-          this.searchResultNodes = keywordsFilteredNodes.filter(node => this.dateFilteredImages.includes(node.id));
+          this.searchResultNodes = keywordsFilteredNodes.filter(node => this.dateFilteredImages.includes(node.id.toString()));
         }
         else {
           this.searchResultNodes = this.dateFilteredImages;

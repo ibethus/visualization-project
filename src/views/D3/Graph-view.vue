@@ -15,13 +15,13 @@
       <li class="mr-3">
         <div>
           <label class="text-sm" for="startDate">Starting date</label>
-          <input @change="updateStartDate" id="startDate" datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
+          <input v-model="startingMinDate" @change="updateStartDate" id="startDate" datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
         </div>
       </li>
       <li class="mr-3">
         <div>
-          <label class="text-sm" for="endDate">End date</label>
-          <input @change="updateEndDate" id="endDate" datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
+          <label class="text-sm" for="endDate">Ending date</label>
+          <input v-model="startingMaxDate" @change="updateEndDate" id="endDate" datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
         </div>
       </li>
     </ul>
@@ -71,6 +71,8 @@ export default {
       endDateFilter: null,
       dateFilteredImages: [],
       searchResultNodes: [],
+      startingMinDate: null,
+      startingMaxDate: null,
     };
   },
   async created() {
@@ -81,6 +83,7 @@ export default {
       this.keywordsData = this.prepareKeywordsData();
       this.keywordsRankingData = this.prepareKeywordsRankingData();
       this.loadData(LEVELS_ENUM.One);
+      this.setDates();
   },
   methods: {
     closeGraphModal(){
@@ -89,6 +92,27 @@ export default {
     displayClickedNodeModal(event){
       this.nodeForModal = this.nodes.find(n => n.id == event.target.__data__.id);
       this.showModal = true;
+    setDates() {
+      this.imagesDatesData.forEach(data => {
+        if(!this.startingMinDate) {
+          this.startingMinDate = data.dateMin;
+        }
+        else {
+         if (this.startingMinDate > data.dateMin) {
+            this.startingMinDate = data.dateMin;
+          }
+        }
+        if(!this.startingMaxDate) {
+          this.startingMaxDate = data.dateMax;
+        }
+        else {
+         if (this.startingMaxDate < data.dateMax) {
+            this.startingMaxDate = data.dateMax;
+          }
+        }
+      });
+      this.startingMinDate = new Date(this.startingMinDate).toISOString().slice(0,10);
+      this.startingMaxDate = new Date(this.startingMaxDate).toISOString().slice(0,10);
     },
     updateStartDate(event) {
       this.startDateFilter = event.target.value;

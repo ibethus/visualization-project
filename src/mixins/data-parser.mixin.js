@@ -46,11 +46,16 @@ export default {
             imageClass = imageData[0].level1;
             break;
         }
+        console.log(imageData[0])
         return {
           id: indexId.id,
           group: imageClass,
           // eslint-disable-next-line no-undef
-          image_path: `${process.env.VUE_APP_PATH_IMAGES}${imageData[0].Path}`
+          image_path: `${process.env.VUE_APP_PATH_IMAGES}${imageData[0].Path}`,
+          timeline: imageData[0].converted_timeline,
+          pdf: imageData[0].path_to_report,
+          caption: imageData[0].caption,
+          page: imageData[0].page
         };
       });
     },

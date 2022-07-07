@@ -246,21 +246,21 @@ export default {
   watch: {
     bodyStrength: function() {
       this.initData();
-      this.$nextTick(function() {
-        this.computeNodePositions();
-      });
+      // this.$nextTick(function() {
+      //   this.computeNodePositions();
+      // });
     },
     linkDistance: function() {
       this.initData();
-      this.$nextTick(function() {
-        this.computeNodePositions();
-      });
+      // this.$nextTick(function() {
+      //   this.computeNodePositions();
+      // });
     },
     nodes: function() {
       this.initData();
-      this.$nextTick(function() {
-        this.computeNodePositions();
-      });
+      // this.$nextTick(function() {
+      //   this.computeNodePositions();
+      // });
     },
   },
   created() {

@@ -36,9 +36,16 @@
       <label for="minmax-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nodes distance</label>
       <input v-model="distanceCoefficient" id="minmax-range" type="range" min="1" max="10" step="0.05" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
     </div>
+    <div id="caption" class="absolute z-40 m-2 mb-20" style="right: 0; bottom: 0; width: 10em">
+      <div v-for="[group, color] in colors" :key="color">
+        <p :style="{'background-color':color}" class="rounded m-1 mx-3 text-sm text-white">
+          {{group}}
+        </p>
+      </div>
+    </div>
     <network class="z-0" v-if="!nodesLoading && !linksLoading && !imagesLoading" :nodeList="nodes" :linkList="links" :linkDistance="l => l.value * distanceCoefficient"
-      :nodeSize="7" :highlightNodes="highlightedNodes" :linkWidth="0.6" :searchResults="searchResultNodes"
-      v-on:clickNode="displayClickedNodeModal"></network>
+      :nodeSize="7" :highlightNodes="highlightedNodes" :linkWidth="0.6" :searchResults="searchResultNodes" :distanceCoefficient="distanceCoefficient"
+      v-on:clickNode="displayClickedNodeModal" v-on:calculatedColors="updateCaption"></network>
   </div>
 </template>
 
@@ -59,6 +66,7 @@ export default {
   mixins: [dataParser, keywordsParser],
   data() {
     return {
+      colors: [],
       distanceCoefficient: 1,
       showModal: false,
       nodeForModal: null,
@@ -100,6 +108,9 @@ export default {
     }
   },
   methods: {
+    updateCaption(event){
+      this.colors = event;
+    },
     closeGraphModal(){
       this.showModal = false;
     },

@@ -1,5 +1,5 @@
 <template>  
-<div v-if="open && node" id="graphModal" style="overflow-y: scroll; max-height: 80%" class="absolute z-40 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+<div v-if="open && node" id="graphModal" style="overflow-y: scroll; max-height: 80%; z-index: 100" class="p-5 w-3/4 absolute bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
     <div class="fixed m-3">
         <button @click="closeModal" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
             X
@@ -10,16 +10,16 @@
     </p>
     <div class="p-5">
         <a href="#">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h5 class="mb-3 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
                 {{node.caption ? node.caption : ""}}
             </h5>
         </a>
-        <div v-if="!editDate">
-            <p class="inline mb-3 font-normal text-gray-700 dark:text-gray-400">
+        <div v-if="!editDate" class="my-4">
+            <p class="inline mb-3 text-base text-gray-700 dark:text-gray-400">
               {{node.timeline}}
             </p>
             <button @click="editDate = true" class="inline bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white ml-2 py-1 px-2 border border-blue-500 hover:border-transparent rounded">
-              Edit
+              Edit date
             </button>
         </div>
         <div v-else class="my-3 p-3 rounded shadow">

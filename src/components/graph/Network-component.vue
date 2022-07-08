@@ -47,15 +47,15 @@
               :stroke="highlightNodes.indexOf(node.id) == -1? theme.nodeStroke: 'red' "
               :class="`${node[nodeTypeKey]} ${node.showText?'selected' : ''} node element 
               ${isNodeInSearchResult(node.id) ? '':'no_result'}`"
-              :r="nodeSize"
+              :r="calculateNodeSize()"
             ></circle>
             <image
               v-show="node.showText"
               :xlink:href="node.image_path"
-              x="-15"
-              y="-15"
-              width="32"
-              height="32"
+              :x="-calculateImagePosition()"
+              :y="-calculateImagePosition()"
+              :width="calculateImageSize()"
+              :height="calculateImageSize()"
               class="image"
               style="pointer-events: none;"
             />
@@ -187,6 +187,10 @@ export default {
       default: () => {
         return [];
       }
+    },
+    distanceCoefficient: {
+      type: Number,
+      default: 1
     }
   },
   data() {
@@ -262,8 +266,30 @@ export default {
   },
   mounted() {
     this.computeNodePositions();
+    var groupColorSet = new Map();
+    this.nodes.forEach(node => groupColorSet.set(node.group, this.nodeColor(node[this.nodeTypeKey])))
+    this.$emit("calculatedColors", groupColorSet);
   },
   methods: {
+    calculateNodeSize(){
+      var size = this.nodeSize;
+      if (this.distanceCoefficient/5 > 1){
+        return size * this.distanceCoefficient/5;
+      }
+      return size;
+    },
+    calculateImagePosition(){
+      var sideSize = this.calculateImageSize();
+      var diag = Math.sqrt(Math.pow(sideSize, 2), Math.pow(sideSize, 2));
+      return diag/2;
+    },
+    calculateImageSize(){
+      var size = 32;
+      if (this.distanceCoefficient/3 > 1){
+        return size * this.distanceCoefficient/3;
+      }
+      return size;
+    },
     isNodeInSearchResult(nodeId){
       return this.isIncludedInSearchResult(nodeId) || !this.searchResults
     },

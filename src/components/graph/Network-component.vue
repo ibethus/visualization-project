@@ -266,6 +266,9 @@ export default {
   },
   mounted() {
     this.computeNodePositions();
+    var groupColorSet = new Map();
+    this.nodes.forEach(node => groupColorSet.set(node.group, this.nodeColor(node[this.nodeTypeKey])))
+    this.$emit("calculatedColors", groupColorSet);
   },
   methods: {
     calculateNodeSize(){

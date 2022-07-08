@@ -19,26 +19,26 @@ Pour utiliser la version Docker du projet, voir [ce lien](https://hub.docker.com
 
 > Les données doivent être placées dans le dossier `public/static` selon la structure suivante :
 
-📂static
-┣ 📂data
-┃ ┣ 📜distance_fifth.csv
-┃ ┣ 📜distance_first.csv
-┃ ┣ 📜distance_fourth.csv
-┃ ┣ 📜distance_second.csv
-┃ ┣ 📜distance_third.csv
-┃ ┣ 📜neighbor_fifth.csv
-┃ ┣ 📜neighbor_first.csv
-┃ ┣ 📜neighbor_fourth.csv
-┃ ┣ 📜neighbor_second.csv
-┃ ┗ 📜neighbor_third.csv
-┣ 📂files
-┃ ┗ 📂dev
-┃ ┃ ┣ 📜completedTree.json
-┃ ┃ ┣ 📜keyword_ranking_for_app.json
-┃ ┃ ┣ 📜short_keywords_for_app.json
-┃ ┃ ┗ 📜short_properties_for_app_new.json
-┣ 📂images
-┗ 📂pdf
+📂static <br/>
+┣ 📂data <br/>
+┃ ┣ 📜distance_fifth.csv <br/>
+┃ ┣ 📜distance_first.csv <br/>
+┃ ┣ 📜distance_fourth.csv <br/>
+┃ ┣ 📜distance_second.csv <br/>
+┃ ┣ 📜distance_third.csv <br/>
+┃ ┣ 📜neighbor_fifth.csv <br/>
+┃ ┣ 📜neighbor_first.csv <br/>
+┃ ┣ 📜neighbor_fourth.csv <br/>
+┃ ┣ 📜neighbor_second.csv <br/>
+┃ ┗ 📜neighbor_third.csv <br/>
+┣ 📂files <br/>
+┃ ┗ 📂dev <br/>
+┃ ┃ ┣ 📜completedTree.json <br/>
+┃ ┃ ┣ 📜keyword_ranking_for_app.json <br/>
+┃ ┃ ┣ 📜short_keywords_for_app.json <br/>
+┃ ┃ ┗ 📜short_properties_for_app_new.json <br/>
+┣ 📂images <br/>
+┗ 📂pdf <br/>
 
 ### Data
 
